@@ -5,10 +5,11 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.coffeebean.ui.feature.splash.SplashScreen
 import com.coffeebean.ui.feature.onboarding.OnboardingScreen
-import com.coffeebean.ui.feature.login.LoginScreen
-import com.coffeebean.ui.feature.home.HomeScreen
+import com.coffeebean.ui.feature.splash.SplashScreen
+//import com.coffeebean.ui.feature.onboarding.OnboardingScreen
+//import com.coffeebean.ui.feature.login.LoginScreen
+//import com.coffeebean.ui.feature.home.HomeScreen
 
 object Destinations {
     const val SPLASH = "splash"
@@ -30,14 +31,26 @@ fun AppNavGraph(
         composable(Destinations.SPLASH) {
             SplashScreen(navController)
         }
+
         composable(Destinations.ONBOARDING) {
-            OnboardingScreen(navController)
+            OnboardingScreen(
+                onFinish = {
+                    navController.navigate(Destinations.LOGIN) {
+                        popUpTo(Destinations.SPLASH) { inclusive = true }
+                    }
+                }
+            )
         }
+/*
         composable(Destinations.LOGIN) {
             LoginScreen(navController)
         }
         composable(Destinations.HOME) {
             HomeScreen()
         }
+
+ */
+
+
     }
 }

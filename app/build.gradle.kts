@@ -63,6 +63,10 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview) // Preview support
     implementation(libs.androidx.material3) // Material 3 design system
 
+    //Pager
+    implementation(libs.accompanist.pager)
+    implementation(libs.accompanist.pager.indicators)
+
     // --- Navigation ---
     implementation(libs.androidx.navigation.compose) // Navigation for Compose
 
@@ -93,4 +97,5 @@ dependencies {
     // --- Debugging tools ---
     debugImplementation(libs.androidx.ui.tooling) // UI tooling (Preview)
     debugImplementation(libs.androidx.ui.test.manifest) // Test manifest for Compose UI
+
 }
