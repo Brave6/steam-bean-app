@@ -62,6 +62,10 @@ dependencies {
     implementation(libs.androidx.ui.graphics) // Graphics utilities
     implementation(libs.androidx.ui.tooling.preview) // Preview support
     implementation(libs.androidx.material3) // Material 3 design system
+    implementation(libs.compose.icons)
+
+    //Constraint Layout
+    implementation(libs.constraintlayout.compose)
 
     //Pager
     implementation(libs.accompanist.pager)

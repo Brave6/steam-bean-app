@@ -9,7 +9,8 @@ import androidx.compose.ui.text.font.FontWeight
 val Typography.headlineCustom: TextStyle
     get() = TextStyle(
         fontFamily = FontFamily.Default, // or FontFamily(Font(R.font.roboto_regular))
-        fontWeight = FontWeight.Normal,
+        fontWeight = FontWeight.SemiBold,
+        color = coffeebeanPurple,
         fontSize = 28.sp,
         lineHeight = 36.sp
     )

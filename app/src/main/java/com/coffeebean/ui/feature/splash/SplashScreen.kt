@@ -30,7 +30,7 @@ fun SplashContent() {
         Image(
             painter = painterResource(id = R.drawable.logo),
             contentDescription = "Coffee Bean Logo",
-            modifier = Modifier.size(120.dp),
+            modifier = Modifier.size(160.dp),
             contentScale = ContentScale.Fit
         )
     }
@@ -44,7 +44,7 @@ fun SplashScreen(
     val completed = viewModel.onboardingCompleted.collectAsState(initial = false)
 
     LaunchedEffect(Unit) {
-        delay(1500)
+        delay(1800)
         if (completed.value) {
             navController.navigate(Destinations.LOGIN) {
                 popUpTo(Destinations.SPLASH) { inclusive = true }
