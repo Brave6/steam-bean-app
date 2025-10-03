@@ -1,6 +1,7 @@
 package com.coffeebean.ui.feature.signup
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -33,6 +34,7 @@ fun SignupScreen(
     ConstraintLayout(
         modifier = Modifier
             .fillMaxSize()
+            .background(Color(0xFFFAFAFA))
             .padding(24.dp)
     ) {
         val (image, title, email, password, confirmPassword, button, terms) = createRefs()

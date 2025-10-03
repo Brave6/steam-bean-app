@@ -5,6 +5,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.coffeebean.ui.feature.home.HomeScreen
+import com.coffeebean.ui.feature.login.LoginScreen
 import com.coffeebean.ui.feature.onboarding.OnboardingScreen
 import com.coffeebean.ui.feature.signup.SignupScreen
 import com.coffeebean.ui.feature.splash.SplashScreen
@@ -51,7 +53,6 @@ fun AppNavGraph(
             )
         }
 
-
         composable(Destinations.SIGNUP) {
             SignupScreen(
                 onSignUpClick = {
@@ -63,16 +64,19 @@ fun AppNavGraph(
             )
         }
 
-
-        /*
-                composable(Destinations.LOGIN) {
-                    LoginScreen(navController)
+        composable(Destinations.LOGIN) {
+            LoginScreen(
+                onLoginClick = {
+                    navController.navigate(Destinations.HOME) {
+                        popUpTo(Destinations.LOGIN) { inclusive = true }
+                    }
                 }
-                composable(Destinations.HOME) {
-                    HomeScreen()
-                }
+            )
+        }
 
-         */
+        composable(Destinations.HOME) {
+            HomeScreen()
+        }
 
 
     }

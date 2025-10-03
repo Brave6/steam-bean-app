@@ -1,6 +1,7 @@
 package com.coffeebean.ui.feature.login
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,14 +19,17 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.coffeebean.R
+import com.coffeebean.ui.feature.signup.SignupScreen
 import com.coffeebean.ui.theme.headlineCustom
 @Composable
 fun LoginScreen(
@@ -34,16 +38,17 @@ fun LoginScreen(
     ConstraintLayout(
         modifier = Modifier
             .fillMaxSize()
+            .background(Color(0xFFFAFAFA))
             .padding(24.dp)
     ) {
-        val (image, tagline, logo, email, password, button, forgot, divider, social) = createRefs()
+        val (imageTitle, image, tagline, logo, email, password, button, forgot, divider, social) = createRefs()
 
         // Illustration
         Image(
-            painter = painterResource(id = R.drawable.coffee_6_illus), // replace with asset
+            painter = painterResource(id = R.drawable.coffee_6_without_bg),
             contentDescription = "Login Illustration",
             modifier = Modifier
-                .size(180.dp)
+                .size(width = 303.dp, height = 366.dp)
                 .constrainAs(image) {
                     top.linkTo(parent.top)
                     start.linkTo(parent.start)
@@ -51,28 +56,18 @@ fun LoginScreen(
                 }
         )
 
-        // Tagline
-        Text(
-            text = "Fuel your day with a perfect brew.",
-            style = MaterialTheme.typography.bodyLarge,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.constrainAs(tagline) {
-                top.linkTo(image.bottom, margin = 12.dp)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
-            }
-        )
-
-        // Brand Logo Text
-        Text(
-            text = "THE COFFEE BEAN & TEA LEAF",
-            style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-            textAlign = TextAlign.Center,
-            modifier = Modifier.constrainAs(logo) {
-                top.linkTo(tagline.bottom, margin = 24.dp)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
-            }
+        // Title Logo (brand image instead of text)
+        Image(
+            painter = painterResource(id = R.drawable.coffee_title), // replace with your logo drawable
+            contentDescription = "Title Logo",
+            contentScale = ContentScale.Fit,
+            modifier = Modifier
+                .height(40.dp) // adjust size as needed
+                .constrainAs(imageTitle) {
+                    top.linkTo(image.bottom, margin = 16.dp)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                }
         )
 
         // Email Field
@@ -83,7 +78,7 @@ fun LoginScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .constrainAs(email) {
-                    top.linkTo(logo.bottom, margin = 24.dp)
+                    top.linkTo(imageTitle.bottom, margin = 24.dp)
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
                 }
@@ -99,7 +94,7 @@ fun LoginScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .constrainAs(password) {
-                    top.linkTo(email.bottom, margin = 12.dp)
+                    top.linkTo(email.bottom, margin = 20.dp)
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
                 }
@@ -112,21 +107,26 @@ fun LoginScreen(
                 .fillMaxWidth()
                 .height(48.dp)
                 .constrainAs(button) {
-                    top.linkTo(password.bottom, margin = 24.dp)
+                    top.linkTo(password.bottom, margin = 20.dp)
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
                 }
         ) {
-            Text("Login")
+            Text(
+                text = "Login",
+                style = MaterialTheme.typography.titleMedium.copy( // base M3 style
+                fontSize = 20.sp, // custom size
+                )
+            )
         }
 
         // Forgot Password
         Text(
             text = "Forgot Password?",
-            style = MaterialTheme.typography.bodySmall,
-            color = Color.Gray,
+            style = MaterialTheme.typography.bodyMedium,
+            color = Color.Black,
             modifier = Modifier.constrainAs(forgot) {
-                top.linkTo(button.bottom, margin = 12.dp)
+                top.linkTo(button.bottom, margin = 20.dp)
                 start.linkTo(parent.start)
                 end.linkTo(parent.end)
             }
@@ -135,7 +135,7 @@ fun LoginScreen(
         // Divider with "or"
         Text(
             text = "──────────  or  ──────────",
-            style = MaterialTheme.typography.bodySmall,
+            style = MaterialTheme.typography.bodyMedium,
             textAlign = TextAlign.Center,
             modifier = Modifier.constrainAs(divider) {
                 top.linkTo(forgot.bottom, margin = 16.dp)
@@ -154,9 +154,23 @@ fun LoginScreen(
                     end.linkTo(parent.end)
                 }
         ) {
-            Icon(painterResource(R.drawable.apple_logo), contentDescription = "Apple")
-            Icon(painterResource(R.drawable.google), contentDescription = "Google")
-            Icon(painterResource(R.drawable.facebook), contentDescription = "Facebook")
+            Icon(painterResource(R.drawable.apple_logo),
+                contentDescription = "Apple")
+            Icon(
+                painter = painterResource(id = R.drawable.google_logoi),
+                contentDescription = "Google",
+                tint = Color.Unspecified
+            )
+            Icon(
+                painter = painterResource(id = R.drawable.facebook_logo),
+                contentDescription = "Facebook",
+                tint = Color.Unspecified
+            )
         }
     }
+}
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun sc() {
+    LoginScreen()
 }
