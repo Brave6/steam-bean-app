@@ -32,12 +32,13 @@ fun HomeSearchBar(
         onSearch = { onSearch(it) },
         active = active,
         onActiveChange = { active = it },
-        placeholder = { Text("Search") },
+        placeholder = { Text("Search for your favorite coffee") },
         trailingIcon = {
             Icon(Icons.Default.Search, contentDescription = "Search")
         },
         modifier = Modifier
             .fillMaxWidth()
+            .padding(16.dp)
             .height(56.dp)
     )
     {
