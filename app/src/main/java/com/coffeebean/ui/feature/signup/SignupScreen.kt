@@ -41,7 +41,7 @@ fun SignupScreen(
 
         // Illustration
         Image(
-            painter = painterResource(id = R.drawable.coffee_5_illus),
+            painter = painterResource(id = R.drawable.coffee_2_illus),
             contentDescription = "Signup Illustration",
             modifier = Modifier
                 .size(width = 366.dp, height = 303.dp)

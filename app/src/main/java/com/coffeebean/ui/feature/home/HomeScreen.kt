@@ -1,8 +1,12 @@
 package com.coffeebean.ui.feature.home
 
+import android.annotation.SuppressLint
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
@@ -12,21 +16,28 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.coffeebean.R
-import com.coffeebean.ui.theme.headlineCustom
+import com.coffeebean.data.local.repository.DummyProductRepository
+import com.coffeebean.domain.model.Product
+import com.coffeebean.ui.theme.coffeebeanPurple
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
+    viewModel: HomeViewModel = hiltViewModel(),
     onMenuClick: () -> Unit = {},
     onProfileClick: () -> Unit = {},
     onNavigate: (String) -> Unit = {}
 ) {
     var searchText by remember { mutableStateOf("") }
     var selectedTab by remember { mutableStateOf("home") }
+    val products by viewModel.products.collectAsState()
+
 
     Scaffold(
         topBar = {
@@ -36,9 +47,13 @@ fun HomeScreen(
                     style = MaterialTheme.typography.headlineSmall,
                 ) },
                 navigationIcon = {
-                    IconButton(onClick = onMenuClick) {
-                        Icon(Icons.Default.Menu, contentDescription = "Menu")
-                    }
+                    Image(
+                        painter = painterResource(id = R.drawable.logo), // replace with your logo drawable
+                        contentDescription = "Logo",
+                        modifier = Modifier
+                            .padding(start = 16.dp)
+                            .size(48.dp) // adjust size as needed
+                    )
                 },
                 actions = {
                     IconButton(onClick = onProfileClick) {
@@ -54,7 +69,7 @@ fun HomeScreen(
             )
         },
         bottomBar = {
-            NavigationBar(containerColor = Color(0xFFFAFAFA))
+            NavigationBar(containerColor = Color(0xFFEDE7F6))
             {
 
                 NavigationBarItem(
@@ -70,7 +85,7 @@ fun HomeScreen(
                         selectedIconColor = Color(0xFF532D6D),      // custom color when selected
                         unselectedIconColor = Color.LightGray,           // custom color when not selected
                         selectedTextColor = Color(0xFF532D6D),      // text color when selected
-                        unselectedTextColor = Color.White,           // text color when not selected
+                        unselectedTextColor = Color.Gray,           // text color when not selected
                         indicatorColor = Color(0xFFC5CAE9)          // background highlight when selected
                     )
                 )
@@ -88,7 +103,7 @@ fun HomeScreen(
                         selectedIconColor = Color(0xFF532D6D),      // custom color when selected
                         unselectedIconColor = Color.LightGray,           // custom color when not selected
                         selectedTextColor = Color(0xFF532D6D),      // text color when selected
-                        unselectedTextColor = Color.White,           // text color when not selected
+                        unselectedTextColor = Color.Gray,           // text color when not selected
                         indicatorColor = Color(0xFFC5CAE9)          // background highlight when selected
                     )
                 )
@@ -106,7 +121,7 @@ fun HomeScreen(
                         selectedIconColor = Color(0xFF532D6D),      // custom color when selected
                         unselectedIconColor = Color.LightGray,           // custom color when not selected
                         selectedTextColor = Color(0xFF532D6D),      // text color when selected
-                        unselectedTextColor = Color.White,           // text color when not selected
+                        unselectedTextColor = Color.Gray,           // text color when not selected
                         indicatorColor = Color(0xFFC5CAE9)          // background highlight when selected
                     )
                 )
@@ -119,7 +134,7 @@ fun HomeScreen(
                         selectedIconColor = Color(0xFF532D6D),      // custom color when selected
                         unselectedIconColor = Color.LightGray,           // custom color when not selected
                         selectedTextColor = Color(0xFF532D6D),      // text color when selected
-                        unselectedTextColor = Color.White,           // text color when not selected
+                        unselectedTextColor = Color.Gray,           // text color when not selected
                         indicatorColor = Color(0xFFC5CAE9)          // background highlight when selected
                     )
                 )
@@ -128,7 +143,7 @@ fun HomeScreen(
     ) { innerPadding ->
         Column(
             modifier = Modifier
-                .background(Color(0xFFFAFAFA))
+                .background(Color(0xFFF5F5F5))
                 .padding(innerPadding)
                 .fillMaxSize()
         ) {
@@ -147,6 +162,8 @@ fun HomeScreen(
 
             // Special Offer Card
             Card(
+                border = BorderStroke(1.dp, Color.LightGray),
+                elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
                 shape = RoundedCornerShape(16.dp),
                 colors = CardDefaults.cardColors(containerColor = Color(0xFF532D6D)),
                 modifier = Modifier
@@ -169,7 +186,7 @@ fun HomeScreen(
                         onClick = { /* Claim offer */ },
                         colors = ButtonDefaults.buttonColors(containerColor = Color.White)
                     ) {
-                        Text("Claim Now", color = Color(0xFFF197E81))
+                        Text("Claim Now", color = coffeebeanPurple)
                     }
                 }
             }
@@ -217,8 +234,8 @@ fun HomeScreen(
                 contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                items(5) { // dummy count
-                    ProductCard()
+                items(products) { product ->
+                    ProductCard(product)
                 }
             }
         }
@@ -226,7 +243,7 @@ fun HomeScreen(
 }
 @Composable
 fun CategoryItem(iconRes: Int, label: String) {
-    Column(horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Icon(
             painter = painterResource(id = iconRes),
             contentDescription = label,
@@ -237,35 +254,40 @@ fun CategoryItem(iconRes: Int, label: String) {
     }
 }
 
-    @Composable
-    fun ProductCard() {
-        Card(
-            shape = RoundedCornerShape(12.dp),
-            colors = CardDefaults.cardColors(containerColor = Color.LightGray),
-            modifier = Modifier
-                .width(160.dp)
-                .height(200.dp)
-        ) {
-            Column {
-                Icon(
-                    painter = painterResource(R.drawable.icon_coffee), // replace with Image
-                    contentDescription = null,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(100.dp)
-                )
-                Column(Modifier.padding(8.dp)) {
-                    Text("Cappuccino", fontWeight = FontWeight.Bold, color = Color.White)
-                    Text("with Chocolate", style = MaterialTheme.typography.bodySmall, color = Color.Gray)
-                    Text("$4.50", fontWeight = FontWeight.Bold, color = Color(0xFFF28E6B))
-                }
+@Composable
+fun ProductCard(product: Product) {
+    Card(
+        border = BorderStroke(1.dp, Color.LightGray),
+        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+        shape = RoundedCornerShape(12.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.White),
+        modifier = Modifier
+
+            .width(160.dp)
+            .height(200.dp)
+    ) {
+        Column {
+            Image(
+                painter = painterResource(id = product.imageRes),
+                contentDescription = product.name,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(120.dp)
+            )
+            Column(Modifier.padding(8.dp)) {
+                Text(product.name, fontWeight = FontWeight.Bold, color = coffeebeanPurple)
+                Text(product.description, style = MaterialTheme.typography.bodySmall, color = Color.Gray)
+                Text(product.price, fontWeight = FontWeight.Bold, color = Color(0xFFF28E6B))
             }
         }
     }
+}
 
-
+@SuppressLint("ViewModelConstructorInComposable")
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun HomeScreenPreview() {
-    HomeScreen()
+    val fakeViewModel = HomeViewModel(DummyProductRepository())
+    HomeScreen(viewModel = fakeViewModel)
 }

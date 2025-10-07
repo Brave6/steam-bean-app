@@ -13,7 +13,7 @@ val onboardingPages = listOf(
         title = "EARN YOUR FREE COFFEE",
         description = "Collect points with every purchase. Rewards are brewing.",
         imageTitle = R.drawable.coffee_title,
-        image = R.drawable.coffee_4_illus
+        image = R.drawable.coffee_2_illus
     ),
     OnboardingPage(
         title = "BREWING CONNECTIONS EVERY DAY",

@@ -27,6 +27,7 @@ fun HomeSearchBar(
     var active by remember { mutableStateOf(false) }
 
     SearchBar(
+        shadowElevation = 8.dp,
         query = searchText,
         onQueryChange = { onSearchTextChange(it) },
         onSearch = { onSearch(it) },
