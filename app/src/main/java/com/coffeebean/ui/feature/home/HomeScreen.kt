@@ -288,6 +288,7 @@ fun ProductCard(product: Product) {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun HomeScreenPreview() {
-    val fakeViewModel = HomeViewModel(DummyProductRepository())
-    HomeScreen(viewModel = fakeViewModel)
+    //val fakeViewModel = HomeViewModel(DummyProductRepository())
+   // HomeScreen(viewModel = fakeViewModel)
+    HomeScreen()
 }
