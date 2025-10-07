@@ -4,20 +4,20 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.coffeebean.R
-import com.coffeebean.ui.navigation.Destinations
+import com.coffeebean.ui.navigation.Screen
 import kotlinx.coroutines.delay
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
 fun SplashContent() {
@@ -46,12 +46,12 @@ fun SplashScreen(
     LaunchedEffect(Unit) {
         delay(1800)
         if (completed.value) {
-            navController.navigate(Destinations.LOGIN) {
-                popUpTo(Destinations.SPLASH) { inclusive = true }
+            navController.navigate(Screen.Login.route) {
+                popUpTo(Screen.Splash.route) { inclusive = true }
             }
         } else {
-            navController.navigate(Destinations.ONBOARDING) {
-                popUpTo(Destinations.SPLASH) { inclusive = true }
+            navController.navigate(Screen.Onboarding.route) {
+                popUpTo(Screen.Splash.route) { inclusive = true }
             }
         }
     }

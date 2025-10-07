@@ -70,6 +70,9 @@ accompanist-pager-indicators = { module = "com.google.accompanist:accompanist-pa
 # Constraint Layout
 constraintlayout-compose = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "constraintlayout" }
 
+# Animation
+accompanist-navigation-animation = { module = "com.google.accompanist:accompanist-navigation-animation", version.ref = "accompanist" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

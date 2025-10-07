@@ -71,6 +71,9 @@ dependencies {
     implementation(libs.accompanist.pager)
     implementation(libs.accompanist.pager.indicators)
 
+    //Animation
+    implementation(libs.accompanist.navigation.animation)
+
     // --- Navigation ---
     implementation(libs.androidx.navigation.compose) // Navigation for Compose
 

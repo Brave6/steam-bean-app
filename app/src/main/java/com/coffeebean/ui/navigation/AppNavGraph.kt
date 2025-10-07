@@ -1,0 +1,90 @@
+package com.coffeebean.ui.navigation
+
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.navigation.NavHostController
+import com.google.accompanist.navigation.animation.AnimatedNavHost
+import com.google.accompanist.navigation.animation.composable
+import com.coffeebean.ui.feature.login.LoginScreen
+import com.coffeebean.ui.feature.onboarding.OnboardingScreen
+import com.coffeebean.ui.feature.signup.SignupScreen
+import com.coffeebean.ui.feature.splash.SplashScreen
+import com.coffeebean.ui.main.MainScreen
+
+@OptIn(ExperimentalAnimationApi::class)
+@Composable
+fun AppNavGraph(
+    navController: NavHostController,
+    modifier: Modifier = Modifier
+) {
+    AnimatedNavHost(
+        navController = navController,
+        startDestination = Screen.Splash.route,
+        modifier = modifier
+    ) {
+        composable(
+            route = Screen.Splash.route,
+            enterTransition = { fadeIn() },
+            exitTransition = { fadeOut() },
+            popEnterTransition = { fadeIn() },
+            popExitTransition = { fadeOut() }
+        ) {
+            SplashScreen(navController)
+        }
+
+        composable(
+            route = Screen.Onboarding.route,
+            enterTransition = { fadeIn(animationSpec = tween(700)) },
+            exitTransition = { fadeOut(animationSpec = tween(400)) }
+        ) {
+            OnboardingScreen(
+                onSignupClick = {
+                    navController.navigate(Screen.Signup.route) {
+                        popUpTo(Screen.Splash.route) { inclusive = true }
+                    }
+                },
+                onLoginClick = {
+                    navController.navigate(Screen.Login.route) {
+                        popUpTo(Screen.Splash.route) { inclusive = true }
+                    }
+                }
+            )
+        }
+
+        composable(
+            route = Screen.Signup.route,
+            enterTransition = { fadeIn(animationSpec = tween(700)) },
+            exitTransition = { fadeOut(animationSpec = tween(400)) }
+        ) {
+            SignupScreen(
+                onSignUpClick = {
+                    navController.navigate(Screen.Login.route) {
+                        popUpTo(Screen.Onboarding.route) { inclusive = true }
+                    }
+                }
+            )
+        }
+
+        composable(
+            route = Screen.Login.route,
+            enterTransition = { fadeIn(animationSpec = tween(700)) },
+            exitTransition = { fadeOut(animationSpec = tween(400)) }
+        ) {
+            LoginScreen(
+                onLoginClick = {
+                    navController.navigate(Screen.Home.route) {
+                        popUpTo(Screen.Login.route) { inclusive = true }
+                    }
+                }
+            )
+        }
+
+        composable(Screen.Home.route) {
+            MainScreen()
+        }
+    }
+}

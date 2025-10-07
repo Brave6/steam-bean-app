@@ -1,4 +1,4 @@
-package com.coffeebean.ui.feature.home
+package com.coffeebean.ui.feature.home.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -41,6 +41,7 @@ fun HomeSearchBar(
             .fillMaxWidth()
             .padding(16.dp)
             .height(56.dp)
+
     )
     {
         // Optional dropdown results when active
