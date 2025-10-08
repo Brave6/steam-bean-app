@@ -13,7 +13,7 @@ import com.coffeebean.ui.navigation.AppNavGraph
 import com.coffeebean.ui.theme.CoffeeBeanTheme
 import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint // <-- important for Hilt
+@AndroidEntryPoint // for Hilt
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

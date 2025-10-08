@@ -24,7 +24,7 @@ fun MenuCategorySection(
 
     LazyRow(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
         items(items) { item ->
-            MenuCard(item, onItemClick)
+            MenuCard(item, onItemClick as () -> Unit)
         }
     }
 }

@@ -25,7 +25,16 @@ fun MainScreen() {
             navController = navController,
             startDestination = Screen.Home.route
         ) {
-            composable(Screen.Home.route) { HomeScreen(navController) }
+            composable(Screen.Home.route) {
+                HomeScreen(
+                    navController = navController,
+                    onLogout = {
+                        navController.navigate(Screen.Login.route) {
+                            popUpTo(Screen.Home.route) { inclusive = true } // remove Home from back stack
+                        }
+                    }
+                )
+            }
             composable(Screen.Menu.route) {
                 MenuScreen(
                     navController = navController,
@@ -36,18 +45,13 @@ fun MainScreen() {
             }
             composable(Screen.Rewards.route) {
                 RewardsScreen(
-                    navController = navController,
-                    onItemClick = { productName ->
-                        println("Clicked on $productName")
-                    }
+                    navController = navController
+
                 )
             }
             composable(Screen.Account.route) {
                 AccountsScreen(
-                    navController = navController,
-                    onItemClick = { productName ->
-                        println("Clicked on $productName")
-                    }
+                    navController = navController
                 )
             }
         }

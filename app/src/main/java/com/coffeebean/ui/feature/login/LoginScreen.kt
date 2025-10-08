@@ -2,46 +2,48 @@ package com.coffeebean.ui.feature.login
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Button
-import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.runtime.Composable
+import androidx.compose.material.icons.filled.VisibilityOff
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.coffeebean.R
-import com.coffeebean.ui.feature.signup.SignupScreen
-import com.coffeebean.ui.theme.headlineCustom
+
 @Composable
 fun LoginScreen(
-    onLoginClick: () -> Unit = {}
+    onLoginSuccess: () -> Unit = {}
 ) {
+    val viewModel: LoginViewModel = hiltViewModel()
+    val uiState by viewModel.uiState.collectAsState()
+
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+
+    // Visibility states
+    var passwordVisible by remember { mutableStateOf(false) }
+
     ConstraintLayout(
         modifier = Modifier
             .fillMaxSize()
             .background(Color(0xFFFAFAFA))
             .padding(24.dp)
     ) {
-        val (imageTitle, image, tagline, logo, email, password, button, forgot, divider, social) = createRefs()
+        val (imageTitle, image, emailField, passwordField, button, errorText, divider, social) = createRefs()
 
         // Illustration
         Image(
@@ -53,16 +55,17 @@ fun LoginScreen(
                     top.linkTo(parent.top)
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
-                }
+                },
+            contentScale = ContentScale.Fit
         )
 
-        // Title Logo (brand image instead of text)
+        // Title Logo
         Image(
-            painter = painterResource(id = R.drawable.coffee_title), // replace with your logo drawable
+            painter = painterResource(id = R.drawable.coffee_title),
             contentDescription = "Title Logo",
             contentScale = ContentScale.Fit,
             modifier = Modifier
-                .height(40.dp) // adjust size as needed
+                .height(40.dp)
                 .constrainAs(imageTitle) {
                     top.linkTo(image.bottom, margin = 16.dp)
                     start.linkTo(parent.start)
@@ -72,12 +75,13 @@ fun LoginScreen(
 
         // Email Field
         OutlinedTextField(
-            value = "",
-            onValueChange = {},
+            value = email,
+            onValueChange = { email = it },
             label = { Text("Email address") },
+            shape = RoundedCornerShape(12.dp),
             modifier = Modifier
                 .fillMaxWidth()
-                .constrainAs(email) {
+                .constrainAs(emailField) {
                     top.linkTo(imageTitle.bottom, margin = 24.dp)
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
@@ -86,15 +90,22 @@ fun LoginScreen(
 
         // Password Field
         OutlinedTextField(
-            value = "",
-            onValueChange = {},
+            value = password,
+            onValueChange = { password = it },
             label = { Text("Password") },
-            visualTransformation = PasswordVisualTransformation(),
-            trailingIcon = { Icon(Icons.Default.Visibility, contentDescription = "Toggle") },
+            singleLine = true,
+            visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+            shape = RoundedCornerShape(12.dp),
+            trailingIcon = {
+                val icon = if (passwordVisible) Icons.Default.VisibilityOff else Icons.Default.Visibility
+                IconButton(onClick = { passwordVisible = !passwordVisible }) {
+                    Icon(icon, contentDescription = if (passwordVisible) "Hide password" else "Show password")
+                }
+            },
             modifier = Modifier
                 .fillMaxWidth()
-                .constrainAs(password) {
-                    top.linkTo(email.bottom, margin = 20.dp)
+                .constrainAs(passwordField) {
+                    top.linkTo(emailField.bottom, margin = 16.dp)
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
                 }
@@ -102,43 +113,51 @@ fun LoginScreen(
 
         // Login Button
         Button(
-            onClick = onLoginClick,
+            onClick = { viewModel.loginUser(email, password) },
+            enabled = !uiState.isLoading,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(48.dp)
                 .constrainAs(button) {
-                    top.linkTo(password.bottom, margin = 20.dp)
+                    top.linkTo(passwordField.bottom, margin = 24.dp)
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
                 }
         ) {
-            Text(
-                text = "Login",
-                style = MaterialTheme.typography.titleMedium.copy( // base M3 style
-                fontSize = 20.sp, // custom size
+            if (uiState.isLoading) {
+                CircularProgressIndicator(
+                    color = Color.White,
+                    strokeWidth = 2.dp,
+                    modifier = Modifier.size(20.dp)
                 )
-            )
+            } else {
+                Text(
+                    text = "Login",
+                    fontSize = 20.sp
+                )
+            }
         }
 
-        // Forgot Password
-        Text(
-            text = "Forgot Password?",
-            style = MaterialTheme.typography.bodyMedium,
-            color = Color.Black,
-            modifier = Modifier.constrainAs(forgot) {
-                top.linkTo(button.bottom, margin = 20.dp)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
-            }
-        )
+        // Error Message
+        if (uiState.errorMessage != null) {
+            Text(
+                text = uiState.errorMessage ?: "",
+                color = Color.Red,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.constrainAs(errorText) {
+                    top.linkTo(button.bottom, margin = 16.dp)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                }
+            )
+        }
 
         // Divider with "or"
         Text(
             text = "──────────  or  ──────────",
-            style = MaterialTheme.typography.bodyMedium,
             textAlign = TextAlign.Center,
             modifier = Modifier.constrainAs(divider) {
-                top.linkTo(forgot.bottom, margin = 16.dp)
+                top.linkTo(button.bottom, margin = if (uiState.errorMessage != null) 48.dp else 24.dp)
                 start.linkTo(parent.start)
                 end.linkTo(parent.end)
             }
@@ -147,30 +166,29 @@ fun LoginScreen(
         // Social Buttons Row
         Row(
             horizontalArrangement = Arrangement.spacedBy(16.dp),
-            modifier = Modifier
-                .constrainAs(social) {
-                    top.linkTo(divider.bottom, margin = 16.dp)
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                }
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.constrainAs(social) {
+                top.linkTo(divider.bottom, margin = 16.dp)
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
+            }
         ) {
-            Icon(painterResource(R.drawable.apple_logo),
-                contentDescription = "Apple")
-            Icon(
-                painter = painterResource(id = R.drawable.google_logoi),
-                contentDescription = "Google",
-                tint = Color.Unspecified
-            )
-            Icon(
-                painter = painterResource(id = R.drawable.facebook_logo),
-                contentDescription = "Facebook",
-                tint = Color.Unspecified
-            )
+            Icon(painterResource(R.drawable.apple_logo), contentDescription = "Apple")
+            Icon(painterResource(R.drawable.google_logoi), contentDescription = "Google", tint = Color.Unspecified)
+            Icon(painterResource(R.drawable.facebook_logo), contentDescription = "Facebook", tint = Color.Unspecified)
+        }
+    }
+
+    // Navigate on success
+    LaunchedEffect(uiState.isSuccess) {
+        if (uiState.isSuccess) {
+            onLoginSuccess()
         }
     }
 }
+
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun sc() {
+fun LoginScreenPreview() {
     LoginScreen()
 }

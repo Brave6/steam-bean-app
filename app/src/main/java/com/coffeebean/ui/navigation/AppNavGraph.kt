@@ -75,7 +75,7 @@ fun AppNavGraph(
             exitTransition = { fadeOut(animationSpec = tween(400)) }
         ) {
             LoginScreen(
-                onLoginClick = {
+                onLoginSuccess = {
                     navController.navigate(Screen.Home.route) {
                         popUpTo(Screen.Login.route) { inclusive = true }
                     }

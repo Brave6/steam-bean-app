@@ -20,6 +20,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.coffeebean.domain.model.Product
+import com.coffeebean.ui.theme.coffeebeanPrice
 import com.coffeebean.ui.theme.coffeebeanPurple
 
 @Composable
@@ -32,7 +33,7 @@ fun ProductCard(product: Product) {
         modifier = Modifier
 
             .width(160.dp)
-            .height(200.dp)
+            .height(180.dp)
     ) {
         Column {
             Image(
@@ -41,12 +42,12 @@ fun ProductCard(product: Product) {
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(120.dp)
+                    .height(100.dp)
             )
             Column(Modifier.padding(8.dp)) {
                 Text(product.name, fontWeight = FontWeight.Bold, color = coffeebeanPurple)
                 Text(product.description, style = MaterialTheme.typography.bodySmall, color = Color.Gray)
-                Text(product.price, fontWeight = FontWeight.Bold, color = Color(0xFFF28E6B))
+                Text(product.price, fontWeight = FontWeight.Bold, color = coffeebeanPrice)
             }
         }
     }
