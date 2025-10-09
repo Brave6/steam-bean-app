@@ -1,9 +1,13 @@
 package com.coffeebean.domain.model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class Product(
-    val id: Int,
-    val name: String,
-    val description: String,
-    val price: String,
-    val imageRes: Int
+    val id: String = "",
+    val name: String = "",
+    val description: String = "",
+    val price: Double = 0.0,
+    val category: String = "",
+    val imageUrl: String = ""
 )

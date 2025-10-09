@@ -1,6 +1,5 @@
 package com.coffeebean.ui.feature.menu
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -21,12 +20,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.coffeebean.ui.theme.coffeebeanPrice
 import java.text.NumberFormat
 import java.util.Locale
@@ -61,8 +62,11 @@ fun MenuCard(
             verticalAlignment = Alignment.CenterVertically
         ) {
             // Product Image
-            Image(
-                painter = painterResource(id = item.imageRes),
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(item.imageUrl)
+                    .crossfade(true)
+                    .build(),
                 contentDescription = null, // Described in Card semantics
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
@@ -105,18 +109,6 @@ fun MenuCard(
                     color = coffeebeanPrice
                 )
             }
-/*
-            // Availability Badge (optional)
-            if (!item.available) {
-                Text(
-                    text = "Out of Stock",
-                    style = MaterialTheme.typography.labelSmall,
-                    color = Color.Red.copy(alpha = 0.7f),
-                    modifier = Modifier.padding(start = 8.dp)
-                )
-            }
-
- */
         }
     }
 }

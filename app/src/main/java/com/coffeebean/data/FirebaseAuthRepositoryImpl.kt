@@ -4,6 +4,7 @@ import com.coffeebean.data.local.repository.AuthRepository
 import com.coffeebean.ui.feature.signup.Resource
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
@@ -30,6 +31,17 @@ class FirebaseAuthRepositoryImpl @Inject constructor(
             emit(Resource.Success(result))
         } catch (e: Exception) {
             emit(Resource.Error(e.localizedMessage ?: "Login failed"))
+        }
+    }
+
+    override fun googleSignIn(idToken: String): Flow<Resource<AuthResult>> = flow {
+        emit(Resource.Loading())
+        try {
+            val credential = GoogleAuthProvider.getCredential(idToken, null)
+            val result = firebaseAuth.signInWithCredential(credential).await()
+            emit(Resource.Success(result))
+        } catch (e: Exception) {
+            emit(Resource.Error(e.localizedMessage ?: "Google Sign-In failed"))
         }
     }
 

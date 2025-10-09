@@ -1,7 +1,14 @@
 package com.coffeebean.ui.feature.login
 
+import android.app.Activity
+import android.content.ContentValues.TAG
+import android.content.Intent
+import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -13,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -23,6 +31,9 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.coffeebean.R
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
 
 @Composable
 fun LoginScreen(
@@ -30,12 +41,50 @@ fun LoginScreen(
 ) {
     val viewModel: LoginViewModel = hiltViewModel()
     val uiState by viewModel.uiState.collectAsState()
+    val context = LocalContext.current
 
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
     // Visibility states
     var passwordVisible by remember { mutableStateOf(false) }
+
+    // Google Sign-In
+    val googleSignInClient = GoogleSignIn.getClient(
+        context,
+        GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(context.getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+    )
+
+    val googleSignInLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        Log.d(TAG, "Google Sign-In result code: ${result.resultCode}")
+
+        if (result.resultCode == Activity.RESULT_OK) {
+            val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+            try {
+                val account = task.getResult(ApiException::class.java)
+                Log.d(TAG, "Google Sign-In successful. Account: ${account?.email}")
+
+                val idToken = account?.idToken
+                if (idToken != null) {
+                    Log.d(TAG, "ID Token retrieved, calling googleSignIn")
+                    viewModel.googleSignIn(idToken)
+                } else {
+                    Log.e(TAG, "ID Token is null")
+                    viewModel.setError("Failed to get authentication token")
+                }
+            } catch (e: ApiException) {
+                Log.e(TAG, "Google Sign-In failed with status code: ${e.statusCode}", e)
+                viewModel.setError("Google Sign-In failed: ${e.message}")
+            }
+        } else {
+            Log.d(TAG, "Google Sign-In cancelled or failed")
+        }
+    }
 
     ConstraintLayout(
         modifier = Modifier
@@ -174,15 +223,25 @@ fun LoginScreen(
             }
         ) {
             Icon(painterResource(R.drawable.apple_logo), contentDescription = "Apple")
-            Icon(painterResource(R.drawable.google_logoi), contentDescription = "Google", tint = Color.Unspecified)
+            Icon(
+                painter = painterResource(R.drawable.google_logoi),
+                contentDescription = "Google",
+                tint = Color.Unspecified,
+                modifier = Modifier.clickable {
+                    Log.d(TAG, "Google Sign-In button clicked")
+                    googleSignInLauncher.launch(googleSignInClient.signInIntent)
+                }            )
             Icon(painterResource(R.drawable.facebook_logo), contentDescription = "Facebook", tint = Color.Unspecified)
         }
     }
 
-    // Navigate on success
-    LaunchedEffect(uiState.isSuccess) {
-        if (uiState.isSuccess) {
+    // Handle successful login
+    LaunchedEffect(uiState.isSuccess, uiState.googleSignInSuccess) {
+        Log.d(TAG, "LaunchedEffect triggered - isSuccess: ${uiState.isSuccess}, googleSignInSuccess: ${uiState.googleSignInSuccess}")
+        if (uiState.isSuccess || uiState.googleSignInSuccess) {
+            Log.d(TAG, "Calling onLoginSuccess")
             onLoginSuccess()
+            viewModel.onNavigationHandled()
         }
     }
 }

@@ -4,46 +4,78 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.coffeebean.data.local.repository.ProductRepository
 import com.coffeebean.domain.model.Product
+import com.coffeebean.domain.model.Promo
+import com.coffeebean.domain.repository.PromoRepository
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+// UI state for the promo carousel
+sealed class HomeUiState {
+    data object Loading : HomeUiState()
+    data class Success(val promos: List<Promo>) : HomeUiState()
+    data class Error(val message: String) : HomeUiState()
+}
+
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val productRepository: ProductRepository,
-    private val firebaseAuth: FirebaseAuth
+    private val productRepository: ProductRepository, // Kept for fetching products
+    private val promoRepository: PromoRepository,     // Added for fetching promos
+    private val firebaseAuth: FirebaseAuth          // Kept for handling logout
 ) : ViewModel() {
 
-    // Existing products state
-    private val _products = MutableStateFlow<List<Product>>(emptyList())
-    val products: StateFlow<List<Product>> = _products
+    // State for the promo carousel
+    private val _uiState = MutableStateFlow<HomeUiState>(HomeUiState.Loading)
+    val uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
 
-    // New: Logout dialog state
+    // Existing state for products
+    private val _products = MutableStateFlow<List<Product>>(emptyList())
+    val products: StateFlow<List<Product>> = _products.asStateFlow()
+
+    // Existing state for logout dialog
     private val _showLogoutDialog = MutableStateFlow(false)
-    val showLogoutDialog: StateFlow<Boolean> = _showLogoutDialog
+    val showLogoutDialog: StateFlow<Boolean> = _showLogoutDialog.asStateFlow()
 
     init {
+        fetchProducts()
+        fetchPromos()
+    }
+
+    private fun fetchProducts() {
         viewModelScope.launch {
             productRepository.getProducts().collectLatest { _products.value = it }
         }
     }
 
-    // Called when user presses back button
+    private fun fetchPromos() {
+        viewModelScope.launch {
+            _uiState.value = HomeUiState.Loading
+            try {
+                val promos = promoRepository.getPromos()
+                _uiState.value = HomeUiState.Success(promos)
+            } catch (e: Exception) {
+                // Consider logging the exception e
+                _uiState.value = HomeUiState.Error("Failed to load promotions")
+            }
+        }
+    }
+
+    // --- Logout Logic (Retained) ---
+
     fun onBackPressed() {
         _showLogoutDialog.value = true
     }
 
-    // Confirm logout
     fun confirmLogout() {
         firebaseAuth.signOut()
         _showLogoutDialog.value = false
     }
 
-    // Dismiss dialog without logging out
     fun dismissLogoutDialog() {
         _showLogoutDialog.value = false
     }

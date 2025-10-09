@@ -1,13 +1,8 @@
 package com.coffeebean.ui.feature.menu
 
 import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.animation.shrinkVertically
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -16,7 +11,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -52,9 +46,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.coffeebean.R
 import com.coffeebean.ui.theme.Recolleta
 
 /**
@@ -66,8 +61,6 @@ enum class MenuCategory(val displayName: String) {
     CAKES("Cakes"),
     PASTRY("Pastry")
 }
-
-
 
 /**
  * UI state for menu screen
@@ -84,8 +77,9 @@ fun MenuScreen(
     navController: NavHostController,
     onItemClick: (MenuItem) -> Unit,
     onSearchClick: () -> Unit = {},
-    uiState: MenuUiState = MenuUiState.Success(getDummyMenuItems()) // Replace with ViewModel
+    viewModel: MenuViewModel = hiltViewModel()
 ) {
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     var selectedTabIndex by remember { mutableIntStateOf(0) }
     val categories = MenuCategory.entries
 
@@ -145,16 +139,16 @@ fun MenuScreen(
             )
 
             // Content based on state
-            when (uiState) {
+            when (val state = uiState) {
                 is MenuUiState.Loading -> LoadingContent()
                 is MenuUiState.Success -> {
                     MenuContent(
                         selectedCategory = categories[selectedTabIndex],
-                        menuItems = uiState.items,
+                        menuItems = state.items,
                         onItemClick = onItemClick
                     )
                 }
-                is MenuUiState.Error -> ErrorContent(message = uiState.message)
+                is MenuUiState.Error -> ErrorContent(message = state.message)
             }
         }
     }
@@ -215,8 +209,7 @@ private fun MenuContent(
     AnimatedContent(
         targetState = selectedCategory,
         transitionSpec = {
-            fadeIn() + slideInVertically { it / 4 } togetherWith
-                    fadeOut() + slideOutVertically { -it / 4 }
+            fadeIn() togetherWith fadeOut()
         },
         label = "menu_content_animation"
     ) { category ->
@@ -329,69 +322,38 @@ private fun ErrorContent(message: String) {
         )
     }
 }
-
-// Dummy data generator - Replace with Firebase/ViewModel
-private fun getDummyMenuItems(): Map<MenuCategory, List<MenuItem>> {
-    return mapOf(
-        MenuCategory.COFFEE to listOf(
-            MenuItem(
-                id = "1",
-                name = "Cappuccino",
-                description = "with Chocolate",
-                price = 125.00,
-                imageRes = R.drawable.brew,
-                category = MenuCategory.COFFEE,
-                subcategory = "Hot Coffee"
-            ),
-            MenuItem(
-                id = "2",
-                name = "Caramel Latte",
-                description = "with Oat Milk",
-                price = 150.00,
-                imageRes = R.drawable.cold_brew,
-                category = MenuCategory.COFFEE,
-                subcategory = "Hot Coffee"
-            ),
-            MenuItem(
-                id = "3",
-                name = "Americano",
-                description = "Double Shot",
-                price = 180.00,
-                imageRes = R.drawable.brew,
-                category = MenuCategory.COFFEE,
-                subcategory = "Hot Coffee"
-            ),
-            MenuItem(
-                id = "4",
-                name = "Iced Latte",
-                description = "with Almond Milk",
-                price = 150.00,
-                imageRes = R.drawable.brew,
-                category = MenuCategory.COFFEE,
-                subcategory = "Iced Coffee"
-            )
-        ),
-        MenuCategory.BEANS to listOf(
-            MenuItem(
-                id = "5",
-                name = "Arabica Blend",
-                description = "Premium roasted beans",
-                price = 450.00,
-                imageRes = R.drawable.brew,
-                category = MenuCategory.BEANS
-            )
-        ),
-        MenuCategory.CAKES to emptyList(), // Empty state example
-        MenuCategory.PASTRY to emptyList()
-    )
-}
-
+/*
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun MenuScreenPreview() {
     val navController = rememberNavController()
+    // In preview, we can provide a dummy implementation of the view model
+    // or pass a dummy uiState directly if the composable supports it.
+    // For this preview, let's keep it simple and assume a success state.
+    val dummyItems = mapOf(
+        MenuCategory.COFFEE to listOf(
+            MenuItem(id = "1", name = "Cappuccino", description = "with Chocolate", price = 125.00, imageUrl = "", category = MenuCategory.COFFEE, subcategory = "Hot Coffee"),
+            MenuItem(id = "2", name = "Caramel Latte", description = "with Oat Milk", price = 150.00, imageUrl = "", category = MenuCategory.COFFEE, subcategory = "Hot Coffee"),
+        ),
+        MenuCategory.BEANS to emptyList(),
+        MenuCategory.CAKES to emptyList(),
+        MenuCategory.PASTRY to emptyList()
+    )
+
+    // This is a simplified approach for the preview.
+    // In a real app, you might use a fake ViewModel that provides this state.
     MenuScreen(
         navController = navController,
-        onItemClick = {}
+        onItemClick = {},
+        viewModel = object : MenuViewModel(object : com.coffeebean.domain.repository.MenuRepository {
+            override suspend fun getProducts(): List<com.coffeebean.domain.model.Product> {
+                return emptyList()
+            }
+        }) {
+            override val uiState: kotlinx.coroutines.flow.StateFlow<MenuUiState> =
+                kotlinx.coroutines.flow.MutableStateFlow(MenuUiState.Success(dummyItems))
+        }
     )
 }
+
+ */

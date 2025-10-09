@@ -8,7 +8,7 @@ data class MenuItem(
     val name: String,
     val description: String,
     val price: Double,
-    val imageRes: Int,
+    val imageUrl: String = "",
     val category: MenuCategory,
     val subcategory: String? = null, // "Hot Coffee", "Iced Coffee", etc.
     val available: Boolean = true

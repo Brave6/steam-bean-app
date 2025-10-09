@@ -8,6 +8,7 @@ sealed class Screen(val route: String) {
     data object Signup : Screen("signup")
 
     // Main app
+    data object Main : Screen("main") // New route for MainScreen
     data object Home : Screen("home")
     data object Menu : Screen("menu")
     data object Rewards : Screen("rewards")

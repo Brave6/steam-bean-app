@@ -2,8 +2,11 @@ package com.coffeebean.di
 
 import com.coffeebean.data.FirebaseAuthRepositoryImpl
 import com.coffeebean.data.local.repository.AuthRepository
+import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.storage
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,4 +29,8 @@ object FirebaseModule {
     @Singleton
     fun provideAuthRepository(firebaseAuth: FirebaseAuth): AuthRepository =
         FirebaseAuthRepositoryImpl(firebaseAuth)
+
+    fun provideStorage(): FirebaseStorage {
+        return Firebase.storage
+    }
 }

@@ -7,6 +7,8 @@ import kotlinx.coroutines.flow.Flow
 interface AuthRepository {
     fun registerUser(email: String, password: String): Flow<Resource<AuthResult>>
     fun loginUser(email: String, password: String): Flow<Resource<AuthResult>>
+
+    fun googleSignIn(idToken: String): Flow<Resource<AuthResult>>
     fun getCurrentUser(): Any?
     fun logout()
 }

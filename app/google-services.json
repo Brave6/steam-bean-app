@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "526807097069",
+    "project_id": "coffee-bean-54e74",
+    "storage_bucket": "coffee-bean-54e74.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:526807097069:android:a446f936ae758566c7f6e4",
+        "android_client_info": {
+          "package_name": "com.coffeebean"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "526807097069-is95a9o9b2gak99dlgpnodb8jn9u1ai6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.coffeebean",
+            "certificate_hash": "70cb3da5c6e2e1d8b66d29f75b3e47f3b29b49d2"
+          }
+        },
+        {
+          "client_id": "526807097069-29d4ojofpuifd0370edkuqgiosnnotn4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEZSSt7iFdBYOypnBxZ44EFgbB7OSwbGM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "526807097069-29d4ojofpuifd0370edkuqgiosnnotn4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

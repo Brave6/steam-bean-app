@@ -12,6 +12,9 @@ plugins {
 
     // Kotlin Annotation Processing (needed for kapt)
     id("org.jetbrains.kotlin.kapt")
+
+    // Kotlin Serialization
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -92,7 +95,12 @@ dependencies {
     implementation(platform(libs.firebase.bom)) // Firebase BoM (manages versions)
     implementation(libs.firebase.auth) // Firebase Authentication
     implementation(libs.firebase.firestore) // Firebase Firestore Database
+    implementation(libs.firebase.storage) // Firebase Cloud Storage
     implementation(libs.firebase.analytics) // Firebase Analytics
+    implementation(libs.play.services.auth)
+
+    // --- Image Loading ---
+    implementation(libs.coil.compose)
 
     // --- Testing ---
     testImplementation(libs.junit) // Unit testing

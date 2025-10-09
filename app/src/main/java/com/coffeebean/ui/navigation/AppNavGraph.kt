@@ -6,14 +6,16 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavDeepLink
 import androidx.navigation.NavHostController
+import androidx.navigation.navDeepLink
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.coffeebean.ui.feature.login.LoginScreen
 import com.coffeebean.ui.feature.onboarding.OnboardingScreen
 import com.coffeebean.ui.feature.signup.SignupScreen
 import com.coffeebean.ui.feature.splash.SplashScreen
-import com.coffeebean.ui.main.MainScreen
+import com.coffeebean.ui.main.components.MainView
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
@@ -71,20 +73,21 @@ fun AppNavGraph(
 
         composable(
             route = Screen.Login.route,
+            deepLinks = listOf(navDeepLink { uriPattern = "android-app://androidx.navigation/login" }),
             enterTransition = { fadeIn(animationSpec = tween(700)) },
             exitTransition = { fadeOut(animationSpec = tween(400)) }
         ) {
             LoginScreen(
                 onLoginSuccess = {
-                    navController.navigate(Screen.Home.route) {
+                    navController.navigate(Screen.Main.route) { // Navigate to Main instead of Home
                         popUpTo(Screen.Login.route) { inclusive = true }
                     }
                 }
             )
         }
 
-        composable(Screen.Home.route) {
-            MainScreen()
+        composable(Screen.Main.route) { // Use the new Main route
+            MainView(appNavController = navController) // Pass the main NavController
         }
     }
 }
