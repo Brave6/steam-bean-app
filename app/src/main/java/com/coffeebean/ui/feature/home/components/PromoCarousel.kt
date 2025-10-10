@@ -4,6 +4,8 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.collectIsDraggedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -27,20 +29,26 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
+import com.coffeebean.domain.model.Promo
 import com.coffeebean.ui.theme.coffeebeanPurple
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlin.math.absoluteValue
 
 /**
@@ -58,33 +66,39 @@ data class PromoCarouselConfig(
 )
 
 /**
- * Modern promotional carousel with auto-scroll, page indicators, and accessibility support.
+ * Modern promotional carousel with auto-scroll, page indicators, and analytics support.
  *
- * @param promoImages List of drawable resource IDs to display
- * @param modifier Modifier to be applied to the carousel
- * @param config Configuration for carousel behavior and appearance
- * @param onPromoClick Optional callback when a promo item is clicked
+ * @param promos List of [Promo] objects to display.
+ * @param modifier Modifier to be applied to the carousel.
+ * @param config Configuration for carousel behavior and appearance.
+ * @param onPromoClick Callback triggered when a promo item is clicked.
+ * @param onPromoViewed Callback triggered when a promo item becomes visible.
  */
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun PromoCarousel(
-    promoImages: List<Int>,
+    promos: List<Promo>,
     modifier: Modifier = Modifier,
     config: PromoCarouselConfig = PromoCarouselConfig(),
-    onPromoClick: ((Int) -> Unit)? = null
+    onPromoClick: (Promo) -> Unit,
+    onPromoViewed: (Promo) -> Unit
 ) {
-    if (promoImages.isEmpty()) return
+    if (promos.isEmpty()) {
+        // You might want a placeholder here
+        return
+    }
 
-    val pagerState = rememberPagerState(pageCount = { promoImages.size })
-    var isUserInteracting by remember { mutableStateOf(false) }
+    val pagerState = rememberPagerState(pageCount = { promos.size })
+    val isUserInteracting by pagerState.interactionSource.collectIsDraggedAsState()
 
-    // Auto-scroll effect with proper lifecycle management
+    // Auto-scroll effect
     LaunchedEffect(config.autoScrollEnabled, isUserInteracting) {
         if (config.autoScrollEnabled && !isUserInteracting) {
             while (true) {
                 delay(config.autoScrollDelayMs)
+                // Avoid scrolling if the user is interacting with the pager
                 if (!pagerState.isScrollInProgress) {
-                    val nextPage = (pagerState.currentPage + 1) % promoImages.size
+                    val nextPage = (pagerState.currentPage + 1) % promos.size
                     pagerState.animateScrollToPage(
                         page = nextPage,
                         animationSpec = tween(config.animationDurationMs)
@@ -94,24 +108,20 @@ fun PromoCarousel(
         }
     }
 
-    // Auto-scroll effect with proper lifecycle management
+    // Analytics: Log promo view when the page changes
     LaunchedEffect(pagerState) {
-        if (config.autoScrollEnabled) {
-            while (true) {
-                delay(config.autoScrollDelayMs)
-                val nextPage = (pagerState.currentPage + 1) % promoImages.size
-                pagerState.animateScrollToPage(
-                    page = nextPage,
-                    animationSpec = tween(config.animationDurationMs)
-                )
+        snapshotFlow { pagerState.currentPage }
+            .distinctUntilChanged()
+            .collect { page ->
+                promos.getOrNull(page)?.let { onPromoViewed(it) }
             }
-        }
     }
+
 
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .semantics { contentDescription = "Promotional carousel with ${promoImages.size} items" }
+            .semantics { contentDescription = "Promotional carousel with ${promos.size} items" }
     ) {
         HorizontalPager(
             state = pagerState,
@@ -121,18 +131,20 @@ fun PromoCarousel(
             contentPadding = PaddingValues(horizontal = config.horizontalPadding),
             pageSpacing = 8.dp
         ) { page ->
+            // Pass the specific promo to the card
+            val promo = promos[page]
             PromoCard(
-                imageResId = promoImages[page],
+                promo = promo,
                 pageIndex = page,
                 pagerState = pagerState,
                 config = config,
-                onClick = onPromoClick
+                onClick = { onPromoClick(promo) }
             )
         }
 
         // Page indicators
         PageIndicators(
-            pageCount = promoImages.size,
+            pageCount = promos.size,
             currentPage = pagerState.currentPage,
             modifier = Modifier
                 .fillMaxWidth()
@@ -144,19 +156,19 @@ fun PromoCarousel(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun PromoCard(
-    imageResId: Int,
+    promo: Promo,
     pageIndex: Int,
     pagerState: PagerState,
     config: PromoCarouselConfig,
-    onClick: ((Int) -> Unit)?
+    onClick: () -> Unit
 ) {
     Card(
         shape = RoundedCornerShape(config.cornerRadius),
         elevation = CardDefaults.cardElevation(defaultElevation = config.cardElevation),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFF532D6D)),
-        onClick = { onClick?.invoke(pageIndex) },
+        colors = CardDefaults.cardColors(containerColor = Color(0xFF532D6D)), // A placeholder color
         modifier = Modifier
             .fillMaxSize()
+            .clickable(onClick = onClick)
             .then(
                 if (config.enablePageTransformation) {
                     Modifier.carouselTransition(pagerState, pageIndex)
@@ -164,11 +176,17 @@ private fun PromoCard(
                     Modifier
                 }
             )
-            .semantics { contentDescription = "Promotional image ${pageIndex + 1}" }
+            .semantics {
+                // Use promo details for better accessibility
+                contentDescription = "Promotion: ${promo.title}. ${promo.description}"
+            }
     ) {
-        Image(
-            painter = painterResource(id = imageResId),
-            contentDescription = null, // Decorative, description on Card
+        AsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(promo.imageUrl)
+                .crossfade(true)
+                .build(),
+            contentDescription = null, // Description is set on the Card
             contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxSize()
         )

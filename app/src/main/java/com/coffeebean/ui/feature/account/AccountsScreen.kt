@@ -45,6 +45,7 @@ import com.coffeebean.ui.theme.coffeebeanPurple
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 fun AccountsScreen(
+    onLogout: () -> Unit,
     navController: NavHostController,
     userName: String = "Seth Aldwin Tolentino",
     email: String = "seth@example.com",
@@ -163,7 +164,7 @@ fun AccountsScreen(
             Divider()
             ListItem(
                 headlineContent = { Text("Logout") },
-                modifier = Modifier.clickable { /* Logout */ },
+                modifier = Modifier.clickable { onLogout() },
                 colors = ListItemDefaults.colors(containerColor = Color.Transparent)
             )
         }
@@ -192,11 +193,4 @@ fun PaymentMethodRow(label: String) {
             Icon(Icons.Default.ChevronRight, contentDescription = "Manage")
         }
     }
-}
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun sc() {
-    val navController = rememberNavController()
-    AccountsScreen(
-        navController = navController)
 }

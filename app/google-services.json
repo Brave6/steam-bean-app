@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "526807097069-dhs4j6c9hpgru320p1g4ir7omfqvpman.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.coffeebean",
+            "certificate_hash": "b05fb6df3c86bb9ca349a288dbbf6bbdb64081f3"
+          }
+        },
+        {
           "client_id": "526807097069-is95a9o9b2gak99dlgpnodb8jn9u1ai6.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

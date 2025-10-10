@@ -11,13 +11,18 @@ import com.coffeebean.ui.feature.account.AccountsScreen
 import com.coffeebean.ui.feature.home.HomeScreen
 import com.coffeebean.ui.feature.menu.MenuScreen
 import com.coffeebean.ui.feature.rewards.RewardsScreen
-import com.coffeebean.ui.main.components.BottomBar
 import com.coffeebean.ui.navigation.Screen
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun MainView(appNavController: NavHostController) {
     val navController = rememberNavController()
+
+    val onLogout = {
+        appNavController.navigate(Screen.Login.route) {
+            popUpTo(Screen.Main.route) { inclusive = true } // remove Main from back stack
+        }
+    }
 
     Scaffold(
         bottomBar = { BottomBar(navController) }
@@ -29,11 +34,7 @@ fun MainView(appNavController: NavHostController) {
             composable(Screen.Home.route) {
                 HomeScreen(
                     navController = navController,
-                    onLogout = {
-                        appNavController.navigate(Screen.Login.route) {
-                            popUpTo(Screen.Main.route) { inclusive = true } // remove Main from back stack
-                        }
-                    }
+                    onLogout = onLogout
                 )
             }
             composable(Screen.Menu.route) {
@@ -52,7 +53,8 @@ fun MainView(appNavController: NavHostController) {
             }
             composable(Screen.Account.route) {
                 AccountsScreen(
-                    navController = navController
+                    navController = navController,
+                    onLogout = onLogout
                 )
             }
         }

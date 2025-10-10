@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.coffeebean.data.local.repository.ProductRepository
 import com.coffeebean.domain.model.Product
 import com.coffeebean.domain.model.Promo
+// Correctly import from the DOMAIN layer
 import com.coffeebean.domain.repository.PromoRepository
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -48,24 +49,22 @@ class HomeViewModel @Inject constructor(
 
     private fun fetchProducts() {
         viewModelScope.launch {
-            productRepository.getProducts().collectLatest { _products.value = it }
+            productRepository.getProducts().collectLatest { productList ->
+                _products.value = productList
+            }
         }
     }
 
     private fun fetchPromos() {
         viewModelScope.launch {
-            _uiState.value = HomeUiState.Loading
-            try {
-                val promos = promoRepository.getPromos()
-                _uiState.value = HomeUiState.Success(promos)
-            } catch (e: Exception) {
-                // Consider logging the exception e
-                _uiState.value = HomeUiState.Error("Failed to load promotions")
-            }
+            val promoList = promoRepository.getPromos()
+            _uiState.value = HomeUiState.Success(promoList)
         }
     }
 
-    // --- Logout Logic (Retained) ---
+    fun onLogoutClicked() {
+        _showLogoutDialog.value = true
+    }
 
     fun onBackPressed() {
         _showLogoutDialog.value = true
