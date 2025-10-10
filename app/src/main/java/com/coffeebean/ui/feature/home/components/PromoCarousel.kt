@@ -1,21 +1,11 @@
 package com.coffeebean.ui.feature.home.components
 
-import androidx.compose.animation.core.tween
+import androidx.compose.animation.core.*
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.collectIsDraggedAsState
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
@@ -23,27 +13,22 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshotFlow
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
-import coil.compose.AsyncImage
+import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
 import com.coffeebean.domain.model.Promo
 import com.coffeebean.ui.theme.coffeebeanPurple
@@ -66,7 +51,14 @@ data class PromoCarouselConfig(
 )
 
 /**
- * Modern promotional carousel with auto-scroll, page indicators, and analytics support.
+ * Modern promotional carousel with auto-scroll, page indicators, shimmer loading, and analytics support.
+ *
+ * Best practices implemented:
+ * - Shimmer loading effect for images
+ * - Proper error handling for image loading
+ * - Accessibility support with semantic descriptions
+ * - Performance optimization with distinctUntilChanged
+ * - Memory-efficient image loading with Coil
  *
  * @param promos List of [Promo] objects to display.
  * @param modifier Modifier to be applied to the carousel.
@@ -84,19 +76,26 @@ fun PromoCarousel(
     onPromoViewed: (Promo) -> Unit
 ) {
     if (promos.isEmpty()) {
-        // You might want a placeholder here
+        // Empty state - you can customize this
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(config.carouselHeight),
+            contentAlignment = Alignment.Center
+        ) {
+            // Optional: Add empty state UI here
+        }
         return
     }
 
     val pagerState = rememberPagerState(pageCount = { promos.size })
     val isUserInteracting by pagerState.interactionSource.collectIsDraggedAsState()
 
-    // Auto-scroll effect
+    // Auto-scroll effect - pauses when user is interacting
     LaunchedEffect(config.autoScrollEnabled, isUserInteracting) {
         if (config.autoScrollEnabled && !isUserInteracting) {
             while (true) {
                 delay(config.autoScrollDelayMs)
-                // Avoid scrolling if the user is interacting with the pager
                 if (!pagerState.isScrollInProgress) {
                     val nextPage = (pagerState.currentPage + 1) % promos.size
                     pagerState.animateScrollToPage(
@@ -117,7 +116,6 @@ fun PromoCarousel(
             }
     }
 
-
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -131,7 +129,6 @@ fun PromoCarousel(
             contentPadding = PaddingValues(horizontal = config.horizontalPadding),
             pageSpacing = 8.dp
         ) { page ->
-            // Pass the specific promo to the card
             val promo = promos[page]
             PromoCard(
                 promo = promo,
@@ -165,7 +162,7 @@ private fun PromoCard(
     Card(
         shape = RoundedCornerShape(config.cornerRadius),
         elevation = CardDefaults.cardElevation(defaultElevation = config.cardElevation),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFF532D6D)), // A placeholder color
+        colors = CardDefaults.cardColors(containerColor = Color(0xFFE8E8E8)),
         modifier = Modifier
             .fillMaxSize()
             .clickable(onClick = onClick)
@@ -177,20 +174,69 @@ private fun PromoCard(
                 }
             )
             .semantics {
-                // Use promo details for better accessibility
                 contentDescription = "Promotion: ${promo.title}. ${promo.description}"
             }
     ) {
-        AsyncImage(
+        SubcomposeAsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
                 .data(promo.imageUrl)
                 .crossfade(true)
                 .build(),
-            contentDescription = null, // Description is set on the Card
+            contentDescription = null,
             contentScale = ContentScale.Crop,
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize(),
+            loading = {
+                ShimmerEffect(modifier = Modifier.fillMaxSize())
+            },
+            error = {
+                // Error state - you can customize this
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color(0xFFE0E0E0)),
+                    contentAlignment = Alignment.Center
+                ) {
+                    // Optional: Add error icon or text here
+                }
+            }
         )
     }
+}
+
+/**
+ * Shimmer loading effect for image placeholders
+ */
+@Composable
+private fun ShimmerEffect(modifier: Modifier = Modifier) {
+    val transition = rememberInfiniteTransition(label = "shimmer")
+    val translateAnim by transition.animateFloat(
+        initialValue = 0f,
+        targetValue = 1000f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(
+                durationMillis = 1200,
+                easing = FastOutSlowInEasing
+            ),
+            repeatMode = RepeatMode.Restart
+        ),
+        label = "shimmer_translate"
+    )
+
+    val shimmerColors = listOf(
+        Color(0xFFE0E0E0),
+        Color(0xFFF5F5F5),
+        Color(0xFFE0E0E0)
+    )
+
+    val brush = Brush.linearGradient(
+        colors = shimmerColors,
+        start = Offset(translateAnim - 1000f, translateAnim - 1000f),
+        end = Offset(translateAnim, translateAnim)
+    )
+
+    Box(
+        modifier = modifier.background(brush)
+    )
 }
 
 /**
@@ -223,6 +269,9 @@ private fun Modifier.carouselTransition(
     )
 }
 
+/**
+ * Page indicators for the carousel
+ */
 @Composable
 private fun PageIndicators(
     pageCount: Int,

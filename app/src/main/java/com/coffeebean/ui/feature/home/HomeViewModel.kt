@@ -5,10 +5,10 @@ import androidx.lifecycle.viewModelScope
 import com.coffeebean.data.local.repository.ProductRepository
 import com.coffeebean.domain.model.Product
 import com.coffeebean.domain.model.Promo
-// Correctly import from the DOMAIN layer
 import com.coffeebean.domain.repository.PromoRepository
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -25,9 +25,9 @@ sealed class HomeUiState {
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val productRepository: ProductRepository, // Kept for fetching products
-    private val promoRepository: PromoRepository,     // Added for fetching promos
-    private val firebaseAuth: FirebaseAuth          // Kept for handling logout
+    private val productRepository: ProductRepository,
+    private val promoRepository: PromoRepository,
+    private val firebaseAuth: FirebaseAuth
 ) : ViewModel() {
 
     // State for the promo carousel
@@ -41,6 +41,9 @@ class HomeViewModel @Inject constructor(
     // Existing state for logout dialog
     private val _showLogoutDialog = MutableStateFlow(false)
     val showLogoutDialog: StateFlow<Boolean> = _showLogoutDialog.asStateFlow()
+
+    private val _isLoggingOut = MutableStateFlow(false)
+    val isLoggingOut: StateFlow<Boolean> = _isLoggingOut.asStateFlow()
 
     init {
         fetchProducts()
@@ -71,8 +74,12 @@ class HomeViewModel @Inject constructor(
     }
 
     fun confirmLogout() {
-        firebaseAuth.signOut()
-        _showLogoutDialog.value = false
+        viewModelScope.launch {
+            _isLoggingOut.value = true
+            _showLogoutDialog.value = false
+            delay(50) // Tiny delay to let dialog animation finish
+            firebaseAuth.signOut()
+        }
     }
 
     fun dismissLogoutDialog() {
