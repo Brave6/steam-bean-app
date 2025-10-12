@@ -4,6 +4,11 @@ import com.coffeebean.data.local.repository.AuthRepository
 import com.coffeebean.data.local.repository.ProductRepository
 import com.coffeebean.data.remote.FirebaseClient
 import com.coffeebean.data.FirebaseAuthRepository
+import com.coffeebean.data.remote.CartRepositoryImpl
+import com.coffeebean.data.remote.FavoritesRepositoryImpl
+import com.coffeebean.data.remote.MenuRepositoryImpl
+import com.coffeebean.data.repository.CartRepository
+import com.coffeebean.data.repository.FavoritesRepository
 import com.coffeebean.data.repository.FirebaseProductRepository
 import com.coffeebean.data.repository.FirebasePromoRepository
 import com.coffeebean.domain.repository.MenuRepository
@@ -54,7 +59,7 @@ object AppModule {
     @Provides
     @Singleton
     fun provideMenuRepository(firebaseClient: FirebaseClient): MenuRepository {
-        return MenuRepository(firebaseClient)
+        return MenuRepositoryImpl(firebaseClient)
     }
 
     @Provides
@@ -68,4 +73,24 @@ object AppModule {
     fun providePromoRepository(impl: FirebasePromoRepository): PromoRepository {
         return impl
     }
+    // ========== NEW: Cart Repository ==========
+    @Provides
+    @Singleton
+    fun provideCartRepository(
+        firebaseClient: FirebaseClient,
+        auth: FirebaseAuth
+    ): CartRepository {
+        return CartRepositoryImpl(firebaseClient, auth)
+    }
+
+    // ========== NEW: Favorites Repository ==========
+    @Provides
+    @Singleton
+    fun provideFavoritesRepository(
+        firebaseClient: FirebaseClient,
+        auth: FirebaseAuth
+    ): FavoritesRepository {
+        return FavoritesRepositoryImpl(firebaseClient, auth)
+    }
 }
+

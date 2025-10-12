@@ -8,11 +8,21 @@ sealed class Screen(val route: String) {
     data object Signup : Screen("signup")
 
     // Main app
-    data object Main : Screen("main") // New route for MainScreen
+    data object Main : Screen("main")
     data object Home : Screen("home")
     data object Menu : Screen("menu")
     data object Rewards : Screen("rewards")
     data object Account : Screen("account")
+
+    // Feature screens
+    data object ProductDetail : Screen("product_detail/{productId}") {
+        fun createRoute(productId: String) = "product_detail/$productId"
+    }
+    data object Search : Screen("search")
+    data object Cart : Screen("cart")
+    data object Favorites : Screen("favorites")
+
+
 
     // If you ever need arguments
     data class Details(val productId: String) : Screen("details/{productId}") {

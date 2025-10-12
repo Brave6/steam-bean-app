@@ -75,7 +75,7 @@ sealed class MenuUiState {
 @Composable
 fun MenuScreen(
     navController: NavHostController,
-    onItemClick: (MenuItem) -> Unit,
+    onItemClick: (MenuItem) -> Unit,  // ✅ NEW - entire MenuItem object
     onSearchClick: () -> Unit = {},
     viewModel: MenuViewModel = hiltViewModel()
 ) {

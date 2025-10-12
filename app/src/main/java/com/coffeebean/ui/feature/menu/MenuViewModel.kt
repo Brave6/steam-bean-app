@@ -42,4 +42,8 @@ class MenuViewModel @Inject constructor(
             }
         }
     }
+
+    fun refresh() {
+        getMenuItems()
+    }
 }
