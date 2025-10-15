@@ -1,5 +1,6 @@
 package com.coffeebean.ui.feature.cart
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -8,9 +9,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.coffeebean.R
 import com.coffeebean.ui.theme.Recolleta
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -57,6 +63,15 @@ fun CartScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
+                Image(
+                    painter = painterResource(id = R.drawable.coffee_7_illus),
+                    contentDescription = "Empty cart illustration",
+                    modifier = Modifier
+                        .size(300.dp)
+                        .padding(bottom = 16.dp),
+                    contentScale = ContentScale.Fit
+                )
+
                 Text(
                     text = "Your cart is empty",
                     style = MaterialTheme.typography.titleLarge,
@@ -81,4 +96,15 @@ fun CartScreen(
             }
         }
     }
+}
+@Preview(showBackground = true)
+@Composable
+fun CartScreenPreview() {
+    val navController = rememberNavController()
+    CartScreen(
+        navController = navController,
+        onNavigateBack = {},
+        onNavigateToProductDetail = {},
+        onCheckout = {}
+    )
 }
