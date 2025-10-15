@@ -66,10 +66,14 @@ fun AccountsScreen(
                     actionIconContentColor = coffeebeanPurple)
             )
         }
-    ) { padding ->
+    ) { innerPadding ->
         Column(
             modifier = Modifier
-                .padding(padding)
+               // .padding(padding)
+                .padding(
+                    top = innerPadding.calculateTopPadding(),
+                    // bottom = 80.dp // Account for bottom nav bar
+                )
                 .verticalScroll(rememberScrollState())
                 .padding(16.dp)
         ) {
