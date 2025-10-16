@@ -8,10 +8,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavDeepLink
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.coffeebean.ui.feature.login.LoginScreen
+import com.coffeebean.ui.feature.menu.components.product.ProductDetailScreen
 import com.coffeebean.ui.feature.onboarding.OnboardingScreen
 import com.coffeebean.ui.feature.signup.SignupScreen
 import com.coffeebean.ui.feature.splash.SplashScreen
@@ -89,5 +92,31 @@ fun AppNavGraph(
         composable(Screen.Main.route) { // Use the new Main route
             MainView(appNavController = navController) // Pass the main NavController
         }
+
+        // Product Detail Screen
+        composable(
+            route = Screen.ProductDetail.route,
+            arguments = listOf(
+                navArgument("productId") {
+                    type = NavType.StringType
+                }
+            )
+        ) { backStackEntry ->
+            val productId = backStackEntry.arguments?.getString("productId") ?: ""
+
+            ProductDetailScreen(
+                productId = productId,
+                onNavigateBack = {
+                    navController.navigateUp()
+                },
+                onNavigateToCart = {
+                    navController.navigate(Screen.Cart.route) {
+                        // Pop up to menu to avoid building large back stack
+                        popUpTo(Screen.Menu.route)
+                    }
+                }
+            )
+        }
+
     }
 }

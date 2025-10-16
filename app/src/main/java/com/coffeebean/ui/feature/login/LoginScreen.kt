@@ -100,7 +100,8 @@ fun LoginScreen(
             contentDescription = "Login Illustration",
             modifier = Modifier
                 .size(width = 303.dp, height = 366.dp)
-                .constrainAs(image) {
+                .constrainAs(image)
+                {
                     top.linkTo(parent.top)
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
