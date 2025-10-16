@@ -16,6 +16,7 @@ fun BottomBar(navController: NavHostController) {
     val items = listOf(
         BottomNavItem("home", R.drawable.icon_home, "Home"),
         BottomNavItem("menu", R.drawable.icon_menu, "Menu"),
+        BottomNavItem("Cart", R.drawable.icon_cart, "Cart"),
         BottomNavItem("rewards", R.drawable.icon_rewards, "Rewards"),
         BottomNavItem("account", R.drawable.icon_person, "Account")
     )
