@@ -1,9 +1,24 @@
-# Coffee Bean
+# Coffee Bean Concept App
 [![Ask DeepWiki](https://devin.ai/assets/askdeepwiki.png)](https://deepwiki.com/Brave6/Coffee_Bean)
 
 Coffee Bean is a sample Android application for a modern coffee shop, built to showcase a full-featured user experience using the latest Android development technologies. From user authentication and onboarding to browsing a dynamic menu and managing a shopping cart, this app serves as a practical example of a client-facing e-commerce application.
 
 The entire application is built with Jetpack Compose and integrates deeply with Firebase for backend services, demonstrating a modern, reactive approach to Android development.
+
+---
+
+### ⚠️ Disclaimer
+
+This project is an **unofficial concept app** created purely for **educational and portfolio purposes**.  
+It is **not affiliated with, endorsed by, or connected to The Coffee Bean & Tea Leaf® or Jollibee Group** in any way.  
+
+All trademarks, logos, brand names, and images that may appear in this project are the property of their respective owners.  
+Any such materials are used only for demonstration purposes to showcase Android app development skills.  
+
+If requested by the brand owner, I will promptly remove or modify any copyrighted materials.
+
+---
+
 
 ## Features
 
