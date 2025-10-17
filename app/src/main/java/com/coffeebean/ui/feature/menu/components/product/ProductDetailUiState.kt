@@ -510,6 +510,7 @@ private fun NutritionInfoSection(nutritionInfo: NutritionInfo) {
             color = Color(0xFF532D6D)
         )
         Spacer(modifier = Modifier.height(12.dp))
+
         Row(
             modifier = Modifier
                 .fillMaxWidth()
