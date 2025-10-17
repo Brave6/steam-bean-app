@@ -34,9 +34,9 @@ fun OnboardingPageScreen(
             contentDescription = "Title Logo",
             contentScale = ContentScale.Fit,
             modifier = Modifier
-                .height(16.dp)
+                .height(64.dp)
                 .constrainAs(imageTitle) {
-                    top.linkTo(parent.top, margin = 50.dp)
+                    top.linkTo(parent.top, margin = 25.dp)
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
                 }

@@ -15,6 +15,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -25,8 +26,10 @@ import androidx.navigation.NavHostController
 import com.coffeebean.R
 import com.coffeebean.ui.feature.home.components.ProductCard
 import com.coffeebean.ui.feature.home.components.PromoCarousel
+import com.coffeebean.ui.feature.home.components.getTimeBasedImage
 import com.coffeebean.ui.theme.Recolleta
 import com.coffeebean.ui.theme.coffeebeanBlack
+import com.coffeebean.ui.theme.coffeebeanPurple
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.analytics.ktx.logEvent
@@ -40,6 +43,8 @@ fun HomeScreen(
     onProfileClick: () -> Unit = {},
     onLogout: () -> Unit,
     analytics: FirebaseAnalytics = Firebase.analytics,
+    logoRes: Int = getTimeBasedImage()
+
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val products by viewModel.products.collectAsStateWithLifecycle()
@@ -70,11 +75,12 @@ fun HomeScreen(
                 },
                 navigationIcon = {
                     Image(
-                        painter = painterResource(id = R.drawable.logo),
+                        painter = painterResource(id = logoRes),
                         contentDescription = "Logo",
                         modifier = Modifier
                             .padding(start = 16.dp)
-                            .size(48.dp)
+                            .size(32.dp),
+                        colorFilter = ColorFilter.tint(coffeebeanPurple) // Tint here
                     )
                 },
                 actions = {
@@ -186,7 +192,7 @@ fun HomeScreen(
     if (showDialog) {
         AlertDialog(
             onDismissRequest = { viewModel.dismissLogoutDialog() },
-            title = { Text("Logout") },
+            title = { Text("Logout", fontFamily = Recolleta) },
             text = { Text("Are you sure you want to log out?") },
             confirmButton = {
                 Button(onClick = {
