@@ -6,6 +6,25 @@ Steam & Bean App is a sample Android application for a modern coffee shop, built
 The entire application is built with Jetpack Compose and integrates deeply with Firebase for backend services, demonstrating a modern, reactive approach to Android development.
 
 ---
+##  Screenshots
+
+<p align="center">
+  <img src="assets/screenshots/screen_onboarding_1.jpg" alt="Home Screen" width="13%">
+  <img src="assets/screenshots/screen_onboarding_2.jpg" alt="Menu Screen" width="13%">
+  <img src="assets/screenshots/screen_onboarding_3.jpg" alt="Rewards Screen" width="13%">
+  <img src="assets/screenshots/screen_signup.jpg" alt="Rewards Screen" width="13%">
+  <img src="assets/screenshots/screen_login.jpg" alt="Rewards Screen" width="13%">
+  <img src="assets/screenshots/screen_home.jpg" alt="Rewards Screen" width="13%">
+  <img src="assets/screenshots/screen_menu.jpg" alt="Rewards Screen" width="13%">
+  <img src="assets/screenshots/screen_menu_product.jpg" alt="Rewards Screen" width="13%">
+  <img src="assets/screenshots/screen_product_details.jpg" alt="Rewards Screen" width="13%">
+  <img src="assets/screenshots/screen_cart.jpg" alt="Rewards Screen" width="13%">
+  <img src="assets/screenshots/screen_cart_items.jpg" alt="Rewards Screen" width="13%">
+  <img src="assets/screenshots/screen_rewards.jpg" alt="Rewards Screen" width="13%">
+  <img src="assets/screenshots/screen_account.jpg" alt="Rewards Screen" width="13%">
+ 
+  
+</p>
 
 ## Features
 
