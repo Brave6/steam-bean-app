@@ -78,9 +78,10 @@ object AppModule {
     @Singleton
     fun provideCartRepository(
         firebaseClient: FirebaseClient,
-        auth: FirebaseAuth
+        auth: FirebaseAuth,
+        firestore: FirebaseFirestore  // 🔥 Add this
     ): CartRepository {
-        return CartRepositoryImpl(firebaseClient, auth)
+        return CartRepositoryImpl(firebaseClient, auth, firestore)
     }
 
     // ========== NEW: Favorites Repository ==========

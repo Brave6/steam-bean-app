@@ -1,5 +1,6 @@
 package com.coffeebean.ui.main.components
 
+import android.util.Log
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -100,7 +101,17 @@ fun MainView(appNavController: NavHostController) {
                 ProductDetailScreen(
                     productId = productId,
                     onNavigateBack = { navController.navigateUp() },
-                    onNavigateToCart = { /* ... */ }
+                    onNavigateToCart = {
+                        // 🔥 FIX: Make sure this navigates properly
+                        Log.d("MainView", "🛒 Navigating to cart...")
+                        navController.navigate(Screen.Cart.route) {
+                            popUpTo(Screen.Home.route) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
+                    }
                 )
             }
 
