@@ -1,6 +1,14 @@
 package com.coffeebean.ui.feature.menu.components.product
 
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -250,11 +258,31 @@ private fun ProductDetailContent(
                     .padding(16.dp)
                     .background(Color.White.copy(alpha = 0.9f), CircleShape)
             ) {
-                Icon(
-                    imageVector = if (state.isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
-                    contentDescription = if (state.isFavorite) "Remove from favorites" else "Add to favorites",
-                    tint = if (state.isFavorite) Color.Red else Color.Gray
-                )
+                // AnimatedContent observes the state and animates changes
+                AnimatedContent(
+                    targetState = state.isFavorite,
+                    // Define the animation
+                    transitionSpec = {
+                        // Pop in: Fade in + scale up
+                        fadeIn(animationSpec = tween(150, delayMillis = 150)) +
+                                scaleIn(
+                                    animationSpec = spring(dampingRatio = 0.6f),
+                                    initialScale = 0.8f
+                                ) togetherWith // 'togetherWith' is the infix function for 'with'
+                                // Pop out: Fade out + scale down
+                                fadeOut(animationSpec = tween(150)) +
+                                scaleOut(animationSpec = tween(150), targetScale = 0.8f)
+                    },
+                    label = "FavoriteIconAnimation" // Label for debugging
+                ) { isFavorited ->
+                    // This is the content that will be animated
+                    // It's re-evaluated every time targetState (isFavorited) changes
+                    Icon(
+                        imageVector = if (isFavorited) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                        contentDescription = if (isFavorited) "Remove from favorites" else "Add to favorites",
+                        tint = if (isFavorited) Color.Red else Color.Gray
+                    )
+                }
             }
         }
 

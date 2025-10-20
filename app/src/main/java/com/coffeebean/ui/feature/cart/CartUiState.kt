@@ -1,5 +1,6 @@
 package com.coffeebean.ui.feature.cart
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.coffeebean.data.repository.CartRepository
@@ -13,12 +14,15 @@ import javax.inject.Inject
 
 sealed class CartUiState {
     data object Loading : CartUiState()
+
     data class Success(
         val items: List<CartItem>,
         val total: Double,
         val itemCount: Int
     ) : CartUiState()
-    data class Empty : CartUiState()
+
+    data object Empty : CartUiState()  // Changed from data class
+
     data class Error(val message: String) : CartUiState()
 }
 
@@ -37,7 +41,7 @@ class CartViewModel @Inject constructor(
     fun loadCart() {
         viewModelScope.launch {
             _uiState.value = CartUiState.Loading
-            
+
             try {
                 // Collect cart items as Flow
                 cartRepository.getCartItems()
@@ -52,7 +56,7 @@ class CartViewModel @Inject constructor(
                         } else {
                             val total = items.sumOf { it.totalPrice }
                             val itemCount = items.sumOf { it.quantity }
-                            
+
                             _uiState.value = CartUiState.Success(
                                 items = items,
                                 total = total,
@@ -97,10 +101,12 @@ class CartViewModel @Inject constructor(
     fun clearCart() {
         viewModelScope.launch {
             try {
+                Log.d("CartViewModel", "🗑️ Clearing entire cart...")
                 cartRepository.clearCart()
-                // Cart will auto-refresh via Flow
+                Log.d("CartViewModel", "✅ Cart cleared!")
+                // 🔥 Cart will auto-refresh via Flow
             } catch (e: Exception) {
-                // Handle error
+                Log.e("CartViewModel", "❌ Error clearing cart: ${e.message}", e)
             }
         }
     }
