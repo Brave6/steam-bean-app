@@ -43,7 +43,7 @@ To get the project up and running, follow these steps:
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/brave6/coffee_bean.git
+    git clone git@github.com:Brave6/steam-bean-app.git
     ```
 
 2.  **Open in Android Studio:**
