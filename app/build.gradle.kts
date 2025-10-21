@@ -99,6 +99,12 @@ dependencies {
     implementation(libs.firebase.analytics) // Firebase Analytics
     implementation(libs.play.services.auth)
 
+    // --- Maps ---
+    implementation(libs.maps.compose)
+    implementation(libs.maps.ktx)
+    implementation(libs.places)
+    implementation(libs.play.services.location)
+
     // --- Image Loading ---
     implementation(libs.coil.compose)
 

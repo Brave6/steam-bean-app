@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.serialization.Serializable
 import javax.inject.Inject
 
 @HiltViewModel
@@ -181,6 +182,7 @@ class ProductDetailViewModel @Inject constructor(
 /**
  * Cart Item data class for repository
  */
+@Serializable
 data class CartItem(
     val id: String = "",
     val productId: String,

@@ -21,7 +21,7 @@ sealed class Screen(val route: String) {
     data object Search : Screen("search")
     data object Cart : Screen("cart")
     data object Favorites : Screen("favorites")
-
+    data object Checkout : Screen("checkout")
 
 
     // If you ever need arguments
