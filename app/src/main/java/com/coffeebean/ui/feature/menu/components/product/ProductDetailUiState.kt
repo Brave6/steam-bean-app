@@ -41,6 +41,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.coffeebean.ui.theme.Recolleta
 import com.coffeebean.ui.theme.coffeebeanPrice
+import kotlinx.serialization.Serializable
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -78,18 +79,18 @@ data class ProductDetail(
     val nutritionInfo: NutritionInfo? = null,
     val allergens: List<String> = emptyList()
 )
-
+@Serializable
 data class ProductSize(
     val id: String,
     val name: String, // "Small", "Medium", "Large"
     val priceModifier: Double = 0.0 // Additional cost
 )
-
+@Serializable
 data class ProductTemperature(
     val id: String,
     val name: String // "Hot", "Iced", "Blended"
 )
-
+@Serializable
 data class NutritionInfo(
     val calories: Int,
     val caffeine: Int? = null,

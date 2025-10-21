@@ -21,6 +21,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.coffeebean.ui.feature.account.AccountsScreen
 import com.coffeebean.ui.feature.cart.CartScreen
+import com.coffeebean.ui.feature.checkout.CheckoutScreen
 import com.coffeebean.ui.feature.home.HomeScreen
 import com.coffeebean.ui.feature.menu.MenuScreen
 import com.coffeebean.ui.feature.menu.components.product.ProductDetailScreen
@@ -42,22 +43,22 @@ fun MainView(appNavController: NavHostController) {
 
     // List of routes where bottom bar should be hidden
     val hideBottomBarRoutes = listOf(
-        "product_detail/{productId}",
-        "search",
-        "cart"
+        Screen.ProductDetail.route,
+        Screen.Search.route,
+        Screen.Cart.route,
+        Screen.Checkout.route
     )
 
-    val shouldShowBottomBar = currentRoute !in hideBottomBarRoutes &&
-            !currentRoute.orEmpty().startsWith("product_detail/")
+    val shouldShowBottomBar = currentRoute !in hideBottomBarRoutes
 
     Scaffold(
         bottomBar = { BottomBar(navController) }
     ) { paddingValues ->
-        NavHost(
-            navController = navController,
-            startDestination = Screen.Home.route,
-            modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding())
-        ) {
+        Box(modifier = Modifier.padding(paddingValues)) {
+            NavHost(
+                navController = navController,
+                startDestination = Screen.Home.route,
+            ) {
                 composable(Screen.Home.route) {
                     HomeScreen(
                         navController = navController,
@@ -68,7 +69,7 @@ fun MainView(appNavController: NavHostController) {
                     MenuScreen(
                         navController = navController,
                         onItemClick = { menuItem ->
-                            // 🔥 Navigate to product detail!
+                            //  Navigate to product detail!
                             navController.navigate(
                                 Screen.ProductDetail.createRoute(menuItem.id)
                             )
@@ -87,66 +88,66 @@ fun MainView(appNavController: NavHostController) {
                     )
                 }
 
-            // 🔥 Add this composable block
-            composable(
-                route = Screen.ProductDetail.route,
-                arguments = listOf(
-                    navArgument("productId") {
-                        type = NavType.StringType
-                    }
-                )
-            ) { backStackEntry ->
-                val productId = backStackEntry.arguments?.getString("productId") ?: ""
-
-                ProductDetailScreen(
-                    productId = productId,
-                    onNavigateBack = { navController.navigateUp() },
-                    onNavigateToCart = {
-                        // 🔥 FIX: Make sure this navigates properly
-                        Log.d("MainView", "🛒 Navigating to cart...")
-                        navController.navigate(Screen.Cart.route) {
-                            popUpTo(Screen.Home.route) {
-                                saveState = true
-                            }
-                            launchSingleTop = true
-                            restoreState = true
+                //  Add this composable block
+                composable(
+                    route = Screen.ProductDetail.route,
+                    arguments = listOf(
+                        navArgument("productId") {
+                            type = NavType.StringType
                         }
-                    }
-                )
-            }
+                    )
+                ) { backStackEntry ->
+                    val productId = backStackEntry.arguments?.getString("productId") ?: ""
 
-            // Cart Screen
-            composable(
-                route = Screen.Cart.route,
-                enterTransition = {
-                    slideInHorizontally(
-                        initialOffsetX = { it },
-                        animationSpec = tween(400)
-                    ) + fadeIn(animationSpec = tween(400))
-                },
-                popExitTransition = {
-                    slideOutHorizontally(
-                        targetOffsetX = { it },
-                        animationSpec = tween(400)
-                    ) + fadeOut(animationSpec = tween(400))
+                    ProductDetailScreen(
+                        productId = productId,
+                        onNavigateBack = { navController.navigateUp() },
+                        onNavigateToCart = {
+                            //  FIX: Make sure this navigates properly
+                            Log.d("MainView", "🛒 Navigating to cart...")
+                            navController.navigate(Screen.Cart.route) {
+                                popUpTo(Screen.Home.route) {
+                                    saveState = true
+                                }
+                                launchSingleTop = true
+                                restoreState = true
+                            }
+                        }
+                    )
                 }
-            ) {
-                CartScreen(
-                    navController = navController,
-                    onNavigateBack = {
-                        navController.navigateUp()
-                    },
-                    onNavigateToProductDetail = { productId ->
-                        navController.navigate(
-                            Screen.ProductDetail.createRoute(productId)
-                        )
-                    },
-                    onCheckout = {
-                        // Navigate to checkout when implemented
-                    }
-                )
-            }
 
+                // Cart Screen
+                composable(
+                    route = Screen.Cart.route,
+                    enterTransition = {
+                        slideInHorizontally(
+                            initialOffsetX = { it },
+                            animationSpec = tween(400)
+                        ) + fadeIn(animationSpec = tween(400))
+                    },
+                    popExitTransition = {
+                        slideOutHorizontally(
+                            targetOffsetX = { it },
+                            animationSpec = tween(400)
+                        ) + fadeOut(animationSpec = tween(400))
+                    }
+                ) {
+                    CartScreen(
+                        navController = navController,
+                        onNavigateBack = { navController.navigateUp() },
+                        onNavigateToProductDetail = { productId ->
+                            navController.navigate(Screen.ProductDetail.createRoute(productId))
+                        },
+                        onCheckout = { navController.navigate(Screen.Checkout.route) }
+                    )
+                }
+
+                composable(Screen.Checkout.route) {
+                    CheckoutScreen(
+                        onNavigateBack = { navController.navigateUp() }
+                    )
+                }
+            }
         }
     }
 }
