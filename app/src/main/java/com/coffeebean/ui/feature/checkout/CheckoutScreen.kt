@@ -10,7 +10,6 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -32,11 +31,13 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.coffeebean.domain.model.Branch
+import com.coffeebean.domain.model.DeliveryAddress
 import com.coffeebean.domain.model.FulfillmentType
 import com.coffeebean.domain.model.PaymentMethod
 import com.coffeebean.ui.theme.Recolleta
 import com.coffeebean.ui.theme.coffeebeanPrice
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.MultiplePermissionsState
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.CameraPosition
@@ -45,7 +46,7 @@ import com.google.maps.android.compose.*
 import java.text.NumberFormat
 import java.util.*
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalPermissionsApi::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalPermissionsApi::class, ExperimentalAnimationApi::class)
 @Composable
 fun CheckoutScreen(
     navController: NavHostController,
@@ -55,6 +56,8 @@ fun CheckoutScreen(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val context = LocalContext.current
+    val snackbarHostState = remember { SnackbarHostState() }
+    var showMapDialog by remember { mutableStateOf(false) }
 
     // Location permissions
     val locationPermissions = rememberMultiplePermissionsState(
@@ -66,7 +69,7 @@ fun CheckoutScreen(
 
     // Get user's current location
     LaunchedEffect(locationPermissions.allPermissionsGranted) {
-        if (locationPermissions.allPermissionsGranted) {
+        if (locationPermissions.allPermissionsGranted && uiState.userLocation == null) {
             val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
             try {
                 fusedLocationClient.lastLocation.addOnSuccessListener { location ->
@@ -75,7 +78,114 @@ fun CheckoutScreen(
                     }
                 }
             } catch (e: SecurityException) {
-                // Handle permission error
+                // Handle permission error (Log it or show a message)
+            }
+        }
+    }
+
+    // Show error snackbar
+    LaunchedEffect(uiState.error) {
+        uiState.error?.let {
+            snackbarHostState.showSnackbar(it)
+            viewModel.clearError()
+        }
+    }
+
+    Scaffold(
+        topBar = {
+            CenterAlignedTopAppBar(
+                title = {
+                    Text(
+                        "Checkout",
+                        fontFamily = Recolleta,
+                        fontWeight = FontWeight.Bold
+                    )
+                },
+                navigationIcon = {
+                    IconButton(onClick = onNavigateBack) {
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back")
+                    }
+                },
+                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                    containerColor = Color.White,
+                    navigationIconContentColor = Color(0xFF532D6D),
+                    titleContentColor = Color(0xFF532D6D)
+                )
+            )
+        },
+        snackbarHost = { SnackbarHost(snackbarHostState) },
+        bottomBar = {
+            CheckoutBottomBar(
+                state = uiState,
+                onPlaceOrder = {
+                    viewModel.placeOrder(onSuccess = onOrderSuccess)
+                }
+            )
+        }
+    ) { padding ->
+        if (uiState.isLoading) {
+            LoadingContent()
+        } else {
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(padding),
+                contentPadding = PaddingValues(16.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                // Fulfillment Type Selector
+                item {
+                    FulfillmentTypeSelector(
+                        selectedType = uiState.fulfillmentType,
+                        onTypeSelected = viewModel::setFulfillmentType
+                    )
+                }
+
+                // Delivery Address or Branch Selection
+                item {
+                    AnimatedContent(
+                        targetState = uiState.fulfillmentType,
+                        label = "fulfillment_animation"
+                    ) { type ->
+                        when (type) {
+                            FulfillmentType.DELIVERY -> {
+                                DeliveryAddressSection(
+                                    address = uiState.deliveryAddress,
+                                    userLocation = uiState.userLocation,
+                                    locationPermissions = locationPermissions,
+                                    onSelectAddressClick = { showMapDialog = true }
+                                )
+                            }
+                            FulfillmentType.PICKUP -> {
+                                BranchSelectionSection(
+                                    branches = uiState.branches,
+                                    selectedBranch = uiState.selectedBranch,
+                                    nearestBranch = uiState.nearestBranch,
+                                    userLocation = uiState.userLocation,
+                                    onBranchSelected = viewModel::selectBranch
+                                )
+                            }
+                        }
+                    }
+                }
+
+                // Payment Method
+                item {
+                    PaymentMethodSection(
+                        selectedMethod = uiState.paymentMethod,
+                        onMethodSelected = viewModel::setPaymentMethod
+                    )
+                }
+
+                // Order Summary
+                item {
+                    OrderSummarySection(state = uiState)
+                }
+
+                // Bottom spacing
+                item {
+                    Spacer(modifier = Modifier.height(100.dp))
+                }
             }
         }
     }
@@ -83,13 +193,218 @@ fun CheckoutScreen(
     // Map Dialog for address selection
     if (showMapDialog) {
         DeliveryMapDialog(
-            userLocation = userLocation ?: LatLng(14.5995, 120.9842), // Default Manila
+            userLocation = uiState.userLocation ?: LatLng(14.5995, 120.9842), // Default Manila
             onDismiss = { showMapDialog = false },
             onConfirm = { deliveryAddress ->
-                onAddressSelected(deliveryAddress)
+                viewModel.updateDeliveryAddress(deliveryAddress)
                 showMapDialog = false
             }
         )
+    }
+}
+
+//---
+//
+//## Helper Composable Functions
+//
+//### Fulfillment Type Selector
+//
+//The following composables handle selecting between delivery and pick-up.
+
+@Composable
+private fun FulfillmentTypeSelector(
+    selectedType: FulfillmentType,
+    onTypeSelected: (FulfillmentType) -> Unit
+) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(containerColor = Color.White),
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp)
+        ) {
+            Text(
+                text = "How would you like to receive your order?",
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
+                color = Color(0xFF532D6D)
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                FulfillmentTypeCard(
+                    type = FulfillmentType.DELIVERY,
+                    icon = Icons.Default.LocalShipping,
+                    label = "Delivery",
+                    isSelected = selectedType == FulfillmentType.DELIVERY,
+                    onClick = { onTypeSelected(FulfillmentType.DELIVERY) },
+                    modifier = Modifier.weight(1f)
+                )
+
+                FulfillmentTypeCard(
+                    type = FulfillmentType.PICKUP,
+                    icon = Icons.Default.Store,
+                    label = "Pick Up",
+                    isSelected = selectedType == FulfillmentType.PICKUP,
+                    onClick = { onTypeSelected(FulfillmentType.PICKUP) },
+                    modifier = Modifier.weight(1f)
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun FulfillmentTypeCard(
+    type: FulfillmentType,
+    icon: ImageVector,
+    label: String,
+    isSelected: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Card(
+        onClick = onClick,
+        modifier = modifier.height(100.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = if (isSelected) Color(0xFF532D6D).copy(alpha = 0.1f) else Color.White
+        ),
+        border = if (isSelected) {
+            BorderStroke(2.dp, Color(0xFF532D6D))
+        } else {
+            BorderStroke(1.dp, Color.LightGray)
+        }
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Icon(
+                imageVector = icon,
+                contentDescription = label,
+                modifier = Modifier.size(32.dp),
+                tint = if (isSelected) Color(0xFF532D6D) else Color.Gray
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = label,
+                style = MaterialTheme.typography.bodyMedium,
+                fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
+                color = if (isSelected) Color(0xFF532D6D) else Color.Gray
+            )
+        }
+    }
+}
+
+//---
+//
+//## Delivery and Branch Selection
+//
+//These handle the logic for choosing a branch or setting a delivery address.
+
+@OptIn(ExperimentalPermissionsApi::class)
+@Composable
+private fun DeliveryAddressSection(
+    address: DeliveryAddress?,
+    userLocation: LatLng?,
+    locationPermissions: MultiplePermissionsState,
+    onSelectAddressClick: () -> Unit // Change to a simple click event
+) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(containerColor = Color.White),
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp)
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "Delivery Address",
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold,
+                    color = Color(0xFF532D6D)
+                )
+
+                if (!locationPermissions.allPermissionsGranted) {
+                    TextButton(
+                        onClick = { locationPermissions.launchMultiplePermissionRequest() }
+                    ) {
+                        Icon(Icons.Default.LocationOn, null, modifier = Modifier.size(16.dp))
+                        Spacer(modifier = Modifier.width(4.dp))
+                        Text("Enable Location")
+                    }
+                }
+            }
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            if (address != null) {
+                // Show selected address
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(Color(0xFFF5F5F5), RoundedCornerShape(12.dp))
+                        .clickable(onClick = onSelectAddressClick)
+                        .padding(12.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        Icons.Default.LocationOn,
+                        contentDescription = null,
+                        tint = Color(0xFF532D6D)
+                    )
+                    Spacer(modifier = Modifier.width(12.dp))
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            text = address.fullAddress,
+                            style = MaterialTheme.typography.bodyMedium,
+                            fontWeight = FontWeight.Bold,
+                            color = Color(0xFF532D6D),
+                            maxLines = 2
+                        )
+                        if (address.landmark.isNotBlank()) {
+                            Spacer(modifier = Modifier.height(4.dp))
+                            Text(
+                                text = "Landmark: ${address.landmark}",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = Color.Gray
+                            )
+                        }
+                    }
+                    Icon(
+                        Icons.Default.Edit,
+                        contentDescription = "Edit Address",
+                        tint = Color.Gray,
+                        modifier = Modifier.size(20.dp)
+                    )
+                }
+            } else {
+                // Button to select address
+                OutlinedButton(
+                    onClick = onSelectAddressClick,
+                    modifier = Modifier.fillMaxWidth(),
+                    border = BorderStroke(1.dp, Color(0xFF532D6D)),
+                    colors = ButtonDefaults.outlinedButtonColors(contentColor = Color(0xFF532D6D))
+                ) {
+                    Icon(Icons.Default.AddLocation, contentDescription = null)
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text("Select Delivery Location")
+                }
+            }
+        }
     }
 }
 
@@ -283,6 +598,12 @@ private fun BranchCard(
     }
 }
 
+//---
+//
+//## Payment Method Section
+//
+//This covers selecting the payment option.
+
 @Composable
 private fun PaymentMethodSection(
     selectedMethod: PaymentMethod,
@@ -367,6 +688,12 @@ private fun PaymentMethodItem(
         }
     }
 }
+
+//---
+//
+//## Order Summary and Bottom Bar
+//
+//These display the order details and the final action button.
 
 @Composable
 private fun OrderSummarySection(state: CheckoutUiState) {
@@ -509,11 +836,15 @@ private fun CheckoutBottomBar(
     }
 }
 
+// Dialogs and Utility Functions
+//
+//This section includes the map dialog and general utility functions.
+
 @Composable
 private fun DeliveryMapDialog(
     userLocation: LatLng,
     onDismiss: () -> Unit,
-    onConfirm: (com.coffeebean.domain.model.DeliveryAddress) -> Unit
+    onConfirm: (DeliveryAddress) -> Unit
 ) {
     var selectedLocation by remember { mutableStateOf(userLocation) }
     var addressText by remember { mutableStateOf("") }
@@ -591,7 +922,7 @@ private fun DeliveryMapDialog(
                 onClick = {
                     if (addressText.isNotBlank()) {
                         onConfirm(
-                            com.coffeebean.domain.model.DeliveryAddress(
+                            DeliveryAddress(
                                 fullAddress = addressText,
                                 landmark = landmarkText,
                                 latitude = selectedLocation.latitude,
@@ -638,295 +969,3 @@ private fun formatPrice(price: Double): String {
     val format = NumberFormat.getCurrencyInstance(Locale("en", "PH"))
     return format.format(price)
 }
-
-// Show error snackbar
-val snackbarHostState = remember { SnackbarHostState() }
-LaunchedEffect(uiState.error) {
-    uiState.error?.let {
-        snackbarHostState.showSnackbar(it)
-        viewModel.clearError()
-    }
-}
-
-Scaffold(
-topBar = {
-    CenterAlignedTopAppBar(
-        title = {
-            Text(
-                "Checkout",
-                fontFamily = Recolleta,
-                fontWeight = FontWeight.Bold
-            )
-        },
-        navigationIcon = {
-            IconButton(onClick = onNavigateBack) {
-                Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back")
-            }
-        },
-        colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-            containerColor = Color.White,
-            navigationIconContentColor = Color(0xFF532D6D),
-            titleContentColor = Color(0xFF532D6D)
-        )
-    )
-},
-snackbarHost = { SnackbarHost(snackbarHostState) },
-bottomBar = {
-    CheckoutBottomBar(
-        state = uiState,
-        onPlaceOrder = {
-            viewModel.placeOrder(onSuccess = onOrderSuccess)
-        }
-    )
-}
-) { padding ->
-    if (uiState.isLoading) {
-        LoadingContent()
-    } else {
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding),
-            contentPadding = PaddingValues(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            // Fulfillment Type Selector
-            item {
-                FulfillmentTypeSelector(
-                    selectedType = uiState.fulfillmentType,
-                    onTypeSelected = viewModel::setFulfillmentType
-                )
-            }
-
-            // Delivery Address or Branch Selection
-            item {
-                AnimatedContent(
-                    targetState = uiState.fulfillmentType,
-                    label = "fulfillment_animation"
-                ) { type ->
-                    when (type) {
-                        FulfillmentType.DELIVERY -> {
-                            DeliveryAddressSection(
-                                address = uiState.deliveryAddress,
-                                userLocation = uiState.userLocation,
-                                locationPermissions = locationPermissions,
-                                onAddressSelected = viewModel::updateDeliveryAddress
-                            )
-                        }
-                        FulfillmentType.PICKUP -> {
-                            BranchSelectionSection(
-                                branches = uiState.branches,
-                                selectedBranch = uiState.selectedBranch,
-                                nearestBranch = uiState.nearestBranch,
-                                userLocation = uiState.userLocation,
-                                onBranchSelected = viewModel::selectBranch
-                            )
-                        }
-                    }
-                }
-            }
-
-            // Payment Method
-            item {
-                PaymentMethodSection(
-                    selectedMethod = uiState.paymentMethod,
-                    onMethodSelected = viewModel::setPaymentMethod
-                )
-            }
-
-            // Order Summary
-            item {
-                OrderSummarySection(state = uiState)
-            }
-
-            // Bottom spacing
-            item {
-                Spacer(modifier = Modifier.height(100.dp))
-            }
-        }
-    }
-}
-}
-
-@Composable
-private fun FulfillmentTypeSelector(
-    selectedType: FulfillmentType,
-    onTypeSelected: (FulfillmentType) -> Unit
-) {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
-    ) {
-        Column(
-            modifier = Modifier.padding(16.dp)
-        ) {
-            Text(
-                text = "How would you like to receive your order?",
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold,
-                color = Color(0xFF532D6D)
-            )
-
-            Spacer(modifier = Modifier.height(12.dp))
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                FulfillmentTypeCard(
-                    type = FulfillmentType.DELIVERY,
-                    icon = Icons.Default.LocalShipping,
-                    label = "Delivery",
-                    isSelected = selectedType == FulfillmentType.DELIVERY,
-                    onClick = { onTypeSelected(FulfillmentType.DELIVERY) },
-                    modifier = Modifier.weight(1f)
-                )
-
-                FulfillmentTypeCard(
-                    type = FulfillmentType.PICKUP,
-                    icon = Icons.Default.Store,
-                    label = "Pick Up",
-                    isSelected = selectedType == FulfillmentType.PICKUP,
-                    onClick = { onTypeSelected(FulfillmentType.PICKUP) },
-                    modifier = Modifier.weight(1f)
-                )
-            }
-        }
-    }
-}
-
-@Composable
-private fun FulfillmentTypeCard(
-    type: FulfillmentType,
-    icon: ImageVector,
-    label: String,
-    isSelected: Boolean,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    Card(
-        onClick = onClick,
-        modifier = modifier.height(100.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = if (isSelected) Color(0xFF532D6D).copy(alpha = 0.1f) else Color.White
-        ),
-        border = if (isSelected) {
-            BorderStroke(2.dp, Color(0xFF532D6D))
-        } else {
-            BorderStroke(1.dp, Color.LightGray)
-        }
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            Icon(
-                imageVector = icon,
-                contentDescription = label,
-                modifier = Modifier.size(32.dp),
-                tint = if (isSelected) Color(0xFF532D6D) else Color.Gray
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = label,
-                style = MaterialTheme.typography.bodyMedium,
-                fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
-                color = if (isSelected) Color(0xFF532D6D) else Color.Gray
-            )
-        }
-    }
-}
-
-@OptIn(ExperimentalPermissionsApi::class)
-@Composable
-private fun DeliveryAddressSection(
-    address: com.coffeebean.domain.model.DeliveryAddress?,
-    userLocation: LatLng?,
-    locationPermissions: com.google.accompanist.permissions.MultiplePermissionsState,
-    onAddressSelected: (com.coffeebean.domain.model.DeliveryAddress) -> Unit
-) {
-    var showMapDialog by remember { mutableStateOf(false) }
-
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
-    ) {
-        Column(
-            modifier = Modifier.padding(16.dp)
-        ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = "Delivery Address",
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold,
-                    color = Color(0xFF532D6D)
-                )
-
-                if (!locationPermissions.allPermissionsGranted) {
-                    TextButton(
-                        onClick = { locationPermissions.launchMultiplePermissionRequest() }
-                    ) {
-                        Icon(Icons.Default.LocationOn, null, modifier = Modifier.size(16.dp))
-                        Spacer(modifier = Modifier.width(4.dp))
-                        Text("Enable Location")
-                    }
-                }
-            }
-
-            Spacer(modifier = Modifier.height(12.dp))
-
-            if (address != null) {
-                // Show selected address
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(Color(0xFFF5F5F5), RoundedCornerShape(12.dp))
-                        .clickable { showMapDialog = true }
-                        .padding(12.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Icon(
-                        Icons.Default.LocationOn,
-                        contentDescription = null,
-                        tint = Color(0xFF532D6D)
-                    )
-                    Spacer(modifier = Modifier.width(12.dp))
-                    Column(modifier = Modifier.weight(1f)) {
-                        Text(
-                            text = address.fullAddress,
-                            style = MaterialTheme.typography.bodyMedium,
-                            fontWeight = FontWeight.SemiBold
-                        )
-                        if (address.landmark.isNotEmpty()) {
-                            Text(
-                                text = "Near: ${address.landmark}",
-                                style = MaterialTheme.typography.bodySmall,
-                                color = Color.Gray
-                            )
-                        }
-                    }
-                    Icon(Icons.Default.Edit, contentDescription = "Edit", tint = Color.Gray)
-                }
-            } else {
-                // Show map picker button
-                OutlinedButton(
-                    onClick = { showMapDialog = true },
-                    modifier = Modifier.fillMaxWidth(),
-                    enabled = locationPermissions.allPermissionsGranted
-                ) {
-                    Icon(Icons.Default.Map, contentDescription = null)
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text("Pin your location on map")
-                }
-            }
-        }
-    }
