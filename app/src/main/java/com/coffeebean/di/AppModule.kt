@@ -4,9 +4,11 @@ import com.coffeebean.data.local.repository.AuthRepository
 import com.coffeebean.data.local.repository.ProductRepository
 import com.coffeebean.data.remote.FirebaseClient
 import com.coffeebean.data.FirebaseAuthRepository
+import com.coffeebean.data.remote.BranchRepositoryImpl
 import com.coffeebean.data.remote.CartRepositoryImpl
 import com.coffeebean.data.remote.FavoritesRepositoryImpl
 import com.coffeebean.data.remote.MenuRepositoryImpl
+import com.coffeebean.data.repository.BranchRepository
 import com.coffeebean.data.repository.CartRepository
 import com.coffeebean.data.repository.FavoritesRepository
 import com.coffeebean.data.repository.FirebaseProductRepository
@@ -93,5 +95,14 @@ object AppModule {
     ): FavoritesRepository {
         return FavoritesRepositoryImpl(firebaseClient, auth)
     }
+
+    @Provides
+    @Singleton
+    fun provideBranchRepository(
+        firebaseClient: FirebaseClient
+    ): BranchRepository {
+        return BranchRepositoryImpl(firebaseClient)
+    }
+
 }
 

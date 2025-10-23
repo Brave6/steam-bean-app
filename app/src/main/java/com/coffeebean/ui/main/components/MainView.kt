@@ -25,6 +25,7 @@ import com.coffeebean.ui.feature.checkout.CheckoutScreen
 import com.coffeebean.ui.feature.home.HomeScreen
 import com.coffeebean.ui.feature.menu.MenuScreen
 import com.coffeebean.ui.feature.menu.components.product.ProductDetailScreen
+import com.coffeebean.ui.feature.order.OrderSuccessScreen
 import com.coffeebean.ui.feature.rewards.RewardsScreen
 import com.coffeebean.ui.navigation.Screen
 
@@ -138,13 +139,50 @@ fun MainView(appNavController: NavHostController) {
                         onNavigateToProductDetail = { productId ->
                             navController.navigate(Screen.ProductDetail.createRoute(productId))
                         },
-                        onCheckout = { navController.navigate(Screen.Checkout.route) }
+                        onCheckout = {
+                            // Navigate to checkout
+                            navController.navigate(Screen.Checkout.route)
+                        }
                     )
                 }
 
                 composable(Screen.Checkout.route) {
                     CheckoutScreen(
-                        onNavigateBack = { navController.navigateUp() }
+                        navController = navController,
+                        onNavigateBack = {
+                            navController.navigateUp()
+                        },
+                        onOrderSuccess = { orderId ->
+                            navController.navigate(Screen.OrderSuccess.createRoute(orderId)) {
+                                popUpTo(Screen.Home.route) {
+                                    inclusive = false
+                                }
+                            }
+                        }
+                    )
+                }
+
+                composable(
+                    route = Screen.OrderSuccess.route,
+                    arguments = listOf(
+                        navArgument("orderId") {
+                            type = NavType.StringType
+                        }
+                    )
+                ) { backStackEntry ->
+                    val orderId = backStackEntry.arguments?.getString("orderId") ?: ""
+                    OrderSuccessScreen(
+                        orderId = orderId,
+                        onContinueShopping = {
+                            navController.navigate(Screen.Home.route) {
+                                popUpTo(Screen.Home.route) {
+                                    inclusive = true
+                                }
+                            }
+                        },
+                        onViewOrders = {
+                            // Navigate to order history when implemented
+                        }
                     )
                 }
             }
