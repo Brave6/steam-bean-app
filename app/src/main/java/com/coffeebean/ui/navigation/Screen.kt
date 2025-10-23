@@ -24,6 +24,10 @@ sealed class Screen(val route: String) {
     data object Checkout : Screen("checkout")
 
 
+    data object OrderSuccess : Screen("order_success/{orderId}") {
+        fun createRoute(orderId: String) = "order_success/$orderId"
+    }
+
     // If you ever need arguments
     data class Details(val productId: String) : Screen("details/{productId}") {
         companion object {

@@ -1,6 +1,7 @@
 package com.coffeebean.data.remote
 
 import android.util.Log
+import com.coffeebean.domain.model.Branch
 import com.coffeebean.domain.model.Product
 import com.coffeebean.domain.model.Promo
 import com.google.firebase.firestore.FirebaseFirestore
@@ -353,6 +354,28 @@ class FirebaseClient @Inject constructor(
             throw FirebaseException("Failed to clear cart", e)
         }
     }
+
+    suspend fun getBranches(): List<Branch> {
+        return try {
+            val snapshot = firestore.collection("branches")
+                .whereEqualTo("isOpen", true)
+                .get()
+                .await()
+
+            snapshot.documents.mapNotNull { doc ->
+                try {
+                    doc.toObject(Branch::class.java)?.copy(id = doc.id)
+                } catch (e: Exception) {
+                    Log.e(TAG, "Error parsing branch ${doc.id}: ${e.message}")
+                    null
+                }
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error fetching branches: ${e.message}", e)
+            throw FirebaseException("Failed to fetch branches", e)
+        }
+    }
+
 
     // ========== STORAGE ==========
 

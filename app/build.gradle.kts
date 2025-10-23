@@ -74,6 +74,9 @@ dependencies {
     implementation(libs.accompanist.pager)
     implementation(libs.accompanist.pager.indicators)
 
+    // Accompanist Permissions
+    implementation(libs.accompanist.permissions)
+
     //Animation
     implementation(libs.accompanist.navigation.animation)
 
