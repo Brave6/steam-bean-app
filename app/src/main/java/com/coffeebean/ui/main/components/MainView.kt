@@ -55,7 +55,7 @@ fun MainView(appNavController: NavHostController) {
     Scaffold(
         bottomBar = { BottomBar(navController) }
     ) { paddingValues ->
-        Box(modifier = Modifier.padding(paddingValues)) {
+        Box(modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding())) {
             NavHost(
                 navController = navController,
                 startDestination = Screen.Home.route,

@@ -54,16 +54,29 @@ class CheckoutViewModel @Inject constructor(
     private fun loadCheckoutData() {
         viewModelScope.launch {
             try {
+                Log.d("CheckoutVM", "🔄 Loading checkout data...")
                 _uiState.update { it.copy(isLoading = true) }
+
+                // Load branches FIRST
+                val branches = branchRepository.getBranches()
+                Log.d("CheckoutVM", "✅ Loaded ${branches.size} branches")
+
+                _uiState.update {
+                    it.copy(
+                        branches = branches,
+                        isLoading = false
+                    )
+                }
 
                 // Load cart items
                 cartRepository.getCartItems().collect { items ->
                     val subtotal = items.sumOf { it.totalPrice }
-                    val deliveryFee = calculateDeliveryFee(subtotal)
+                    val deliveryFee = calculateDeliveryFee(subtotal, _uiState.value.fulfillmentType)
+
+                    Log.d("CheckoutVM", "🛒 Cart: ${items.size} items, subtotal: $subtotal")
 
                     _uiState.update {
                         it.copy(
-                            isLoading = false,
                             cartItems = items,
                             subtotal = subtotal,
                             deliveryFee = deliveryFee,
@@ -72,19 +85,23 @@ class CheckoutViewModel @Inject constructor(
                     }
                 }
 
-                // Load branches
-                val branches = branchRepository.getBranches()
-                _uiState.update { it.copy(branches = branches) }
-
             } catch (e: Exception) {
-                Log.e("CheckoutVM", "Error loading checkout data: ${e.message}", e)
+                Log.e("CheckoutVM", "❌ Error loading checkout data: ${e.message}", e)
                 _uiState.update {
                     it.copy(
                         isLoading = false,
-                        error = "Failed to load checkout data"
+                        error = "Failed to load checkout data: ${e.message}"
                     )
                 }
             }
+        }
+    }
+
+    private fun calculateDeliveryFee(subtotal: Double, type: FulfillmentType): Double {
+        return if (type == FulfillmentType.DELIVERY) {
+            if (subtotal >= FREE_DELIVERY_THRESHOLD) 0.0 else DELIVERY_FEE
+        } else {
+            0.0
         }
     }
 
