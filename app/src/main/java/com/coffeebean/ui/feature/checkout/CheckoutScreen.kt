@@ -67,20 +67,45 @@ fun CheckoutScreen(
         )
     )
 
-    // Get user's current location
-    LaunchedEffect(locationPermissions.allPermissionsGranted) {
-        if (locationPermissions.allPermissionsGranted && uiState.userLocation == null) {
-            val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
-            try {
-                fusedLocationClient.lastLocation.addOnSuccessListener { location ->
-                    location?.let {
-                        viewModel.updateUserLocation(LatLng(it.latitude, it.longitude))
-                    }
+    val fusedLocationClient = remember { LocationServices.getFusedLocationProviderClient(context) }
+
+    // Location request settings (Define how often you want updates)
+    val locationRequest = remember {
+        com.google.android.gms.location.LocationRequest.create().apply {
+            interval = 10000 // 10 seconds
+            fastestInterval = 5000 // 5 seconds
+            priority = com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY
+        }
+    }
+
+    // Location callback to handle new locations
+    val locationCallback = remember {
+        object : com.google.android.gms.location.LocationCallback() {
+            override fun onLocationResult(locationResult: com.google.android.gms.location.LocationResult) {
+                locationResult.lastLocation?.let { location ->
+                    viewModel.updateUserLocation(LatLng(location.latitude, location.longitude))
                 }
-            } catch (e: SecurityException)
-            {
-                // Handle permission error (Log it or show a message)
             }
+        }
+    }
+
+    // Request and remove location updates based on lifecycle and permissions
+    DisposableEffect(locationPermissions.allPermissionsGranted) {
+        if (locationPermissions.allPermissionsGranted) {
+            try {
+                fusedLocationClient.requestLocationUpdates(
+                    locationRequest,
+                    locationCallback,
+                    context.mainLooper // Use the main looper for callbacks
+                )
+            } catch (e: SecurityException) {
+                // Handle the exception if permissions are revoked after granting
+            }
+        }
+
+        // Cleanup: Stop listening for location updates when the Composable is disposed
+        onDispose {
+            fusedLocationClient.removeLocationUpdates(locationCallback)
         }
     }
 
