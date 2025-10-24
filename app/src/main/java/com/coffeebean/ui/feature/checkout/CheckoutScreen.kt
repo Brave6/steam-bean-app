@@ -77,7 +77,8 @@ fun CheckoutScreen(
                         viewModel.updateUserLocation(LatLng(it.latitude, it.longitude))
                     }
                 }
-            } catch (e: SecurityException) {
+            } catch (e: SecurityException)
+            {
                 // Handle permission error (Log it or show a message)
             }
         }
@@ -153,7 +154,7 @@ fun CheckoutScreen(
                                     address = uiState.deliveryAddress,
                                     userLocation = uiState.userLocation,
                                     locationPermissions = locationPermissions,
-                                    onSelectAddressClick = { showMapDialog = true }
+                                    onAddressSelected = viewModel::updateDeliveryAddress
                                 )
                             }
                             FulfillmentType.PICKUP -> {
@@ -190,17 +191,17 @@ fun CheckoutScreen(
         }
     }
 
-    // Map Dialog for address selection
-    if (showMapDialog) {
-        DeliveryMapDialog(
-            userLocation = uiState.userLocation ?: LatLng(14.5995, 120.9842), // Default Manila
-            onDismiss = { showMapDialog = false },
-            onConfirm = { deliveryAddress ->
-                viewModel.updateDeliveryAddress(deliveryAddress)
-                showMapDialog = false
-            }
-        )
-    }
+//    // Map Dialog for address selection
+//    if (showMapDialog) {
+//        DeliveryMapDialog(
+//            userLocation = uiState.userLocation ?: LatLng(14.5995, 120.9842), // Default Manila
+//            onDismiss = { showMapDialog = false },
+//            onConfirm = { deliveryAddress ->
+//                viewModel.updateDeliveryAddress(deliveryAddress)
+//                showMapDialog = false
+//            }
+//        )
+//    }
 }
 
 //---
@@ -313,11 +314,34 @@ private fun FulfillmentTypeCard(
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 private fun DeliveryAddressSection(
-    address: DeliveryAddress?,
+    address: com.coffeebean.domain.model.DeliveryAddress?,
     userLocation: LatLng?,
-    locationPermissions: MultiplePermissionsState,
-    onSelectAddressClick: () -> Unit // Change to a simple click event
+    locationPermissions: com.google.accompanist.permissions.MultiplePermissionsState,
+    onAddressSelected: (com.coffeebean.domain.model.DeliveryAddress) -> Unit
 ) {
+    var showMapDialog by remember { mutableStateOf(false) }
+    val context = LocalContext.current
+
+    // Fetch current location when dialog is about to open
+    var currentLocation by remember { mutableStateOf(userLocation) }
+
+    LaunchedEffect(showMapDialog, locationPermissions.allPermissionsGranted) {
+        if (showMapDialog && locationPermissions.allPermissionsGranted) {
+            // Get fresh location when opening map
+            val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
+            try {
+                fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+                    location?.let {
+                        currentLocation = LatLng(it.latitude, it.longitude)
+                    }
+                }
+            } catch (e: SecurityException) {
+                // Use existing userLocation if permission fails
+                currentLocation = userLocation
+            }
+        }
+    }
+
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(containerColor = Color.White),
@@ -357,7 +381,7 @@ private fun DeliveryAddressSection(
                     modifier = Modifier
                         .fillMaxWidth()
                         .background(Color(0xFFF5F5F5), RoundedCornerShape(12.dp))
-                        .clickable(onClick = onSelectAddressClick)
+                        .clickable { showMapDialog = true }
                         .padding(12.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -371,40 +395,43 @@ private fun DeliveryAddressSection(
                         Text(
                             text = address.fullAddress,
                             style = MaterialTheme.typography.bodyMedium,
-                            fontWeight = FontWeight.Bold,
-                            color = Color(0xFF532D6D),
-                            maxLines = 2
+                            fontWeight = FontWeight.SemiBold
                         )
-                        if (address.landmark.isNotBlank()) {
-                            Spacer(modifier = Modifier.height(4.dp))
+                        if (address.landmark.isNotEmpty()) {
                             Text(
-                                text = "Landmark: ${address.landmark}",
+                                text = "Near: ${address.landmark}",
                                 style = MaterialTheme.typography.bodySmall,
                                 color = Color.Gray
                             )
                         }
                     }
-                    Icon(
-                        Icons.Default.Edit,
-                        contentDescription = "Edit Address",
-                        tint = Color.Gray,
-                        modifier = Modifier.size(20.dp)
-                    )
+                    Icon(Icons.Default.Edit, contentDescription = "Edit", tint = Color.Gray)
                 }
             } else {
-                // Button to select address
+                // Show map picker button
                 OutlinedButton(
-                    onClick = onSelectAddressClick,
+                    onClick = { showMapDialog = true },
                     modifier = Modifier.fillMaxWidth(),
-                    border = BorderStroke(1.dp, Color(0xFF532D6D)),
-                    colors = ButtonDefaults.outlinedButtonColors(contentColor = Color(0xFF532D6D))
+                    enabled = locationPermissions.allPermissionsGranted
                 ) {
-                    Icon(Icons.Default.AddLocation, contentDescription = null)
+                    Icon(Icons.Default.Map, contentDescription = null)
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text("Select Delivery Location")
+                    Text("Pin your location on map")
                 }
             }
         }
+    }
+
+    // Map Dialog - Uses fresh current location
+    if (showMapDialog) {
+        DeliveryMapDialog(
+            userLocation = currentLocation ?: userLocation ?: LatLng(14.5995, 120.9842),
+            onDismiss = { showMapDialog = false },
+            onConfirm = { deliveryAddress ->
+                onAddressSelected(deliveryAddress)
+                showMapDialog = false
+            }
+        )
     }
 }
 

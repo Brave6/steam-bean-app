@@ -357,21 +357,31 @@ class FirebaseClient @Inject constructor(
 
     suspend fun getBranches(): List<Branch> {
         return try {
+            Log.d(TAG, "🏪 Fetching branches from Firestore...")
+
             val snapshot = firestore.collection("branches")
                 .whereEqualTo("isOpen", true)
                 .get()
                 .await()
 
-            snapshot.documents.mapNotNull { doc ->
+            Log.d(TAG, "📦 Firestore returned ${snapshot.size()} branches")
+
+            val branches = snapshot.documents.mapNotNull { doc ->
                 try {
-                    doc.toObject(Branch::class.java)?.copy(id = doc.id)
+                    val branch = doc.toObject(Branch::class.java)?.copy(id = doc.id)
+                    Log.d(TAG, "✅ Parsed branch: ${branch?.name}")
+                    branch
                 } catch (e: Exception) {
-                    Log.e(TAG, "Error parsing branch ${doc.id}: ${e.message}")
+                    Log.e(TAG, "❌ Error parsing branch ${doc.id}: ${e.message}")
                     null
                 }
             }
+
+            Log.d(TAG, "🎉 Successfully loaded ${branches.size} branches")
+            branches
+
         } catch (e: Exception) {
-            Log.e(TAG, "Error fetching branches: ${e.message}", e)
+            Log.e(TAG, "❌ Error fetching branches: ${e.message}", e)
             throw FirebaseException("Failed to fetch branches", e)
         }
     }
