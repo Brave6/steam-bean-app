@@ -8,7 +8,7 @@ The entire application is built with Jetpack Compose and integrates deeply with 
 ---
 ## Screenshots
 <p align="center">
-  <img src="assets/gifs/screens_2.gif" alt="Steam & Bean ScreenShot Demo" width="200"/>
+  <img src="assets/gifs/screens.gif" alt="Steam & Bean ScreenShot Demo" width="250"/>
 </p>
 
 
