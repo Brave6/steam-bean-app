@@ -6,10 +6,11 @@ Steam & Bean App is a sample Android application for a modern coffee shop, built
 The entire application is built with Jetpack Compose and integrates deeply with Firebase for backend services, demonstrating a modern, reactive approach to Android development.
 
 ---
-##  Screenshots
+## Screenshots
 <p align="center">
-  <video src="assets/gifs/screens.mp4" width="400" autoplay loop muted></video>
+  <img src="assets/gifs/screens.gif" alt="Steam & Bean ScreenShot Demo" width="400"/>
 </p>
+
 
 ## Features
 
