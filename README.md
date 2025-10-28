@@ -8,7 +8,7 @@ The entire application is built with Jetpack Compose and integrates deeply with 
 ---
 ##  Screenshots
 <p align="center">
-  <img src="https://i.imgur.com/yourfilename.gif" alt="Checkout Flow Demo" width="400"/>
+  <img src="https://i.imgur.com/pqiWQq4.mp4" width="400"/>
 </p>
 
 
