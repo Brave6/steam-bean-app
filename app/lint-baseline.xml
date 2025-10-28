@@ -1,0 +1,944 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<issues format="6" by="lint 8.11.2" type="baseline" client="gradle" dependencies="true" name="AGP (8.11.2)" variant="all" version="8.11.2">
+
+    <issue
+        id="InvalidPackage"
+        message="Invalid package reference in library; not included in Android: `javax.naming.directory`. Referenced from `io.grpc.internal.JndiResourceResolverFactory.JndiRecordFetcher`.">
+        <location
+            file="C:/Users/ROPALI/.gradle/caches/modules-2/files-2.1/io.grpc/grpc-core/1.62.2/5808049a5e33eba6f248a68d58e75399a68f2784/grpc-core-1.62.2.jar"/>
+    </issue>
+
+    <issue
+        id="InvalidPackage"
+        message="Invalid package reference in library; not included in Android: `javax.naming`. Referenced from `io.grpc.internal.JndiResourceResolverFactory.JndiRecordFetcher`.">
+        <location
+            file="C:/Users/ROPALI/.gradle/caches/modules-2/files-2.1/io.grpc/grpc-core/1.62.2/5808049a5e33eba6f248a68d58e75399a68f2784/grpc-core-1.62.2.jar"/>
+    </issue>
+
+    <issue
+        id="MemberExtensionConflict"
+        message="`contains` is defined both as a member in class `kotlin.collections.List` and an extension in package `kotlin.collections`. The defined behavior for this is to use the member, but since the extension is explicitly imported into this file, there&apos;s a chance that this was not expected. (One common way this happens is for members to be added to a class after code was already written to use an extension)."
+        errorLine1="        return favorites.contains(productId)"
+        errorLine2="               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/coffeebean/data/remote/FavoritesRepositoryImpl.kt"
+            line="34"
+            column="16"/>
+    </issue>
+
+    <issue
+        id="MemberExtensionConflict"
+        message="`contains` is defined both as a member in class `kotlin.collections.List` and an extension in package `kotlin.collections`. The defined behavior for this is to use the member, but since the extension is explicitly imported into this file, there&apos;s a chance that this was not expected. (One common way this happens is for members to be added to a class after code was already written to use an extension)."
+        errorLine1="                if (!currentFavorites.contains(productId)) {"
+        errorLine2="                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/coffeebean/data/remote/FirebaseClient.kt"
+            line="222"
+            column="22"/>
+    </issue>
+
+    <issue
+        id="RedundantLabel"
+        message="Redundant label can be removed"
+        errorLine1="            android:label=&quot;@string/app_name&quot;"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/AndroidManifest.xml"
+            line="23"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="AndroidGradlePluginVersion"
+        message="A newer version of com.android.application than 8.11.2 is available: 8.13.0"
+        errorLine1="agp = &quot;8.11.2&quot;"
+        errorLine2="      ~~~~~~~~">
+        <location
+            file="../gradle/libs.versions.toml"
+            line="2"
+            column="7"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.activity:activity-compose than 1.10.1 is available: 1.11.0"
+        errorLine1="activityCompose = &quot;1.10.1&quot;"
+        errorLine2="                  ~~~~~~~~">
+        <location
+            file="../gradle/libs.versions.toml"
+            line="9"
+            column="19"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.compose:compose-bom than 2024.09.00 is available: 2025.10.01"
+        errorLine1="composeBom = &quot;2024.09.00&quot;"
+        errorLine2="             ~~~~~~~~~~~~">
+        <location
+            file="../gradle/libs.versions.toml"
+            line="10"
+            column="14"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.navigation:navigation-compose than 2.8.0 is available: 2.9.5"
+        errorLine1="navigationCompose = &quot;2.8.0&quot;"
+        errorLine2="                    ~~~~~~~">
+        <location
+            file="../gradle/libs.versions.toml"
+            line="11"
+            column="21"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.hilt:hilt-navigation-compose than 1.2.0 is available: 1.3.0"
+        errorLine1="hiltNavigationCompose = &quot;1.2.0&quot;"
+        errorLine2="                        ~~~~~~~">
+        <location
+            file="../gradle/libs.versions.toml"
+            line="13"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.datastore:datastore-preferences than 1.1.1 is available: 1.1.7"
+        errorLine1="datastore = &quot;1.1.1&quot;"
+        errorLine2="            ~~~~~~~">
+        <location
+            file="../gradle/libs.versions.toml"
+            line="14"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of com.google.firebase:firebase-bom than 33.4.0 is available: 34.4.0"
+        errorLine1="firebaseBom = &quot;33.4.0&quot;"
+        errorLine2="              ~~~~~~~~">
+        <location
+            file="../gradle/libs.versions.toml"
+            line="16"
+            column="15"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.constraintlayout:constraintlayout-compose than 1.0.1 is available: 1.1.1"
+        errorLine1="constraintlayout = &quot;1.0.1&quot;"
+        errorLine2="                   ~~~~~~~">
+        <location
+            file="../gradle/libs.versions.toml"
+            line="18"
+            column="20"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.compose.material:material-icons-extended than 1.6.8 is available: 1.7.8"
+        errorLine1="compose = &quot;1.6.8&quot;"
+        errorLine2="          ~~~~~~~">
+        <location
+            file="../gradle/libs.versions.toml"
+            line="19"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of com.google.android.gms:play-services-auth than 20.7.0 is available: 21.4.0"
+        errorLine1="playServicesAuth = &quot;20.7.0&quot;"
+        errorLine2="                   ~~~~~~~~">
+        <location
+            file="../gradle/libs.versions.toml"
+            line="20"
+            column="20"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of com.google.android.libraries.places:places than 3.4.0 is available: 5.0.0"
+        errorLine1="places = &quot;3.4.0&quot;"
+        errorLine2="         ~~~~~~~">
+        <location
+            file="../gradle/libs.versions.toml"
+            line="24"
+            column="10"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of com.google.gms.google-services than 4.4.2 is available: 4.4.4"
+        errorLine1="google-services = { id = &quot;com.google.gms.google-services&quot;, version = &quot;4.4.2&quot; }"
+        errorLine2="                                                                     ~~~~~~~">
+        <location
+            file="../gradle/libs.versions.toml"
+            line="104"
+            column="70"/>
+    </issue>
+
+    <issue
+        id="NewerVersionAvailable"
+        message="A newer version of org.jetbrains.kotlin.android than 2.0.21 is available: 2.2.21"
+        errorLine1="kotlin = &quot;2.0.21&quot;"
+        errorLine2="         ~~~~~~~~">
+        <location
+            file="../gradle/libs.versions.toml"
+            line="3"
+            column="10"/>
+    </issue>
+
+    <issue
+        id="NewerVersionAvailable"
+        message="A newer version of org.jetbrains.kotlin.plugin.compose than 2.0.21 is available: 2.2.21"
+        errorLine1="kotlin = &quot;2.0.21&quot;"
+        errorLine2="         ~~~~~~~~">
+        <location
+            file="../gradle/libs.versions.toml"
+            line="3"
+            column="10"/>
+    </issue>
+
+    <issue
+        id="NewerVersionAvailable"
+        message="A newer version of org.jetbrains.kotlin.plugin.serialization than 2.0.21 is available: 2.2.21"
+        errorLine1="kotlin = &quot;2.0.21&quot;"
+        errorLine2="         ~~~~~~~~">
+        <location
+            file="../gradle/libs.versions.toml"
+            line="3"
+            column="10"/>
+    </issue>
+
+    <issue
+        id="NewerVersionAvailable"
+        message="A newer version of com.google.dagger.hilt.android than 2.52 is available: 2.57.2"
+        errorLine1="hilt = &quot;2.52&quot;"
+        errorLine2="       ~~~~~~">
+        <location
+            file="../gradle/libs.versions.toml"
+            line="12"
+            column="8"/>
+    </issue>
+
+    <issue
+        id="NewerVersionAvailable"
+        message="A newer version of com.google.dagger:hilt-android than 2.52 is available: 2.57.2"
+        errorLine1="hilt = &quot;2.52&quot;"
+        errorLine2="       ~~~~~~">
+        <location
+            file="../gradle/libs.versions.toml"
+            line="12"
+            column="8"/>
+    </issue>
+
+    <issue
+        id="NewerVersionAvailable"
+        message="A newer version of com.google.dagger:hilt-compiler than 2.52 is available: 2.57.2"
+        errorLine1="hilt = &quot;2.52&quot;"
+        errorLine2="       ~~~~~~">
+        <location
+            file="../gradle/libs.versions.toml"
+            line="12"
+            column="8"/>
+    </issue>
+
+    <issue
+        id="NewerVersionAvailable"
+        message="A newer version of org.jetbrains.kotlinx:kotlinx-coroutines-android than 1.8.1 is available: 1.10.2"
+        errorLine1="coroutines = &quot;1.8.1&quot;"
+        errorLine2="             ~~~~~~~">
+        <location
+            file="../gradle/libs.versions.toml"
+            line="15"
+            column="14"/>
+    </issue>
+
+    <issue
+        id="NewerVersionAvailable"
+        message="A newer version of com.google.accompanist:accompanist-navigation-animation than 0.32.0 is available: 0.36.0"
+        errorLine1="accompanist = &quot;0.32.0&quot;"
+        errorLine2="              ~~~~~~~~">
+        <location
+            file="../gradle/libs.versions.toml"
+            line="17"
+            column="15"/>
+    </issue>
+
+    <issue
+        id="NewerVersionAvailable"
+        message="A newer version of com.google.accompanist:accompanist-pager than 0.32.0 is available: 0.36.0"
+        errorLine1="accompanist = &quot;0.32.0&quot;"
+        errorLine2="              ~~~~~~~~">
+        <location
+            file="../gradle/libs.versions.toml"
+            line="17"
+            column="15"/>
+    </issue>
+
+    <issue
+        id="NewerVersionAvailable"
+        message="A newer version of com.google.accompanist:accompanist-pager-indicators than 0.32.0 is available: 0.36.0"
+        errorLine1="accompanist = &quot;0.32.0&quot;"
+        errorLine2="              ~~~~~~~~">
+        <location
+            file="../gradle/libs.versions.toml"
+            line="17"
+            column="15"/>
+    </issue>
+
+    <issue
+        id="NewerVersionAvailable"
+        message="A newer version of com.google.accompanist:accompanist-permissions than 0.32.0 is available: 0.37.3"
+        errorLine1="accompanist = &quot;0.32.0&quot;"
+        errorLine2="              ~~~~~~~~">
+        <location
+            file="../gradle/libs.versions.toml"
+            line="17"
+            column="15"/>
+    </issue>
+
+    <issue
+        id="NewerVersionAvailable"
+        message="A newer version of org.jetbrains.kotlinx:kotlinx-serialization-json than 1.6.3 is available: 1.9.0"
+        errorLine1="kotlinxSerializationJson = &quot;1.6.3&quot;"
+        errorLine2="                           ~~~~~~~">
+        <location
+            file="../gradle/libs.versions.toml"
+            line="21"
+            column="28"/>
+    </issue>
+
+    <issue
+        id="NewerVersionAvailable"
+        message="A newer version of io.coil-kt:coil-compose than 2.6.0 is available: 2.7.0"
+        errorLine1="coil = &quot;2.6.0&quot;"
+        errorLine2="       ~~~~~~~">
+        <location
+            file="../gradle/libs.versions.toml"
+            line="22"
+            column="8"/>
+    </issue>
+
+    <issue
+        id="NewerVersionAvailable"
+        message="A newer version of com.google.maps.android:maps-compose than 4.3.3 is available: 6.12.1"
+        errorLine1="maps-compose = { group = &quot;com.google.maps.android&quot;, name = &quot;maps-compose&quot;, version = &quot;4.3.3&quot; }"
+        errorLine2="                                                                                     ~~~~~~~">
+        <location
+            file="../gradle/libs.versions.toml"
+            line="94"
+            column="86"/>
+    </issue>
+
+    <issue
+        id="NewerVersionAvailable"
+        message="A newer version of com.google.maps.android:maps-ktx than 5.0.0 is available: 5.2.1"
+        errorLine1="maps-ktx = { group = &quot;com.google.maps.android&quot;, name = &quot;maps-ktx&quot;, version = &quot;5.0.0&quot; }"
+        errorLine2="                                                                             ~~~~~~~">
+        <location
+            file="../gradle/libs.versions.toml"
+            line="95"
+            column="78"/>
+    </issue>
+
+    <issue
+        id="ComposableNaming"
+        message="Composable functions that return Unit should start with an uppercase letter"
+        errorLine1="fun sc() {"
+        errorLine2="    ~~">
+        <location
+            file="src/main/java/com/coffeebean/ui/feature/rewards/RewardsScreen.kt"
+            line="175"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="ModifierParameter"
+        message="Modifier parameter should be the first optional parameter"
+        errorLine1="    modifier: Modifier = Modifier"
+        errorLine2="    ~~~~~~~~">
+        <location
+            file="src/main/java/com/coffeebean/ui/feature/home/components/ProductCard.kt"
+            line="55"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="LogConditional"
+        message="The log call Log.d(...) should be conditional: surround with `if (Log.isLoggable(...))` or `if (BuildConfig.DEBUG) { ... }`"
+        errorLine1="        Log.d(&quot;CartRepository&quot;, &quot;🔄 Setting up real-time cart listener for user: $userId&quot;)"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/coffeebean/data/remote/CartRepositoryImpl.kt"
+            line="104"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="LogConditional"
+        message="The log call Log.d(...) should be conditional: surround with `if (Log.isLoggable(...))` or `if (BuildConfig.DEBUG) { ... }`"
+        errorLine1="                Log.d(&quot;CheckoutVM&quot;, &quot;✅ Loaded ${branches.size} branches&quot;)"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/coffeebean/ui/feature/checkout/CheckoutViewModel.kt"
+            line="62"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="LogConditional"
+        message="The log call Log.d(...) should be conditional: surround with `if (Log.isLoggable(...))` or `if (BuildConfig.DEBUG) { ... }`"
+        errorLine1="                    Log.d(&quot;CheckoutVM&quot;, &quot;🛒 Cart: ${items.size} items, subtotal: $subtotal&quot;)"
+        errorLine2="                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/coffeebean/ui/feature/checkout/CheckoutViewModel.kt"
+            line="76"
+            column="21"/>
+    </issue>
+
+    <issue
+        id="LogConditional"
+        message="The log call Log.d(...) should be conditional: surround with `if (Log.isLoggable(...))` or `if (BuildConfig.DEBUG) { ... }`"
+        errorLine1="            Log.d(TAG, &quot;📦 Firestore returned ${snapshot.size()} branches&quot;)"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/coffeebean/data/remote/FirebaseClient.kt"
+            line="367"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="LogConditional"
+        message="The log call Log.d(...) should be conditional: surround with `if (Log.isLoggable(...))` or `if (BuildConfig.DEBUG) { ... }`"
+        errorLine1="                    Log.d(TAG, &quot;✅ Parsed branch: ${branch?.name}&quot;)"
+        errorLine2="                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/coffeebean/data/remote/FirebaseClient.kt"
+            line="372"
+            column="21"/>
+    </issue>
+
+    <issue
+        id="LogConditional"
+        message="The log call Log.d(...) should be conditional: surround with `if (Log.isLoggable(...))` or `if (BuildConfig.DEBUG) { ... }`"
+        errorLine1="            Log.d(TAG, &quot;🎉 Successfully loaded ${branches.size} branches&quot;)"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/coffeebean/data/remote/FirebaseClient.kt"
+            line="380"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="LogConditional"
+        message="The log call Log.d(...) should be conditional: surround with `if (Log.isLoggable(...))` or `if (BuildConfig.DEBUG) { ... }`"
+        errorLine1="        Log.d(TAG, &quot;Google Sign-In result code: ${result.resultCode}&quot;)"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/coffeebean/ui/feature/login/LoginScreen.kt"
+            line="64"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="LogConditional"
+        message="The log call Log.d(...) should be conditional: surround with `if (Log.isLoggable(...))` or `if (BuildConfig.DEBUG) { ... }`"
+        errorLine1="        Log.d(TAG, &quot;LaunchedEffect triggered - isSuccess: ${uiState.isSuccess}, googleSignInSuccess: ${uiState.googleSignInSuccess}&quot;)"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/coffeebean/ui/feature/login/LoginScreen.kt"
+            line="241"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="LogConditional"
+        message="The log call Log.d(...) should be conditional: surround with `if (Log.isLoggable(...))` or `if (BuildConfig.DEBUG) { ... }`"
+        errorLine1="                Log.d(TAG, &quot;Google Sign-In result: $result&quot;)"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/coffeebean/ui/feature/login/LoginViewModel.kt"
+            line="39"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="VectorPath"
+        message="Very long vector path (3222 characters), which is bad for performance. Considering reducing precision, removing minor details or rasterizing vector."
+        errorLine1="          android:pathData=&quot;M40.41,12.66C40.432,12.543 40.411,12.422 40.35,12.32V12.23C40.336,12.165 40.309,12.104 40.271,12.05C40.233,11.996 40.185,11.95 40.129,11.915C40.073,11.88 40.011,11.856 39.946,11.844C39.881,11.833 39.814,11.835 39.75,11.85L36.01,12.71C34.442,13.07 33.074,14.022 32.192,15.368C31.31,16.714 30.984,18.349 31.28,19.93L30.48,20.62L29.35,15.71C30.253,14.704 30.737,13.391 30.704,12.039C30.67,10.688 30.122,9.4 29.17,8.44L27.1,6.39C27,6.299 26.87,6.248 26.735,6.248C26.6,6.248 26.47,6.299 26.37,6.39C25.383,7.385 24.829,8.729 24.829,10.13C24.829,11.531 25.383,12.875 26.37,13.87L28.37,15.87L29.06,19L28.06,18.73C27.628,17.181 26.616,15.858 25.234,15.035C23.853,14.212 22.208,13.953 20.64,14.31L16.9,15.17C16.769,15.207 16.658,15.293 16.59,15.41C16.545,15.486 16.521,15.572 16.52,15.66C16.495,15.776 16.513,15.896 16.57,16C16.979,17.572 17.985,18.923 19.374,19.765C20.764,20.608 22.427,20.875 24.01,20.51L27.62,19.67L29.31,20.12L30.5,25.37C30.525,25.481 30.587,25.58 30.676,25.651C30.765,25.722 30.876,25.76 30.99,25.76H31.1C31.164,25.746 31.226,25.719 31.28,25.681C31.334,25.643 31.38,25.595 31.415,25.539C31.45,25.483 31.474,25.421 31.485,25.356C31.497,25.291 31.495,25.224 31.48,25.16L30.69,21.75L32.01,20.6L35.62,19.77C37.167,19.415 38.521,18.482 39.403,17.162C40.286,15.843 40.632,14.236 40.37,12.67L40.41,12.66ZM20.85,15.26C22.061,14.99 23.329,15.158 24.428,15.734C25.527,16.311 26.385,17.26 26.85,18.41C26.41,18.26 25.982,18.076 25.57,17.86C25.014,17.566 24.431,17.325 23.83,17.14C23.216,16.928 22.578,16.797 21.93,16.75C21.358,16.711 20.793,16.596 20.25,16.41C19.735,16.253 19.231,16.062 18.74,15.84L18.6,15.78L20.85,15.26ZM23.79,19.49C22.606,19.755 21.366,19.601 20.283,19.054C19.199,18.507 18.34,17.601 17.85,16.49L18.35,16.7C18.873,16.937 19.411,17.141 19.96,17.31C20.574,17.522 21.212,17.653 21.86,17.7C22.421,17.759 22.972,17.89 23.5,18.09C24.05,18.259 24.582,18.48 25.09,18.75L25.69,19.04L23.79,19.49ZM29.27,14.06V13.92C29.26,13.432 29.186,12.948 29.05,12.48C28.927,12.008 28.742,11.554 28.5,11.13C28.297,10.775 28.143,10.395 28.04,10C27.922,9.604 27.858,9.193 27.85,8.78C27.85,8.71 27.85,8.64 27.85,8.56L28.46,9.17C29.082,9.803 29.493,10.612 29.638,11.487C29.783,12.362 29.655,13.261 29.27,14.06ZM26.67,7.63C26.781,8.014 26.842,8.41 26.85,8.81C26.861,9.297 26.935,9.781 27.07,10.25C27.191,10.721 27.373,11.175 27.61,11.6C27.814,11.958 27.968,12.341 28.07,12.74C28.195,13.149 28.262,13.573 28.27,14C28.27,14.13 28.27,14.28 28.27,14.43L27.07,13.22C26.345,12.488 25.906,11.521 25.833,10.494C25.76,9.467 26.057,8.447 26.67,7.62V7.63ZM32.95,16C33.314,15.415 33.791,14.908 34.352,14.508C34.913,14.108 35.548,13.823 36.22,13.67L38.4,13.17L38.23,13.29C37.698,13.643 37.202,14.049 36.75,14.5C36.284,14.957 35.865,15.459 35.5,16C35.165,16.474 34.783,16.913 34.36,17.31C33.951,17.72 33.502,18.089 33.02,18.41C32.725,18.608 32.442,18.822 32.17,19.05C32.109,17.977 32.381,16.912 32.95,16ZM38.7,16.42C38.336,17.005 37.859,17.512 37.298,17.912C36.737,18.312 36.102,18.597 35.43,18.75L33.55,19.18C34.091,18.838 34.597,18.442 35.06,18C35.523,17.563 35.942,17.08 36.31,16.56C36.646,16.087 37.028,15.648 37.45,15.25C37.862,14.839 38.314,14.471 38.8,14.15C39.01,14.01 39.23,13.85 39.49,13.64C39.5,14.633 39.226,15.608 38.7,16.45V16.42Z&quot;"
+        errorLine2="                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/drawable/icon_menu.xml"
+            line="13"
+            column="29"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.brew` appears to be unused">
+        <location
+            file="src/main/res/drawable/brew.jpg"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.carousel_1` appears to be unused">
+        <location
+            file="src/main/res/drawable/carousel_1.jpg"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.coffee_6_illus` appears to be unused">
+        <location
+            file="src/main/res/drawable/coffee_6_illus.png"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.coffee_title` appears to be unused">
+        <location
+            file="src/main/res/drawable/coffee_title.png"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.cold_brew` appears to be unused">
+        <location
+            file="src/main/res/drawable/cold_brew.jpg"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.purple_200` appears to be unused"
+        errorLine1="    &lt;color name=&quot;purple_200&quot;>#FFBB86FC&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="3"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.purple_500` appears to be unused"
+        errorLine1="    &lt;color name=&quot;purple_500&quot;>#FF6200EE&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="4"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.purple_700` appears to be unused"
+        errorLine1="    &lt;color name=&quot;purple_700&quot;>#FF3700B3&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="5"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.teal_200` appears to be unused"
+        errorLine1="    &lt;color name=&quot;teal_200&quot;>#FF03DAC5&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="6"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.teal_700` appears to be unused"
+        errorLine1="    &lt;color name=&quot;teal_700&quot;>#FF018786&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="7"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.black` appears to be unused"
+        errorLine1="    &lt;color name=&quot;black&quot;>#FF000000&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="8"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.white` appears to be unused"
+        errorLine1="    &lt;color name=&quot;white&quot;>#FFFFFFFF&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="9"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_launcher_background` appears to be unused"
+        errorLine1="&lt;vector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
+        errorLine2="^">
+        <location
+            file="src/main/res/drawable/ic_launcher_background.xml"
+            line="2"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_launcher_foreground` appears to be unused"
+        errorLine1="&lt;vector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
+        errorLine2="^">
+        <location
+            file="src/main/res/drawable/ic_launcher_foreground.xml"
+            line="1"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.icon_chef` appears to be unused">
+        <location
+            file="src/main/res/drawable/icon_chef.png"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.icon_coffee` appears to be unused">
+        <location
+            file="src/main/res/drawable/icon_coffee.png"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.icon_coffee_bean` appears to be unused">
+        <location
+            file="src/main/res/drawable/icon_coffee_bean.png"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.icon_ice_blended` appears to be unused">
+        <location
+            file="src/main/res/drawable/icon_ice_blended.png"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.icon_shopping_cart` appears to be unused"
+        errorLine1="&lt;vector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
+        errorLine2="^">
+        <location
+            file="src/main/res/drawable/icon_shopping_cart.xml"
+            line="1"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.icon_tea` appears to be unused">
+        <location
+            file="src/main/res/drawable/icon_tea.png"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.logo` appears to be unused">
+        <location
+            file="src/main/res/drawable/logo.png"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.promo_bpi` appears to be unused">
+        <location
+            file="src/main/res/drawable/promo_bpi.jpg"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.promo_combo` appears to be unused">
+        <location
+            file="src/main/res/drawable/promo_combo.jpg"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.promo_teacher_day` appears to be unused">
+        <location
+            file="src/main/res/drawable/promo_teacher_day.jpg"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.promo_toys` appears to be unused">
+        <location
+            file="src/main/res/drawable/promo_toys.jpg"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.vanilla` appears to be unused">
+        <location
+            file="src/main/res/drawable/vanilla.jpg"/>
+    </issue>
+
+    <issue
+        id="SyntheticAccessor"
+        message="Access to `private` method `getDataStore` of class `DataStoreKt` requires synthetic accessor"
+        errorLine1="    val onboardingCompleted: Flow&lt;Boolean> = context.dataStore.data"
+        errorLine2="                                                     ~~~~~~~~~">
+        <location
+            file="src/main/java/com/coffeebean/data/local/dataStore.kt"
+            line="22"
+            column="54"/>
+    </issue>
+
+    <issue
+        id="SyntheticAccessor"
+        message="Access to `private` method `getDataStore` of class `DataStoreKt` requires synthetic accessor"
+        errorLine1="        context.dataStore.edit { prefs ->"
+        errorLine2="                ~~~~~~~~~">
+        <location
+            file="src/main/java/com/coffeebean/data/local/dataStore.kt"
+            line="26"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="ConvertToWebp"
+        message="One or more images in this project can be converted to the WebP format which typically results in smaller file sizes, even for lossless conversion">
+        <location
+            file="src/main/res/drawable/coffee_4_illus.png"/>
+    </issue>
+
+    <issue
+        id="MonochromeLauncherIcon"
+        message="The application adaptive icon is missing a monochrome tag"
+        errorLine1="&lt;adaptive-icon xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;>"
+        errorLine2="^">
+        <location
+            file="src/main/res/mipmap-anydpi-v26/ic_launcher.xml"
+            line="2"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="MonochromeLauncherIcon"
+        message="The application adaptive roundIcon is missing a monochrome tag"
+        errorLine1="&lt;adaptive-icon xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;>"
+        errorLine2="^">
+        <location
+            file="src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml"
+            line="2"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/brew.jpg` in densityless folder">
+        <location
+            file="src/main/res/drawable/brew.jpg"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/carousel_1.jpg` in densityless folder">
+        <location
+            file="src/main/res/drawable/carousel_1.jpg"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/coffee_2_illus.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/coffee_2_illus.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/coffee_3_illus.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/coffee_3_illus.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/coffee_4_illus.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/coffee_4_illus.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/coffee_5_illus.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/coffee_5_illus.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/coffee_6_illus.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/coffee_6_illus.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/coffee_6_without_bg.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/coffee_6_without_bg.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/coffee_7_illus.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/coffee_7_illus.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/coffee_title.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/coffee_title.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/cold_brew.jpg` in densityless folder">
+        <location
+            file="src/main/res/drawable/cold_brew.jpg"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/icon_chef.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/icon_chef.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/icon_coffee.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/icon_coffee.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/icon_coffee_bean.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/icon_coffee_bean.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/icon_ice_blended.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/icon_ice_blended.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/icon_tea.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/icon_tea.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/logo.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/logo.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/logo_cloudy.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/logo_cloudy.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/logo_moon.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/logo_moon.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/logo_steam_bean_title.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/logo_steam_bean_title.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/promo_bpi.jpg` in densityless folder">
+        <location
+            file="src/main/res/drawable/promo_bpi.jpg"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/promo_combo.jpg` in densityless folder">
+        <location
+            file="src/main/res/drawable/promo_combo.jpg"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/promo_teacher_day.jpg` in densityless folder">
+        <location
+            file="src/main/res/drawable/promo_teacher_day.jpg"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/promo_toys.jpg` in densityless folder">
+        <location
+            file="src/main/res/drawable/promo_toys.jpg"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/transparent_logo.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/transparent_logo.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/vanilla.jpg` in densityless folder">
+        <location
+            file="src/main/res/drawable/vanilla.jpg"/>
+    </issue>
+
+    <issue
+        id="IconDuplicates"
+        message="The following unrelated icon files have identical contents: brew.jpg, carousel_1.jpg">
+        <location
+            file="src/main/res/drawable/carousel_1.jpg"/>
+        <location
+            file="src/main/res/drawable/brew.jpg"/>
+    </issue>
+
+</issues>

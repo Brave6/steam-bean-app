@@ -1,0 +1,47 @@
+processors:
+  active: true
+
+style:
+  MagicNumber:
+    active: false
+  MaxLineLength:
+    active: true
+    maxLineLength: 160
+  UnusedPrivateMember:
+    active: true
+
+comments:
+  CommentOverPrivateFunction:
+    active: false
+
+naming:
+  FunctionNaming:
+    active: true
+    functionPattern: '^[a-z][A-Za-z0-9]*$'
+  PackageNaming:
+    active: true
+  VariableNaming:
+    active: false
+
+complexity:
+  LongMethod:
+    active: true
+    threshold: 100
+  LargeClass:
+    active: true
+    threshold: 600
+  ComplexCondition:
+    active: true
+
+#compose:
+#  CompositionLocalNaming:
+#    active: false
+#  ContentEmitterReturningValues:
+#    active: false
+#  ModifierComposable:
+#    active: false
+#  ModifierMissing:
+#    active: false
+#  PreviewNaming:
+#    active: false
+

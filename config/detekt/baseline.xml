@@ -1,0 +1,267 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <CurrentIssues>
+    <ID>ComposableNaming:RewardsScreen.kt$sc</ID>
+    <ID>ComposableParamOrder:HomeScreen.kt$HomeScreen</ID>
+    <ID>ComposableParamOrder:ProductCard.kt$ProductCard</ID>
+    <ID>ComposableParamOrder:PromoCarousel.kt$PromoCarousel</ID>
+    <ID>CyclomaticComplexMethod:SignupScreen.kt$@Composable fun SignupScreen( onSignUpClick: () -&gt; Unit = {} )</ID>
+    <ID>DestructuringDeclarationWithTooManyEntries:LoginScreen.kt$val (imageTitle, image, emailField, passwordField, button, errorText, divider, social) = createRefs()</ID>
+    <ID>DestructuringDeclarationWithTooManyEntries:OnboardingPageScreen.kt$val (imageTitle, image, title, desc) = createRefs()</ID>
+    <ID>DestructuringDeclarationWithTooManyEntries:OnboardingScreen.kt$val (pager, indicator, button, login) = createRefs()</ID>
+    <ID>DestructuringDeclarationWithTooManyEntries:SignupScreen.kt$val (image, title, emailField, passwordField, confirmField, button, terms, loading, errorText) = createRefs()</ID>
+    <ID>ForbiddenComment:CheckoutViewModel.kt$CheckoutViewModel$// TODO: Implement order creation in repository</ID>
+    <ID>ForbiddenComment:SearchScreen.kt$// TODO: Implement search results</ID>
+    <ID>FunctionNaming:AccountsScreen.kt$@Composable @OptIn(ExperimentalMaterial3Api::class) fun AccountsScreen( onLogout: () -&gt; Unit, navController: NavHostController, userName: String = "Seth Aldwin Tolentino", email: String = "seth@example.com", loyaltyPoints: Int = 320, loyaltyTier: String = "Gold" )</ID>
+    <ID>FunctionNaming:AccountsScreen.kt$@Composable fun PaymentMethodRow(label: String)</ID>
+    <ID>FunctionNaming:AccountsScreen.kt$@Composable fun SectionTitle(title: String)</ID>
+    <ID>FunctionNaming:AppNavGraph.kt$@OptIn(ExperimentalAnimationApi::class) @Composable fun AppNavGraph( navController: NavHostController, modifier: Modifier = Modifier )</ID>
+    <ID>FunctionNaming:BottomNavItem.kt$@Composable fun BottomBar(navController: NavHostController)</ID>
+    <ID>FunctionNaming:CartScreen.kt$@Composable private fun CartContent( items: List&lt;CartItem&gt;, onUpdateQuantity: (String, Int) -&gt; Unit, onRemoveItem: (String) -&gt; Unit, onItemClick: (String) -&gt; Unit )</ID>
+    <ID>FunctionNaming:CartScreen.kt$@Composable private fun CartItemCard( item: CartItem, onUpdateQuantity: (Int) -&gt; Unit, onRemove: () -&gt; Unit, onClick: () -&gt; Unit )</ID>
+    <ID>FunctionNaming:CartScreen.kt$@Composable private fun CheckoutBottomBar( total: Double, onCheckout: () -&gt; Unit )</ID>
+    <ID>FunctionNaming:CartScreen.kt$@Composable private fun EmptyCartContent(onNavigateBack: () -&gt; Unit)</ID>
+    <ID>FunctionNaming:CartScreen.kt$@Composable private fun ErrorContent( message: String, onRetry: () -&gt; Unit )</ID>
+    <ID>FunctionNaming:CartScreen.kt$@Composable private fun LoadingContent()</ID>
+    <ID>FunctionNaming:CartScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun CartScreen( navController: NavHostController, onNavigateBack: () -&gt; Unit, onNavigateToProductDetail: (String) -&gt; Unit, onCheckout: () -&gt; Unit, viewModel: CartViewModel = hiltViewModel() // 🔥 Add ViewModel )</ID>
+    <ID>FunctionNaming:CartScreen.kt$@Preview(showBackground = true) @Composable fun CartScreenPreview()</ID>
+    <ID>FunctionNaming:CategoryItem.kt$@Composable fun CategoryItem(iconRes: Int, label: String)</ID>
+    <ID>FunctionNaming:CheckoutScreen.kt$@Composable private fun BranchCard( branch: Branch, isSelected: Boolean, isNearest: Boolean, userLocation: LatLng?, onClick: () -&gt; Unit )</ID>
+    <ID>FunctionNaming:CheckoutScreen.kt$@Composable private fun BranchSelectionSection( branches: List&lt;Branch&gt;, selectedBranch: Branch?, nearestBranch: Branch?, userLocation: LatLng?, onBranchSelected: (Branch) -&gt; Unit )</ID>
+    <ID>FunctionNaming:CheckoutScreen.kt$@Composable private fun CheckoutBottomBar( state: CheckoutUiState, onPlaceOrder: () -&gt; Unit )</ID>
+    <ID>FunctionNaming:CheckoutScreen.kt$@Composable private fun DeliveryMapDialog( userLocation: LatLng, onDismiss: () -&gt; Unit, onConfirm: (DeliveryAddress) -&gt; Unit )</ID>
+    <ID>FunctionNaming:CheckoutScreen.kt$@Composable private fun FulfillmentTypeCard( type: FulfillmentType, icon: ImageVector, label: String, isSelected: Boolean, onClick: () -&gt; Unit, modifier: Modifier = Modifier )</ID>
+    <ID>FunctionNaming:CheckoutScreen.kt$@Composable private fun FulfillmentTypeSelector( selectedType: FulfillmentType, onTypeSelected: (FulfillmentType) -&gt; Unit )</ID>
+    <ID>FunctionNaming:CheckoutScreen.kt$@Composable private fun LoadingContent()</ID>
+    <ID>FunctionNaming:CheckoutScreen.kt$@Composable private fun OrderSummarySection(state: CheckoutUiState)</ID>
+    <ID>FunctionNaming:CheckoutScreen.kt$@Composable private fun PaymentMethodItem( method: PaymentMethod, isSelected: Boolean, onClick: () -&gt; Unit )</ID>
+    <ID>FunctionNaming:CheckoutScreen.kt$@Composable private fun PaymentMethodSection( selectedMethod: PaymentMethod, onMethodSelected: (PaymentMethod) -&gt; Unit )</ID>
+    <ID>FunctionNaming:CheckoutScreen.kt$@OptIn(ExperimentalMaterial3Api::class, ExperimentalPermissionsApi::class, ExperimentalAnimationApi::class) @Composable fun CheckoutScreen( navController: NavHostController, onNavigateBack: () -&gt; Unit, onOrderSuccess: (String) -&gt; Unit, viewModel: CheckoutViewModel = hiltViewModel() )</ID>
+    <ID>FunctionNaming:CheckoutScreen.kt$@OptIn(ExperimentalPermissionsApi::class) @Composable private fun DeliveryAddressSection( address: com.coffeebean.domain.model.DeliveryAddress?, userLocation: LatLng?, locationPermissions: com.google.accompanist.permissions.MultiplePermissionsState, onAddressSelected: (com.coffeebean.domain.model.DeliveryAddress) -&gt; Unit )</ID>
+    <ID>FunctionNaming:HomeScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun HomeScreen( navController: NavHostController, viewModel: HomeViewModel = hiltViewModel(), onProfileClick: () -&gt; Unit = {}, onLogout: () -&gt; Unit, analytics: FirebaseAnalytics = Firebase.analytics, logoRes: Int = getTimeBasedImage() )</ID>
+    <ID>FunctionNaming:HomeSearchBar.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun HomeSearchBar( searchText: String, onSearchTextChange: (String) -&gt; Unit, onSearch: (String) -&gt; Unit )</ID>
+    <ID>FunctionNaming:LoginScreen.kt$@Composable fun LoginScreen( onLoginSuccess: () -&gt; Unit = {} )</ID>
+    <ID>FunctionNaming:LoginScreen.kt$@Composable fun LoginScreenPreviewable( uiState: LoginUiState = LoginUiState(), onLoginClick: (String, String) -&gt; Unit = { _, _ -&gt; }, onGoogleSignInClick: () -&gt; Unit = {}, errorMessage: String? = null )</ID>
+    <ID>FunctionNaming:LoginScreen.kt$@Preview(showBackground = true, showSystemUi = true) @Composable fun LoginScreenPreview()</ID>
+    <ID>FunctionNaming:MainScreen.kt$@Composable fun MainScreen(appNavController: NavHostController)</ID>
+    <ID>FunctionNaming:MainView.kt$@Composable fun MainView(appNavController: NavHostController)</ID>
+    <ID>FunctionNaming:MenuCard.kt$@Composable fun MenuCard( item: MenuItem, onClick: () -&gt; Unit, modifier: Modifier = Modifier )</ID>
+    <ID>FunctionNaming:MenuCategorySection.kt$@Composable fun MenuCategorySection( title: String, items: List&lt;MenuItem&gt;, onItemClick: (String) -&gt; Unit )</ID>
+    <ID>FunctionNaming:MenuScreen.kt$@Composable private fun EmptyContent(category: String)</ID>
+    <ID>FunctionNaming:MenuScreen.kt$@Composable private fun ErrorContent(message: String)</ID>
+    <ID>FunctionNaming:MenuScreen.kt$@Composable private fun LoadingContent()</ID>
+    <ID>FunctionNaming:MenuScreen.kt$@Composable private fun MenuContent( selectedCategory: MenuCategory, menuItems: Map&lt;MenuCategory, List&lt;MenuItem&gt;&gt;, onItemClick: (MenuItem) -&gt; Unit )</ID>
+    <ID>FunctionNaming:MenuScreen.kt$@Composable private fun MenuTabs( categories: List&lt;MenuCategory&gt;, selectedIndex: Int, onTabSelected: (Int) -&gt; Unit )</ID>
+    <ID>FunctionNaming:MenuScreen.kt$@Composable private fun SubcategoryHeader(title: String)</ID>
+    <ID>FunctionNaming:MenuScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun MenuScreen( navController: NavHostController, onItemClick: (MenuItem) -&gt; Unit, // ✅ NEW - entire MenuItem object onSearchClick: () -&gt; Unit = {}, viewModel: MenuViewModel = hiltViewModel() )</ID>
+    <ID>FunctionNaming:OnboardingPageScreen.kt$@Composable fun OnboardingPageScreen( page: OnboardingPage, modifier: Modifier = Modifier )</ID>
+    <ID>FunctionNaming:OnboardingPageScreen.kt$@OptIn(ExperimentalPagerApi::class) @Preview(showBackground = true) @Composable fun OnboardingPagePreview()</ID>
+    <ID>FunctionNaming:OnboardingScreen.kt$@OptIn(ExperimentalPagerApi::class) @Composable fun OnboardingScreen( //onFinish: () -&gt; Unit, onSignupClick: () -&gt; Unit, // for Get Started onLoginClick: () -&gt; Unit // for "Already have an account? Login" )</ID>
+    <ID>FunctionNaming:OnboardingScreen.kt$@OptIn(ExperimentalPagerApi::class) @Preview(showBackground = true) @Composable fun OnboardingPage()</ID>
+    <ID>FunctionNaming:OrderSuccessScreen.kt$@Composable fun OrderSuccessScreen( orderId: String, onContinueShopping: () -&gt; Unit, onViewOrders: () -&gt; Unit )</ID>
+    <ID>FunctionNaming:ProductCard.kt$@Composable fun ProductCard( product: Product, onClick: (() -&gt; Unit)? = null, modifier: Modifier = Modifier )</ID>
+    <ID>FunctionNaming:ProductCard.kt$@Composable fun ProductCardShimmer(modifier: Modifier = Modifier)</ID>
+    <ID>FunctionNaming:ProductCard.kt$@Composable private fun ProductImageError(modifier: Modifier = Modifier)</ID>
+    <ID>FunctionNaming:ProductCard.kt$@Composable private fun ProductImageShimmer(modifier: Modifier = Modifier)</ID>
+    <ID>FunctionNaming:ProductCard.kt$@Composable private fun ShimmerBox(modifier: Modifier = Modifier)</ID>
+    <ID>FunctionNaming:ProductDetailUiState.kt$@Composable private fun AddToCartBottomBar( state: ProductDetailUiState.Success, onQuantityChange: (Int) -&gt; Unit, onAddToCart: () -&gt; Unit )</ID>
+    <ID>FunctionNaming:ProductDetailUiState.kt$@Composable private fun AllergensSection(allergens: List&lt;String&gt;)</ID>
+    <ID>FunctionNaming:ProductDetailUiState.kt$@Composable private fun ErrorContent( message: String, onRetry: () -&gt; Unit )</ID>
+    <ID>FunctionNaming:ProductDetailUiState.kt$@Composable private fun LoadingContent()</ID>
+    <ID>FunctionNaming:ProductDetailUiState.kt$@Composable private fun NutritionInfoSection(nutritionInfo: NutritionInfo)</ID>
+    <ID>FunctionNaming:ProductDetailUiState.kt$@Composable private fun NutritionItem(label: String, value: String)</ID>
+    <ID>FunctionNaming:ProductDetailUiState.kt$@Composable private fun ProductDetailContent( state: ProductDetailUiState.Success, imageScale: Float, scrollState: ScrollState, onSizeSelected: (ProductSize) -&gt; Unit, onTemperatureSelected: (ProductTemperature) -&gt; Unit, onFavoriteToggle: () -&gt; Unit, modifier: Modifier = Modifier )</ID>
+    <ID>FunctionNaming:ProductDetailUiState.kt$@Composable private fun SizeChip( size: ProductSize, isSelected: Boolean, onClick: () -&gt; Unit, modifier: Modifier = Modifier )</ID>
+    <ID>FunctionNaming:ProductDetailUiState.kt$@Composable private fun SizeSelector( sizes: List&lt;ProductSize&gt;, selectedSize: ProductSize?, onSizeSelected: (ProductSize) -&gt; Unit )</ID>
+    <ID>FunctionNaming:ProductDetailUiState.kt$@Composable private fun TemperatureChip( temperature: ProductTemperature, isSelected: Boolean, onClick: () -&gt; Unit, modifier: Modifier = Modifier )</ID>
+    <ID>FunctionNaming:ProductDetailUiState.kt$@Composable private fun TemperatureSelector( temperatures: List&lt;ProductTemperature&gt;, selectedTemperature: ProductTemperature?, onTemperatureSelected: (ProductTemperature) -&gt; Unit )</ID>
+    <ID>FunctionNaming:ProductDetailUiState.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun ProductDetailScreen( productId: String, onNavigateBack: () -&gt; Unit, onNavigateToCart: () -&gt; Unit, viewModel: ProductDetailViewModel = hiltViewModel() )</ID>
+    <ID>FunctionNaming:ProductDetailUiState.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable private fun ProductDetailTopBar( onNavigateBack: () -&gt; Unit, scrollState: ScrollState )</ID>
+    <ID>FunctionNaming:PromoCarousel.kt$@Composable private fun PageIndicators( pageCount: Int, currentPage: Int, modifier: Modifier = Modifier, activeColor: Color = coffeebeanPurple, inactiveColor: Color = Color.LightGray, indicatorSize: Dp = 8.dp, spacing: Dp = 4.dp )</ID>
+    <ID>FunctionNaming:PromoCarousel.kt$@Composable private fun ShimmerEffect(modifier: Modifier = Modifier)</ID>
+    <ID>FunctionNaming:PromoCarousel.kt$@OptIn(ExperimentalFoundationApi::class) @Composable fun PromoCarousel( promos: List&lt;Promo&gt;, modifier: Modifier = Modifier, config: PromoCarouselConfig = PromoCarouselConfig(), onPromoClick: (Promo) -&gt; Unit, onPromoViewed: (Promo) -&gt; Unit )</ID>
+    <ID>FunctionNaming:PromoCarousel.kt$@OptIn(ExperimentalFoundationApi::class) @Composable private fun PromoCard( promo: Promo, pageIndex: Int, pagerState: PagerState, config: PromoCarouselConfig, onClick: () -&gt; Unit )</ID>
+    <ID>FunctionNaming:RewardsScreen.kt$@Composable fun RewardCard(reward: Reward)</ID>
+    <ID>FunctionNaming:RewardsScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun RewardsScreen( navController: NavHostController, points: Int = 120, nextRewardGoal: Int = 200, rewards: List&lt;Reward&gt; = sampleRewards() )</ID>
+    <ID>FunctionNaming:SearchScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun SearchScreen( navController: NavHostController, onProductClick: (String) -&gt; Unit, onNavigateBack: () -&gt; Unit )</ID>
+    <ID>FunctionNaming:SignupScreen.kt$@Composable fun SignupScreen( onSignUpClick: () -&gt; Unit = {} )</ID>
+    <ID>FunctionNaming:SignupScreen.kt$@Preview(showBackground = true, showSystemUi = true) @Composable fun Sc()</ID>
+    <ID>FunctionNaming:SplashScreen.kt$@Composable fun SplashContent()</ID>
+    <ID>FunctionNaming:SplashScreen.kt$@Composable fun SplashScreen( navController: NavController, viewModel: SplashViewModel = hiltViewModel() )</ID>
+    <ID>FunctionNaming:SplashScreen.kt$@Preview(showBackground = true, showSystemUi = true) @Composable fun SplashPreview()</ID>
+    <ID>FunctionNaming:Theme.kt$@Composable fun CoffeeBeanTheme( // darkTheme: Boolean = isSystemInDarkTheme(), darkTheme: Boolean = false, // 👈 always light // Dynamic color is available on Android 12+ dynamicColor: Boolean = false, content: @Composable () -&gt; Unit )</ID>
+    <ID>LambdaParameterEventTrailing:PromoCarousel.kt$onPromoViewed</ID>
+    <ID>LambdaParameterInRestartableEffect:HomeScreen.kt$onLogout</ID>
+    <ID>LambdaParameterInRestartableEffect:LoginScreen.kt$onLoginSuccess</ID>
+    <ID>LambdaParameterInRestartableEffect:PromoCarousel.kt$onPromoViewed</ID>
+    <ID>LambdaParameterInRestartableEffect:SignupScreen.kt$onSignUpClick</ID>
+    <ID>LongMethod:AccountsScreen.kt$@Composable @OptIn(ExperimentalMaterial3Api::class) fun AccountsScreen( onLogout: () -&gt; Unit, navController: NavHostController, userName: String = "Seth Aldwin Tolentino", email: String = "seth@example.com", loyaltyPoints: Int = 320, loyaltyTier: String = "Gold" )</ID>
+    <ID>LongMethod:CartScreen.kt$@Composable private fun CartItemCard( item: CartItem, onUpdateQuantity: (Int) -&gt; Unit, onRemove: () -&gt; Unit, onClick: () -&gt; Unit )</ID>
+    <ID>LongMethod:CheckoutScreen.kt$@Composable private fun BranchCard( branch: Branch, isSelected: Boolean, isNearest: Boolean, userLocation: LatLng?, onClick: () -&gt; Unit )</ID>
+    <ID>LongMethod:CheckoutScreen.kt$@OptIn(ExperimentalMaterial3Api::class, ExperimentalPermissionsApi::class, ExperimentalAnimationApi::class) @Composable fun CheckoutScreen( navController: NavHostController, onNavigateBack: () -&gt; Unit, onOrderSuccess: (String) -&gt; Unit, viewModel: CheckoutViewModel = hiltViewModel() )</ID>
+    <ID>LongMethod:CheckoutScreen.kt$@OptIn(ExperimentalPermissionsApi::class) @Composable private fun DeliveryAddressSection( address: com.coffeebean.domain.model.DeliveryAddress?, userLocation: LatLng?, locationPermissions: com.google.accompanist.permissions.MultiplePermissionsState, onAddressSelected: (com.coffeebean.domain.model.DeliveryAddress) -&gt; Unit )</ID>
+    <ID>LongMethod:HomeScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun HomeScreen( navController: NavHostController, viewModel: HomeViewModel = hiltViewModel(), onProfileClick: () -&gt; Unit = {}, onLogout: () -&gt; Unit, analytics: FirebaseAnalytics = Firebase.analytics, logoRes: Int = getTimeBasedImage() )</ID>
+    <ID>LongMethod:LoginScreen.kt$@Composable fun LoginScreen( onLoginSuccess: () -&gt; Unit = {} )</ID>
+    <ID>LongMethod:LoginScreen.kt$@Composable fun LoginScreenPreviewable( uiState: LoginUiState = LoginUiState(), onLoginClick: (String, String) -&gt; Unit = { _, _ -&gt; }, onGoogleSignInClick: () -&gt; Unit = {}, errorMessage: String? = null )</ID>
+    <ID>LongMethod:MainView.kt$@Composable fun MainView(appNavController: NavHostController)</ID>
+    <ID>LongMethod:ProductDetailUiState.kt$@Composable private fun ProductDetailContent( state: ProductDetailUiState.Success, imageScale: Float, scrollState: ScrollState, onSizeSelected: (ProductSize) -&gt; Unit, onTemperatureSelected: (ProductTemperature) -&gt; Unit, onFavoriteToggle: () -&gt; Unit, modifier: Modifier = Modifier )</ID>
+    <ID>LongMethod:SignupScreen.kt$@Composable fun SignupScreen( onSignUpClick: () -&gt; Unit = {} )</ID>
+    <ID>LongParameterList:AccountsScreen.kt$( onLogout: () -&gt; Unit, navController: NavHostController, userName: String = "Seth Aldwin Tolentino", email: String = "seth@example.com", loyaltyPoints: Int = 320, loyaltyTier: String = "Gold" )</ID>
+    <ID>LongParameterList:CheckoutScreen.kt$( type: FulfillmentType, icon: ImageVector, label: String, isSelected: Boolean, onClick: () -&gt; Unit, modifier: Modifier = Modifier )</ID>
+    <ID>LongParameterList:HomeScreen.kt$( navController: NavHostController, viewModel: HomeViewModel = hiltViewModel(), onProfileClick: () -&gt; Unit = {}, onLogout: () -&gt; Unit, analytics: FirebaseAnalytics = Firebase.analytics, logoRes: Int = getTimeBasedImage() )</ID>
+    <ID>LongParameterList:ProductDetailUiState.kt$( state: ProductDetailUiState.Success, imageScale: Float, scrollState: ScrollState, onSizeSelected: (ProductSize) -&gt; Unit, onTemperatureSelected: (ProductTemperature) -&gt; Unit, onFavoriteToggle: () -&gt; Unit, modifier: Modifier = Modifier )</ID>
+    <ID>LongParameterList:PromoCarousel.kt$( pageCount: Int, currentPage: Int, modifier: Modifier = Modifier, activeColor: Color = coffeebeanPurple, inactiveColor: Color = Color.LightGray, indicatorSize: Dp = 8.dp, spacing: Dp = 4.dp )</ID>
+    <ID>MatchingDeclarationName:FirebaseAuthRepositoryImpl.kt$FirebaseAuthRepository : AuthRepository</ID>
+    <ID>MatchingDeclarationName:PromoCarousel.kt$PromoCarouselConfig</ID>
+    <ID>MaxLineLength:MenuScreen.kt$/* @Preview(showBackground = true, showSystemUi = true) @Composable fun MenuScreenPreview() { val navController = rememberNavController() // In preview, we can provide a dummy implementation of the view model // or pass a dummy uiState directly if the composable supports it. // For this preview, let's keep it simple and assume a success state. val dummyItems = mapOf( MenuCategory.COFFEE to listOf( MenuItem(id = "1", name = "Cappuccino", description = "with Chocolate", price = 125.00, imageUrl = "", category = MenuCategory.COFFEE, subcategory = "Hot Coffee"), MenuItem(id = "2", name = "Caramel Latte", description = "with Oat Milk", price = 150.00, imageUrl = "", category = MenuCategory.COFFEE, subcategory = "Hot Coffee"), ), MenuCategory.BEANS to emptyList(), MenuCategory.CAKES to emptyList(), MenuCategory.PASTRY to emptyList() ) // This is a simplified approach for the preview. // In a real app, you might use a fake ViewModel that provides this state. MenuScreen( navController = navController, onItemClick = {}, viewModel = object : MenuViewModel(object : com.coffeebean.domain.repository.MenuRepository { override suspend fun getProducts(): List&lt;com.coffeebean.domain.model.Product&gt; { return emptyList() } }) { override val uiState: kotlinx.coroutines.flow.StateFlow&lt;MenuUiState&gt; = kotlinx.coroutines.flow.MutableStateFlow(MenuUiState.Success(dummyItems)) } ) } */</ID>
+    <ID>ModifierMissing:AccountsScreen.kt$AccountsScreen</ID>
+    <ID>ModifierMissing:AccountsScreen.kt$PaymentMethodRow</ID>
+    <ID>ModifierMissing:AccountsScreen.kt$SectionTitle</ID>
+    <ID>ModifierMissing:BottomNavItem.kt$BottomBar</ID>
+    <ID>ModifierMissing:CartScreen.kt$CartScreen</ID>
+    <ID>ModifierMissing:CategoryItem.kt$CategoryItem</ID>
+    <ID>ModifierMissing:CheckoutScreen.kt$CheckoutScreen</ID>
+    <ID>ModifierMissing:HomeScreen.kt$HomeScreen</ID>
+    <ID>ModifierMissing:HomeSearchBar.kt$HomeSearchBar</ID>
+    <ID>ModifierMissing:LoginScreen.kt$LoginScreen</ID>
+    <ID>ModifierMissing:LoginScreen.kt$LoginScreenPreviewable</ID>
+    <ID>ModifierMissing:MainView.kt$MainView</ID>
+    <ID>ModifierMissing:MenuCategorySection.kt$MenuCategorySection</ID>
+    <ID>ModifierMissing:MenuScreen.kt$MenuScreen</ID>
+    <ID>ModifierMissing:OnboardingScreen.kt$OnboardingScreen</ID>
+    <ID>ModifierMissing:OrderSuccessScreen.kt$OrderSuccessScreen</ID>
+    <ID>ModifierMissing:ProductDetailUiState.kt$ProductDetailScreen</ID>
+    <ID>ModifierMissing:RewardsScreen.kt$RewardCard</ID>
+    <ID>ModifierMissing:RewardsScreen.kt$RewardsScreen</ID>
+    <ID>ModifierMissing:SearchScreen.kt$SearchScreen</ID>
+    <ID>ModifierMissing:SignupScreen.kt$SignupScreen</ID>
+    <ID>ModifierMissing:SplashScreen.kt$SplashContent</ID>
+    <ID>MultipleEmitters:MenuCategorySection.kt$MenuCategorySection</ID>
+    <ID>NewLineAtEndOfFile:Branch.kt$com.coffeebean.domain.model.Branch.kt</ID>
+    <ID>NewLineAtEndOfFile:BranchRepository.kt$com.coffeebean.data.repository.BranchRepository.kt</ID>
+    <ID>NewLineAtEndOfFile:BranchRepositoryImpl.kt$com.coffeebean.data.remote.BranchRepositoryImpl.kt</ID>
+    <ID>NewLineAtEndOfFile:CartRepository.kt$com.coffeebean.data.repository.CartRepository.kt</ID>
+    <ID>NewLineAtEndOfFile:CartRepositoryImpl.kt$com.coffeebean.data.remote.CartRepositoryImpl.kt</ID>
+    <ID>NewLineAtEndOfFile:CartScreen.kt$com.coffeebean.ui.feature.cart.CartScreen.kt</ID>
+    <ID>NewLineAtEndOfFile:CartUiState.kt$com.coffeebean.ui.feature.cart.CartUiState.kt</ID>
+    <ID>NewLineAtEndOfFile:CategoryItem.kt$com.coffeebean.ui.feature.home.components.CategoryItem.kt</ID>
+    <ID>NewLineAtEndOfFile:CheckoutScreen.kt$com.coffeebean.ui.feature.checkout.CheckoutScreen.kt</ID>
+    <ID>NewLineAtEndOfFile:CheckoutViewModel.kt$com.coffeebean.ui.feature.checkout.CheckoutViewModel.kt</ID>
+    <ID>NewLineAtEndOfFile:Color.kt$com.coffeebean.ui.theme.Color.kt</ID>
+    <ID>NewLineAtEndOfFile:ExampleUnitTest.kt$com.coffeebean.ExampleUnitTest.kt</ID>
+    <ID>NewLineAtEndOfFile:FavoritesRepository.kt$com.coffeebean.data.repository.FavoritesRepository.kt</ID>
+    <ID>NewLineAtEndOfFile:FavoritesRepositoryImpl.kt$com.coffeebean.data.remote.FavoritesRepositoryImpl.kt</ID>
+    <ID>NewLineAtEndOfFile:FirebaseClient.kt$com.coffeebean.data.remote.FirebaseClient.kt</ID>
+    <ID>NewLineAtEndOfFile:HomeScreen.kt$com.coffeebean.ui.feature.home.HomeScreen.kt</ID>
+    <ID>NewLineAtEndOfFile:HomeViewModel.kt$com.coffeebean.ui.feature.home.HomeViewModel.kt</ID>
+    <ID>NewLineAtEndOfFile:MainView.kt$com.coffeebean.ui.main.components.MainView.kt</ID>
+    <ID>NewLineAtEndOfFile:MenuCard.kt$com.coffeebean.ui.feature.menu.MenuCard.kt</ID>
+    <ID>NewLineAtEndOfFile:MenuItem.kt$com.coffeebean.ui.feature.menu.MenuItem.kt</ID>
+    <ID>NewLineAtEndOfFile:MenuRepository.kt$com.coffeebean.domain.repository.MenuRepository.kt</ID>
+    <ID>NewLineAtEndOfFile:MenuRepositoryImpl.kt$com.coffeebean.data.remote.MenuRepositoryImpl.kt</ID>
+    <ID>NewLineAtEndOfFile:MenuScreen.kt$com.coffeebean.ui.feature.menu.MenuScreen.kt</ID>
+    <ID>NewLineAtEndOfFile:MenuViewModel.kt$com.coffeebean.ui.feature.menu.MenuViewModel.kt</ID>
+    <ID>NewLineAtEndOfFile:MyApp.kt$com.coffeebean.MyApp.kt</ID>
+    <ID>NewLineAtEndOfFile:Order.kt$com.coffeebean.domain.model.Order.kt</ID>
+    <ID>NewLineAtEndOfFile:ProductCard.kt$com.coffeebean.ui.feature.home.components.ProductCard.kt</ID>
+    <ID>NewLineAtEndOfFile:ProductDetailUiState.kt$com.coffeebean.ui.feature.menu.components.product.ProductDetailUiState.kt</ID>
+    <ID>NewLineAtEndOfFile:ProductDetailViewModel.kt$com.coffeebean.ui.feature.menu.components.product.ProductDetailViewModel.kt</ID>
+    <ID>NewLineAtEndOfFile:Promo.kt$com.coffeebean.domain.model.Promo.kt</ID>
+    <ID>NewLineAtEndOfFile:PromoCarousel.kt$com.coffeebean.ui.feature.home.components.PromoCarousel.kt</ID>
+    <ID>NewLineAtEndOfFile:SearchScreen.kt$com.coffeebean.ui.feature.search.SearchScreen.kt</ID>
+    <ID>NewLineAtEndOfFile:SignupScreen.kt$com.coffeebean.ui.feature.signup.SignupScreen.kt</ID>
+    <ID>NewLineAtEndOfFile:SplashViewModel.kt$com.coffeebean.ui.feature.splash.SplashViewModel.kt</ID>
+    <ID>NewLineAtEndOfFile:Theme.kt$com.coffeebean.ui.theme.Theme.kt</ID>
+    <ID>NewLineAtEndOfFile:Type.kt$com.coffeebean.ui.theme.Type.kt</ID>
+    <ID>ParameterNaming:CheckoutScreen.kt$onAddressSelected</ID>
+    <ID>ParameterNaming:CheckoutScreen.kt$onBranchSelected</ID>
+    <ID>ParameterNaming:CheckoutScreen.kt$onMethodSelected</ID>
+    <ID>ParameterNaming:CheckoutScreen.kt$onTypeSelected</ID>
+    <ID>ParameterNaming:MenuScreen.kt$onTabSelected</ID>
+    <ID>ParameterNaming:ProductDetailUiState.kt$onSizeSelected</ID>
+    <ID>ParameterNaming:ProductDetailUiState.kt$onTemperatureSelected</ID>
+    <ID>ParameterNaming:PromoCarousel.kt$onPromoViewed</ID>
+    <ID>PreviewPublic:CartScreen.kt$CartScreenPreview</ID>
+    <ID>PreviewPublic:LoginScreen.kt$LoginScreenPreview</ID>
+    <ID>PreviewPublic:OnboardingPageScreen.kt$OnboardingPagePreview</ID>
+    <ID>PreviewPublic:OnboardingScreen.kt$OnboardingPage</ID>
+    <ID>PreviewPublic:RewardsScreen.kt$sc</ID>
+    <ID>PreviewPublic:SignupScreen.kt$Sc</ID>
+    <ID>PreviewPublic:SplashScreen.kt$SplashPreview</ID>
+    <ID>SwallowedException:CartUiState.kt$CartViewModel$e: Exception</ID>
+    <ID>SwallowedException:CheckoutScreen.kt$e: SecurityException</ID>
+    <ID>SwallowedException:FirebasePromoRepository.kt$FirebasePromoRepository$e: Exception</ID>
+    <ID>SwallowedException:MenuViewModel.kt$MenuViewModel$e: Exception</ID>
+    <ID>SwallowedException:ProductDetailViewModel.kt$ProductDetailViewModel$e: Exception</ID>
+    <ID>ThrowsCount:FirebaseClient.kt$FirebaseClient$suspend fun getProductById(productId: String): Product</ID>
+    <ID>ThrowsCount:FirebaseClient.kt$FirebaseClient$suspend fun getPromoById(promoId: String): Promo</ID>
+    <ID>TooGenericExceptionCaught:CartRepositoryImpl.kt$CartRepositoryImpl$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:CartUiState.kt$CartViewModel$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:CheckoutViewModel.kt$CheckoutViewModel$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:FirebaseAuthRepository.kt$FirebaseAuthRepository$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:FirebaseAuthRepositoryImpl.kt$FirebaseAuthRepository$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:FirebaseClient.kt$FirebaseClient$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:FirebasePromoRepository.kt$FirebasePromoRepository$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:MenuViewModel.kt$MenuViewModel$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:ProductDetailViewModel.kt$ProductDetailViewModel$e: Exception</ID>
+    <ID>TooGenericExceptionThrown:CartRepositoryImpl.kt$CartRepositoryImpl$throw Exception("Cart item not found")</ID>
+    <ID>TooGenericExceptionThrown:CartRepositoryImpl.kt$CartRepositoryImpl$throw Exception("Failed to parse cart item")</ID>
+    <ID>TooGenericExceptionThrown:CartRepositoryImpl.kt$CartRepositoryImpl$throw Exception("User not authenticated")</ID>
+    <ID>TooGenericExceptionThrown:FavoritesRepositoryImpl.kt$FavoritesRepositoryImpl$throw Exception("User not authenticated")</ID>
+    <ID>TooManyFunctions:AppModule.kt$AppModule</ID>
+    <ID>TooManyFunctions:CheckoutScreen.kt$com.coffeebean.ui.feature.checkout.CheckoutScreen.kt</ID>
+    <ID>TooManyFunctions:FirebaseClient.kt$FirebaseClient</ID>
+    <ID>TooManyFunctions:ProductDetailUiState.kt$com.coffeebean.ui.feature.menu.components.product.ProductDetailUiState.kt</ID>
+    <ID>UnusedParameter:AccountsScreen.kt$navController: NavHostController</ID>
+    <ID>UnusedParameter:CartScreen.kt$navController: NavHostController</ID>
+    <ID>UnusedParameter:CheckoutScreen.kt$navController: NavHostController</ID>
+    <ID>UnusedParameter:CheckoutScreen.kt$type: FulfillmentType</ID>
+    <ID>UnusedParameter:LoginScreen.kt$onGoogleSignInClick: () -&gt; Unit = {}</ID>
+    <ID>UnusedParameter:RewardsScreen.kt$navController: NavHostController</ID>
+    <ID>UnusedParameter:SearchScreen.kt$navController: NavHostController</ID>
+    <ID>UnusedParameter:SearchScreen.kt$onProductClick: (String) -&gt; Unit</ID>
+    <ID>UnusedPrivateProperty:LoginScreen.kt$val dummyContext = LocalContext.current</ID>
+    <ID>UnusedPrivateProperty:MainView.kt$val shouldShowBottomBar = currentRoute !in hideBottomBarRoutes</ID>
+    <ID>ViewModelInjection:LoginScreen.kt$viewModel</ID>
+    <ID>ViewModelInjection:SignupScreen.kt$viewModel</ID>
+    <ID>WildcardImport:BottomNavItem.kt$import androidx.compose.material3.*</ID>
+    <ID>WildcardImport:CartScreen.kt$import androidx.compose.foundation.layout.*</ID>
+    <ID>WildcardImport:CartScreen.kt$import androidx.compose.material3.*</ID>
+    <ID>WildcardImport:CheckoutScreen.kt$import androidx.compose.animation.*</ID>
+    <ID>WildcardImport:CheckoutScreen.kt$import androidx.compose.foundation.layout.*</ID>
+    <ID>WildcardImport:CheckoutScreen.kt$import androidx.compose.material.icons.filled.*</ID>
+    <ID>WildcardImport:CheckoutScreen.kt$import androidx.compose.material3.*</ID>
+    <ID>WildcardImport:CheckoutScreen.kt$import androidx.compose.runtime.*</ID>
+    <ID>WildcardImport:CheckoutScreen.kt$import com.google.maps.android.compose.*</ID>
+    <ID>WildcardImport:CheckoutViewModel.kt$import com.coffeebean.domain.model.*</ID>
+    <ID>WildcardImport:ExampleUnitTest.kt$import org.junit.Assert.*</ID>
+    <ID>WildcardImport:HomeScreen.kt$import androidx.compose.foundation.layout.*</ID>
+    <ID>WildcardImport:HomeScreen.kt$import androidx.compose.material3.*</ID>
+    <ID>WildcardImport:HomeScreen.kt$import androidx.compose.runtime.*</ID>
+    <ID>WildcardImport:LoginScreen.kt$import androidx.compose.foundation.layout.*</ID>
+    <ID>WildcardImport:LoginScreen.kt$import androidx.compose.material3.*</ID>
+    <ID>WildcardImport:LoginScreen.kt$import androidx.compose.runtime.*</ID>
+    <ID>WildcardImport:OnboardingPageScreen.kt$import androidx.compose.foundation.layout.*</ID>
+    <ID>WildcardImport:OnboardingPageScreen.kt$import androidx.compose.material3.*</ID>
+    <ID>WildcardImport:OnboardingPageScreen.kt$import androidx.compose.runtime.*</ID>
+    <ID>WildcardImport:OnboardingScreen.kt$import androidx.compose.material3.*</ID>
+    <ID>WildcardImport:OnboardingScreen.kt$import androidx.compose.runtime.*</ID>
+    <ID>WildcardImport:OnboardingScreen.kt$import com.google.accompanist.pager.*</ID>
+    <ID>WildcardImport:ProductCard.kt$import androidx.compose.animation.core.*</ID>
+    <ID>WildcardImport:ProductCard.kt$import androidx.compose.foundation.layout.*</ID>
+    <ID>WildcardImport:ProductDetailUiState.kt$import androidx.compose.foundation.layout.*</ID>
+    <ID>WildcardImport:ProductDetailUiState.kt$import androidx.compose.material3.*</ID>
+    <ID>WildcardImport:ProductDetailUiState.kt$import androidx.compose.runtime.*</ID>
+    <ID>WildcardImport:PromoCarousel.kt$import androidx.compose.animation.core.*</ID>
+    <ID>WildcardImport:PromoCarousel.kt$import androidx.compose.foundation.layout.*</ID>
+    <ID>WildcardImport:PromoCarousel.kt$import androidx.compose.runtime.*</ID>
+    <ID>WildcardImport:SearchScreen.kt$import androidx.compose.foundation.layout.*</ID>
+    <ID>WildcardImport:SearchScreen.kt$import androidx.compose.material3.*</ID>
+    <ID>WildcardImport:SearchScreen.kt$import androidx.compose.runtime.*</ID>
+    <ID>WildcardImport:SignupScreen.kt$import androidx.compose.foundation.layout.*</ID>
+    <ID>WildcardImport:SignupScreen.kt$import androidx.compose.material3.*</ID>
+    <ID>WildcardImport:SignupScreen.kt$import androidx.compose.runtime.*</ID>
+    <ID>WildcardImport:SplashScreen.kt$import androidx.compose.foundation.layout.*</ID>
+  </CurrentIssues>
+</SmellBaseline>

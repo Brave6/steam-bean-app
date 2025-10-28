@@ -15,6 +15,9 @@ plugins {
 
     // Kotlin Serialization
     alias(libs.plugins.kotlin.serialization)
+
+    id("io.gitlab.arturbosch.detekt") version "1.23.6"
+
 }
 
 android {
@@ -51,7 +54,34 @@ android {
     buildFeatures {
         compose = true
     }
+
+    lint {
+        abortOnError = true
+        warningsAsErrors = true
+        checkAllWarnings = true
+        checkDependencies = true
+        htmlReport = true
+        htmlOutput = file("$buildDir/reports/lint/lint-report.html")
+        baseline = file("lint-baseline.xml")
+    }
 }
+
+detekt {
+    config.setFrom(files("$rootDir/config/detekt/detekt.yml"))
+    buildUponDefaultConfig = true
+    allRules = false
+    autoCorrect = true
+    baseline = file("$rootDir/config/detekt/baseline.xml")
+
+    reports {
+        html.required.set(true)
+        html.outputLocation.set(file("$buildDir/reports/detekt/detekt.html"))
+        xml.required.set(false)
+        txt.required.set(false)
+    }
+}
+
+
 
 dependencies {
     // --- AndroidX Core ---
@@ -110,6 +140,9 @@ dependencies {
 
     // --- Image Loading ---
     implementation(libs.coil.compose)
+
+    // Detekt Compose
+    detektPlugins(libs.detekt)
 
     // --- Testing ---
     testImplementation(libs.junit) // Unit testing
