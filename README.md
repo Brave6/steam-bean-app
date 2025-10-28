@@ -20,6 +20,10 @@ The entire application is built with Jetpack Compose and integrates deeply with 
   <img src="assets/screenshots/screen_product_details.jpg" alt="Rewards Screen" width="13%">
   <img src="assets/screenshots/screen_cart.jpg" alt="Rewards Screen" width="13%">
   <img src="assets/screenshots/screen_cart_items.jpg" alt="Rewards Screen" width="13%">
+  <img src="assets/screenshots/screen_checkout.jpg" alt="Rewards Screen" width="13%">
+  <img src="assets/screenshots/screen_checkout_delivery.jpg" alt="Rewards Screen" width="13%">
+  <img src="assets/screenshots/screen_checkout_pickup.jpg" alt="Rewards Screen" width="13%">
+  <img src="assets/screenshots/screen_checkout_summary.jpg" alt="Rewards Screen" width="13%">
   <img src="assets/screenshots/screen_rewards.jpg" alt="Rewards Screen" width="13%">
   <img src="assets/screenshots/screen_account.jpg" alt="Rewards Screen" width="13%">
  
