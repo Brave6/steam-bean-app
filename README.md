@@ -9,7 +9,7 @@ The entire application is built with Jetpack Compose and integrates deeply with 
 ##  Screenshots
 
 <p align="center">
-  <img src="assets/screenshots/screen_onboarding_1.jpg" alt="Home Screen" width="13%">
+  <img src="assets/screenshots/screen_onboarding_1.jpg" alt="Home Screen" width="10%">
   <img src="assets/screenshots/screen_onboarding_2.jpg" alt="Menu Screen" width="13%">
   <img src="assets/screenshots/screen_onboarding_3.jpg" alt="Rewards Screen" width="13%">
   <img src="assets/screenshots/screen_signup.jpg" alt="Rewards Screen" width="13%">
@@ -41,6 +41,7 @@ The entire application is built with Jetpack Compose and integrates deeply with 
 - **Favorites**: Users can mark products as favorites, with selections saved to their account.
 - **User Profile**: An account screen displaying user information, loyalty points, and a logout option.
 - **Rewards System**: A basic rewards screen showing user points and progress toward the next reward.
+- **Checkout Flow** Integrated Google Maps, payment methods, and order summary.
 - **Firebase Integration**: Leverages Firebase for Authentication, Firestore database, Cloud Storage (for images), and Analytics for promotion tracking.
 
 ## Tech Stack & Architecture
