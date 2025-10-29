@@ -101,9 +101,9 @@ class CartRepositoryImpl @Inject constructor(
     override fun getCartItems(): Flow<List<CartItem>> = callbackFlow {
         val userId = getUserId()
 
-        Log.d("CartRepository", "🔄 Setting up real-time cart listener for user: $userId")
+//  For Testing Only  Log.d("CartRepository", "🔄 Setting up real-time cart listener for user: $userId")
 
-        // 🔥 Add Firestore snapshot listener for real-time updates
+        //  Add Firestore snapshot listener for real-time updates
         val listener = firestore.collection("users")
             .document(userId)
             .collection("cart")
@@ -143,14 +143,14 @@ class CartRepositoryImpl @Inject constructor(
                         }
                     }
 
-                    Log.d("CartRepository", "✅ Cart updated: ${items.size} items")
+//    For Testing Only   Log.d("CartRepository", "✅ Cart updated: ${items.size} items")
                     trySend(items).isSuccess
                 }
             }
 
         // 🔥 Remove listener when Flow is cancelled
         awaitClose {
-            Log.d("CartRepository", "🔴 Removing cart listener")
+//    For Testing Only  Log.d("CartRepository", "🔴 Removing cart listener")
             listener.remove()
         }
     }

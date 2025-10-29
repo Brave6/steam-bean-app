@@ -61,7 +61,7 @@ fun LoginScreen(
     val googleSignInLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult()
     ) { result ->
-        Log.d(TAG, "Google Sign-In result code: ${result.resultCode}")
+//   For Testing Only    Log.d(TAG, "Google Sign-In result code: ${result.resultCode}")
 
         if (result.resultCode == Activity.RESULT_OK) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
@@ -238,7 +238,7 @@ fun LoginScreen(
 
     // Handle successful login
     LaunchedEffect(uiState.isSuccess, uiState.googleSignInSuccess) {
-        Log.d(TAG, "LaunchedEffect triggered - isSuccess: ${uiState.isSuccess}, googleSignInSuccess: ${uiState.googleSignInSuccess}")
+//    For Testing Only   Log.d(TAG, "LaunchedEffect triggered - isSuccess: ${uiState.isSuccess}, googleSignInSuccess: ${uiState.googleSignInSuccess}")
         if (uiState.isSuccess || uiState.googleSignInSuccess) {
             Log.d(TAG, "Calling onLoginSuccess")
             onLoginSuccess()

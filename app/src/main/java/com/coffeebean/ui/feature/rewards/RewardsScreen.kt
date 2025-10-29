@@ -172,7 +172,7 @@ fun sampleRewards() = listOf(
 )
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun sc() {
+fun Sc() {
     val navController = rememberNavController()
     RewardsScreen(
         navController = navController

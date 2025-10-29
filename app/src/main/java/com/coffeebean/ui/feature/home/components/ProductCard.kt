@@ -51,8 +51,8 @@ import java.util.Locale
 @Composable
 fun ProductCard(
     product: Product,
-    onClick: (() -> Unit)? = null,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onClick: (() -> Unit)? = null
 ) {
     // Memoize currency formatter to avoid recreation on recomposition
     val currencyFormat = remember {

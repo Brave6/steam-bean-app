@@ -36,7 +36,7 @@ class LoginViewModel @Inject constructor(
         Log.d(TAG, "googleSignIn called with token")
         viewModelScope.launch {
             authRepository.googleSignIn(idToken).collect { result ->
-                Log.d(TAG, "Google Sign-In result: $result")
+//    For Testing Only     Log.d(TAG, "Google Sign-In result: $result")
                 when (result) {
                     is Resource.Loading -> {
                         Log.d(TAG, "Google Sign-In loading")

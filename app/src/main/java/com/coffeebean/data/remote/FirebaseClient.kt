@@ -212,6 +212,7 @@ class FirebaseClient @Inject constructor(
     /**
      * Adds a product to user's favorites.
      */
+    @Suppress("CONFLICTING_CANDIDATE")
     suspend fun addToFavorites(userId: String, productId: String) {
         try {
             val userRef = firestore.collection("users").document(userId)
@@ -357,19 +358,19 @@ class FirebaseClient @Inject constructor(
 
     suspend fun getBranches(): List<Branch> {
         return try {
-            Log.d(TAG, "🏪 Fetching branches from Firestore...")
+//    For Testing Only       Log.d(TAG, "🏪 Fetching branches from Firestore...")
 
             val snapshot = firestore.collection("branches")
                 .whereEqualTo("isOpen", true)
                 .get()
                 .await()
 
-            Log.d(TAG, "📦 Firestore returned ${snapshot.size()} branches")
+//   For Testing Only         Log.d(TAG, "📦 Firestore returned ${snapshot.size()} branches")
 
             val branches = snapshot.documents.mapNotNull { doc ->
                 try {
                     val branch = doc.toObject(Branch::class.java)?.copy(id = doc.id)
-                    Log.d(TAG, "✅ Parsed branch: ${branch?.name}")
+//   For Testing Only         Log.d(TAG, "✅ Parsed branch: ${branch?.name}")
                     branch
                 } catch (e: Exception) {
                     Log.e(TAG, "❌ Error parsing branch ${doc.id}: ${e.message}")
@@ -377,7 +378,7 @@ class FirebaseClient @Inject constructor(
                 }
             }
 
-            Log.d(TAG, "🎉 Successfully loaded ${branches.size} branches")
+//  For Testing Only         Log.d(TAG, "🎉 Successfully loaded ${branches.size} branches")
             branches
 
         } catch (e: Exception) {
