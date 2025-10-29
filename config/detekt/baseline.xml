@@ -1,10 +1,8 @@
 <?xml version="1.0" ?>
 <SmellBaseline>
-  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <ManuallySuppressedIssues/>
   <CurrentIssues>
-    <ID>ComposableNaming:RewardsScreen.kt$sc</ID>
     <ID>ComposableParamOrder:HomeScreen.kt$HomeScreen</ID>
-    <ID>ComposableParamOrder:ProductCard.kt$ProductCard</ID>
     <ID>ComposableParamOrder:PromoCarousel.kt$PromoCarousel</ID>
     <ID>CyclomaticComplexMethod:SignupScreen.kt$@Composable fun SignupScreen( onSignUpClick: () -&gt; Unit = {} )</ID>
     <ID>DestructuringDeclarationWithTooManyEntries:LoginScreen.kt$val (imageTitle, image, emailField, passwordField, button, errorText, divider, social) = createRefs()</ID>
@@ -60,7 +58,7 @@
     <ID>FunctionNaming:OnboardingScreen.kt$@OptIn(ExperimentalPagerApi::class) @Composable fun OnboardingScreen( //onFinish: () -&gt; Unit, onSignupClick: () -&gt; Unit, // for Get Started onLoginClick: () -&gt; Unit // for "Already have an account? Login" )</ID>
     <ID>FunctionNaming:OnboardingScreen.kt$@OptIn(ExperimentalPagerApi::class) @Preview(showBackground = true) @Composable fun OnboardingPage()</ID>
     <ID>FunctionNaming:OrderSuccessScreen.kt$@Composable fun OrderSuccessScreen( orderId: String, onContinueShopping: () -&gt; Unit, onViewOrders: () -&gt; Unit )</ID>
-    <ID>FunctionNaming:ProductCard.kt$@Composable fun ProductCard( product: Product, onClick: (() -&gt; Unit)? = null, modifier: Modifier = Modifier )</ID>
+    <ID>FunctionNaming:ProductCard.kt$@Composable fun ProductCard( product: Product, modifier: Modifier = Modifier, onClick: (() -&gt; Unit)? = null )</ID>
     <ID>FunctionNaming:ProductCard.kt$@Composable fun ProductCardShimmer(modifier: Modifier = Modifier)</ID>
     <ID>FunctionNaming:ProductCard.kt$@Composable private fun ProductImageError(modifier: Modifier = Modifier)</ID>
     <ID>FunctionNaming:ProductCard.kt$@Composable private fun ProductImageShimmer(modifier: Modifier = Modifier)</ID>
@@ -84,6 +82,7 @@
     <ID>FunctionNaming:PromoCarousel.kt$@OptIn(ExperimentalFoundationApi::class) @Composable private fun PromoCard( promo: Promo, pageIndex: Int, pagerState: PagerState, config: PromoCarouselConfig, onClick: () -&gt; Unit )</ID>
     <ID>FunctionNaming:RewardsScreen.kt$@Composable fun RewardCard(reward: Reward)</ID>
     <ID>FunctionNaming:RewardsScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun RewardsScreen( navController: NavHostController, points: Int = 120, nextRewardGoal: Int = 200, rewards: List&lt;Reward&gt; = sampleRewards() )</ID>
+    <ID>FunctionNaming:RewardsScreen.kt$@Preview(showBackground = true, showSystemUi = true) @Composable fun Sc()</ID>
     <ID>FunctionNaming:SearchScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun SearchScreen( navController: NavHostController, onProductClick: (String) -&gt; Unit, onNavigateBack: () -&gt; Unit )</ID>
     <ID>FunctionNaming:SignupScreen.kt$@Composable fun SignupScreen( onSignUpClick: () -&gt; Unit = {} )</ID>
     <ID>FunctionNaming:SignupScreen.kt$@Preview(showBackground = true, showSystemUi = true) @Composable fun Sc()</ID>
@@ -114,6 +113,7 @@
     <ID>LongParameterList:PromoCarousel.kt$( pageCount: Int, currentPage: Int, modifier: Modifier = Modifier, activeColor: Color = coffeebeanPurple, inactiveColor: Color = Color.LightGray, indicatorSize: Dp = 8.dp, spacing: Dp = 4.dp )</ID>
     <ID>MatchingDeclarationName:FirebaseAuthRepositoryImpl.kt$FirebaseAuthRepository : AuthRepository</ID>
     <ID>MatchingDeclarationName:PromoCarousel.kt$PromoCarouselConfig</ID>
+    <ID>MatchingDeclarationName:dataStore.kt$DataStoreManager</ID>
     <ID>MaxLineLength:MenuScreen.kt$/* @Preview(showBackground = true, showSystemUi = true) @Composable fun MenuScreenPreview() { val navController = rememberNavController() // In preview, we can provide a dummy implementation of the view model // or pass a dummy uiState directly if the composable supports it. // For this preview, let's keep it simple and assume a success state. val dummyItems = mapOf( MenuCategory.COFFEE to listOf( MenuItem(id = "1", name = "Cappuccino", description = "with Chocolate", price = 125.00, imageUrl = "", category = MenuCategory.COFFEE, subcategory = "Hot Coffee"), MenuItem(id = "2", name = "Caramel Latte", description = "with Oat Milk", price = 150.00, imageUrl = "", category = MenuCategory.COFFEE, subcategory = "Hot Coffee"), ), MenuCategory.BEANS to emptyList(), MenuCategory.CAKES to emptyList(), MenuCategory.PASTRY to emptyList() ) // This is a simplified approach for the preview. // In a real app, you might use a fake ViewModel that provides this state. MenuScreen( navController = navController, onItemClick = {}, viewModel = object : MenuViewModel(object : com.coffeebean.domain.repository.MenuRepository { override suspend fun getProducts(): List&lt;com.coffeebean.domain.model.Product&gt; { return emptyList() } }) { override val uiState: kotlinx.coroutines.flow.StateFlow&lt;MenuUiState&gt; = kotlinx.coroutines.flow.MutableStateFlow(MenuUiState.Success(dummyItems)) } ) } */</ID>
     <ID>ModifierMissing:AccountsScreen.kt$AccountsScreen</ID>
     <ID>ModifierMissing:AccountsScreen.kt$PaymentMethodRow</ID>
@@ -174,6 +174,7 @@
     <ID>NewLineAtEndOfFile:SplashViewModel.kt$com.coffeebean.ui.feature.splash.SplashViewModel.kt</ID>
     <ID>NewLineAtEndOfFile:Theme.kt$com.coffeebean.ui.theme.Theme.kt</ID>
     <ID>NewLineAtEndOfFile:Type.kt$com.coffeebean.ui.theme.Type.kt</ID>
+    <ID>NewLineAtEndOfFile:dataStore.kt$com.coffeebean.data.local.dataStore.kt</ID>
     <ID>ParameterNaming:CheckoutScreen.kt$onAddressSelected</ID>
     <ID>ParameterNaming:CheckoutScreen.kt$onBranchSelected</ID>
     <ID>ParameterNaming:CheckoutScreen.kt$onMethodSelected</ID>
@@ -186,7 +187,7 @@
     <ID>PreviewPublic:LoginScreen.kt$LoginScreenPreview</ID>
     <ID>PreviewPublic:OnboardingPageScreen.kt$OnboardingPagePreview</ID>
     <ID>PreviewPublic:OnboardingScreen.kt$OnboardingPage</ID>
-    <ID>PreviewPublic:RewardsScreen.kt$sc</ID>
+    <ID>PreviewPublic:RewardsScreen.kt$Sc</ID>
     <ID>PreviewPublic:SignupScreen.kt$Sc</ID>
     <ID>PreviewPublic:SplashScreen.kt$SplashPreview</ID>
     <ID>SwallowedException:CartUiState.kt$CartViewModel$e: Exception</ID>
