@@ -16,7 +16,7 @@ plugins {
     // Kotlin Serialization
     alias(libs.plugins.kotlin.serialization)
 
-    id("io.gitlab.arturbosch.detekt") version "1.23.6"
+    id("io.gitlab.arturbosch.detekt") version "1.23.8"
 
 }
 
@@ -63,6 +63,14 @@ android {
         htmlReport = true
         htmlOutput = file("$buildDir/reports/lint/lint-report.html")
         baseline = file("lint-baseline.xml")
+    }
+
+    packaging {
+        resources {
+            // Exclude the JNDI NameResolverProvider service file that causes the Lint error.
+            // This forces gRPC to use an Android-friendly resolver like OkHttp.
+            excludes += "META-INF/services/io.grpc.NameResolverProvider"
+        }
     }
 }
 
