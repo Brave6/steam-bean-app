@@ -54,12 +54,12 @@ class CheckoutViewModel @Inject constructor(
     private fun loadCheckoutData() {
         viewModelScope.launch {
             try {
-                Log.d("CheckoutVM", "🔄 Loading checkout data...")
+//    For Testing Only   Log.d("CheckoutVM", "🔄 Loading checkout data...")
                 _uiState.update { it.copy(isLoading = true) }
 
                 // Load branches FIRST
                 val branches = branchRepository.getBranches()
-                Log.d("CheckoutVM", "✅ Loaded ${branches.size} branches")
+//    For Testing Only   Log.d("CheckoutVM", "✅ Loaded ${branches.size} branches")
 
                 _uiState.update {
                     it.copy(
@@ -73,7 +73,7 @@ class CheckoutViewModel @Inject constructor(
                     val subtotal = items.sumOf { it.totalPrice }
                     val deliveryFee = calculateDeliveryFee(subtotal, _uiState.value.fulfillmentType)
 
-                    Log.d("CheckoutVM", "🛒 Cart: ${items.size} items, subtotal: $subtotal")
+//    For Testing Only   Log.d("CheckoutVM", "🛒 Cart: ${items.size} items, subtotal: $subtotal")
 
                     _uiState.update {
                         it.copy(

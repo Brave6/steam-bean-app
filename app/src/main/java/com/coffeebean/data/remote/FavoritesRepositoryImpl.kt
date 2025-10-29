@@ -1,6 +1,5 @@
 package com.coffeebean.data.remote
 
-import com.coffeebean.data.remote.FirebaseClient
 import com.coffeebean.data.repository.FavoritesRepository
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.flow.Flow
@@ -28,6 +27,7 @@ class FavoritesRepositoryImpl @Inject constructor(
         firebaseClient.removeFromFavorites(userId, productId)
     }
 
+    @Suppress("CONFLICTING_CANDIDATE")
     override suspend fun isFavorite(productId: String): Boolean {
         val userId = getUserId()
         val favorites = firebaseClient.getFavorites(userId)
