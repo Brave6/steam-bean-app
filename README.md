@@ -11,6 +11,8 @@ The entire application is built with Jetpack Compose and integrates deeply with 
   <img src="assets/gifs/screens.gif" alt="Steam & Bean ScreenShot Demo" width="180"/>
 </p>
 
+## Code Quality Status
+[![Code Quality](https://img.shields.io/badge/Code_Quality-Strictly_Enforced-11B347?style=for-the-badge&logo=android)](https://detekt.dev/)
 
 ## Features
 
@@ -35,6 +37,9 @@ This project is built with a modern Android technology stack and follows clean a
 - **Dependency Injection**: Hilt for managing dependencies throughout the app.
 - **Asynchronous Programming**: Kotlin Coroutines and Flow for handling background tasks and reactive data streams.
 - **Navigation**: Jetpack Navigation for Compose, with custom animations.
+- **Code Quality**:
+    - **Detekt**: Enforces a strict set of over 90 Kotlin code style and complexity rules using a project-specific baseline for continuous maintenance.
+    - **Android Lint**: Configured with `checkAllWarnings = true` and `abortOnError = true` to enforce critical Android-specific warnings as errors, ensuring API compatibility and resource correctness.
 - **Backend**:
   - **Firebase Authentication** for user management.
   - **Firebase Firestore** as the real-time database for products, promos, carts, and favorites.
