@@ -10,5 +10,4 @@ plugins {
 
     // Firebase Google Services plugin (applied in app module only)
     alias(libs.plugins.google.services) apply false
-
 }

@@ -17,7 +17,20 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
 
     id("io.gitlab.arturbosch.detekt") version "1.23.8"
+    alias(libs.plugins.secrets)
 
+}
+
+secrets {
+    // Change the properties file name if needed
+    propertiesFileName = "secrets.properties"
+
+    // A properties file containing default secret values
+    defaultPropertiesFileName = "secrets.defaults.properties"
+
+    // Configure which keys should be ignored by the plugin
+    ignoreList.add("keyToIgnore") // Ignore the key "keyToIgnore"
+    ignoreList.add("sdk.*")        // Ignore all keys matching the regexp "sdk.*"
 }
 
 android {
