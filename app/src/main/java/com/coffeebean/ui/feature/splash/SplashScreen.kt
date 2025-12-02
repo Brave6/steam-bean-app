@@ -28,7 +28,7 @@ fun SplashContent() {
         contentAlignment = Alignment.Center
     ) {
         Image(
-            painter = painterResource(id = R.drawable.transparent_logo),
+            painter = painterResource(id = R.drawable.logo_coffee_bean),
             contentDescription = "Coffee Bean Logo",
             modifier = Modifier.size(480.dp),
             contentScale = ContentScale.Fit
